@@ -1,16 +1,39 @@
 package eu.campesinux.GestionePratiche.professionisti;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import eu.campesinux.GestionePratiche.specializzazioni.Specializzazione;
 
 @Entity
+@Table(name="professionista")
+@Access(AccessType.FIELD)
 public class Professionista {
-
+	
+	@Id
+    @Column(name = "id")
 	private Long id;
+	
 	private String nome;
 	private String cognome;
+	
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Specializzazione.class)
+	@JoinTable(name = "professionista_specializzazione", joinColumns = @JoinColumn(name = "professionista_id"),	inverseJoinColumns = @JoinColumn(name = "specializzazione_id"))
+	private Set<Specializzazione> specializzazioni= new HashSet<>();
 	
 	protected Professionista() {
 	}
@@ -41,5 +64,13 @@ public class Professionista {
 		this.cognome = cognome;
 	}
 
-
+	
+	public void addSpecializzazione(Specializzazione specializzazione) {
+		this.specializzazioni.add(specializzazione);
+	}
+	
+	public Set<Specializzazione> getSpecializzazioni(){
+		return this.specializzazioni;
+	}
+	
 }

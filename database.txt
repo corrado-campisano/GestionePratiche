@@ -25,13 +25,13 @@ VALUES ('admin',
 
 
 
-
 CREATE TABLE `pratica` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `identificativo` varchar(255) NOT NULL,
   `descrizione` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 CREATE TABLE `cliente` (
@@ -50,9 +50,22 @@ CREATE TABLE `professionista` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
 CREATE TABLE `specializzazione` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `descrizione` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE IF NOT EXISTS professionista_specializzazione (
+  professionista_id INT(11) UNSIGNED NOT NULL,
+  specializzazione_id INT(11) UNSIGNED NOT NULL,
+  UNIQUE (professionista_id,specializzazione_id)
+) engine=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 
