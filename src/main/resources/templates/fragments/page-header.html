@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<body>
+	<div th:fragment="header">
+	
+		<table width="100%">
+			<tr>
+				<td align="left"><h2>Gestionale pratiche</h2></td>
+				<td align="right">
+					<form th:action="@{/logout}" method="post">
+						Logged as: [[${#httpServletRequest.remoteUser}]]
+						&nbsp;&nbsp;&nbsp;
+						<input type="submit" value="Logout" />
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<a href="/pratiche">Pratiche</a>&nbsp;&nbsp;&nbsp;
+					<a href="/clienti">Clienti</a>&nbsp;&nbsp;&nbsp;
+					<a href="/professionisti">Professionisti</a>&nbsp;&nbsp;&nbsp;
+				</td>
+			</tr>
+		</table>
+	</div>
+</body>
+
+</html>

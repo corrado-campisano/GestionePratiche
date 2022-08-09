@@ -21,21 +21,22 @@ VALUES ('admin',
 
 
 
-CREATE TABLE `product` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `brand` varchar(45) NOT NULL,
-  `madein` varchar(45) NOT NULL,
-  `price` float NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 CREATE TABLE `pratica` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `identificativo` varchar(255) NOT NULL,
   `descrizione` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `cliente` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ragione_sociale` varchar(255) NOT NULL,
+  `codice_fiscale` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 
 

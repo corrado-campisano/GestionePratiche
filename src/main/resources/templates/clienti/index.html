@@ -14,30 +14,30 @@
 	</div>
 	<div align="center">
 
-		<h3>Lista pratiche</h3>
+		<h3>Lista clienti</h3>
 		
-		<a href="pratiche/new">Crea nuova pratica</a>
+		<a href="clienti/new">Crea nuovo cliente</a>
 
 		<br /><br />
 		<table border="1" cellpadding="10">
 			<thead>
 				<tr>
 					<th>ID</th>
-					<th>Identificativo</th>
-					<th>Descrizione</th>
+					<th>Ragione Sociale</th>
+					<th>Codice Fiscale</th>
 					<th sec:authorize="hasRole('ADMIN')">Azioni</th>
 
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="pratica : ${listaPratiche}">
-					<td th:text="${pratica.id}">ID</td>
-					<td th:text="${pratica.identificativo}">Identificativo</td>
-					<td th:text="${pratica.descrizione}">Descrizione</td>
+				<tr th:each="cliente : ${listaClienti}">
+					<td th:text="${cliente.id}">ID</td>
+					<td th:text="${cliente.ragioneSociale}">Ragione Sociale</td>
+					<td th:text="${cliente.codiceFiscale}">Codice Fiscale</td>
 					<td sec:authorize="hasRole('ADMIN')">
-						<a th:href="@{'/pratiche/edit/' + ${pratica.id}}">Edit</a>
+						<a th:href="@{'/clienti/edit/' + ${cliente.id}}">Edit</a>
 						&nbsp;&nbsp;&nbsp;
-						<a th:href="@{'/pratiche/delete/' + ${pratica.id}}">Delete</a>
+						<a th:href="@{'/clienti/delete/' + ${cliente.id}}">Delete</a>
 					</td>
 				</tr>
 			</tbody>
