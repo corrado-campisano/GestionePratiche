@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Gestionale Pratiche</title>
+</head>
+
+<body>
+	<div align="center">
+
+		<div th:replace="fragments/page-header :: header"></div>
+
+	</div>
+	<div align="center">
+
+		<h3>Lista specializzazioni</h3>
+		
+		<a sec:authorize="hasRole('ADMIN')" href="specializzazioni/new">Crea nuova specializzazione</a>
+
+		<br /><br />
+		<table border="1" cellpadding="10">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Descrizione</th>
+					<th sec:authorize="hasRole('ADMIN')">Azioni</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="specializzazione : ${listaSpecializzazioni}">
+					<td th:text="${specializzazione.id}">ID</td>
+					<td th:text="${specializzazione.descrizione}">Descrizione</td>
+					<td sec:authorize="hasRole('ADMIN')">
+						<a th:href="@{'/specializzazioni/edit/' + ${specializzazione.id}}">Edit</a>
+						&nbsp;&nbsp;&nbsp;
+						<a th:href="@{'/specializzazioni/delete/' + ${specializzazione.id}}">Delete</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+</html>

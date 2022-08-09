@@ -14,21 +14,13 @@
 	</div>
 	<div align="center">
 	
-		<h3>Modifica cliente</h3>
+		<h3>Creazione nuova specializzazione</h3>
 		
-		<form action="#" th:action="@{/clienti/save}" th:object="${cliente}" method="post">
+		<form action="#" th:action="@{/specializzazioni/save}" th:object="${specializzazione}" method="post">
 			<table border="0" cellpadding="10">
 				<tr>
-					<td>ID:</td>
-					<td><input type="text" th:field="*{id}" readonly="readonly" /></td>
-				</tr>
-				<tr>
-					<td>Ragione Sociale:</td>
-					<td><input type="text" th:field="*{ragioneSociale}" /></td>
-				</tr>
-				<tr>
-					<td>Codice Fiscale:</td>
-					<td><input type="text" th:field="*{codiceFiscale}" /></td>
+					<td>Descrizione:</td>
+					<td><input type="text" th:field="*{descrizione}" /></td>
 				</tr>
 				<tr>
 					<td colspan="2"><button type="submit">Save</button></td>

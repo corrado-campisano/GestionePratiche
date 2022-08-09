@@ -11,7 +11,7 @@ public class Professionista {
 	private Long id;
 	private String nome;
 	private String cognome;
-
+	
 	protected Professionista() {
 	}
 
