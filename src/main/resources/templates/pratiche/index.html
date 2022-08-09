@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>Gestione pratiche</title>
+</head>
+<body>
+<div align="center">	
+
+	<h3 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h3>
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="Logout" />
+	</form>
+
+	<h1>Gestione pratiche</h1>
+	<a href="pratiche/new">Crea nuova pratica</a>
+	
+	<br/><br/>
+	<table border="1" cellpadding="10">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Identificativo</th>
+				<th>Descrizione</th>
+				<th sec:authorize="hasRole('ADMIN')">Actions</th>				
+				
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="pratica : ${listaPratiche}">
+				<td th:text="${pratica.id}">ID</td>
+				<td th:text="${pratica.identificativo}">Identificativo</td>
+				<td th:text="${pratica.descrizione}">Descrizione</td>
+				<td sec:authorize="hasRole('ADMIN')">
+					<a th:href="@{'/pratiche/edit/' + ${pratica.id}}">Edit</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<a th:href="@{'/pratiche/delete/' + ${pratica.id}}">Delete</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</body>
+</html>

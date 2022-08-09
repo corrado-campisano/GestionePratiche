@@ -1,4 +1,4 @@
-package net.codejava;
+package eu.campesinux.GestionePratiche.config;
 
 import javax.sql.DataSource;
 

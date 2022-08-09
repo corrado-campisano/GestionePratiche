@@ -1,4 +1,4 @@
-package net.codejava;
+package eu.campesinux.GestionePratiche;
 
 import java.util.List;
 

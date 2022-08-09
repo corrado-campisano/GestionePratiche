@@ -1,4 +1,4 @@
-package net.codejava;
+package eu.campesinux.GestionePratiche;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

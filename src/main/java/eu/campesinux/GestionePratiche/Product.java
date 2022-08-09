@@ -1,4 +1,4 @@
-package net.codejava;
+package eu.campesinux.GestionePratiche;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
