@@ -1,12 +1,12 @@
 
 INSERT INTO `users` (`username`,`password`,`role`,`enabled`)
-VALUES ('namhm',
-'$2a$10$XptfskLsT1l/bRTLRiiCgejHqOpgXFreUnNUa35gJdCr2v2QbVFzu',
+VALUES ('marisa',
+'$2a$10$f3iFK1oIwXjQD6RKHB9Ur.2ZUt/jbo5v.6sYFU4BQQ/I4ud6Fo2.G',
 'ROLE_USER', 1);
  
 INSERT INTO `users` (`username`,`password`,`role`,`enabled`)
 VALUES ('admin',
-'$2a$10$zxvEq8XzYEYtNjbkRsJEbukHeRx3XS6MDXHMu8cNuNsRfZJWwswDy',
+'$2a$10$XM50LLW.rmHL8qCbY00WYOjTZzTU8xL.TS08qY7UpaMzzi.vmMOZS',
 'ROLE_ADMIN', 1);
 
 
@@ -19,6 +19,22 @@ INSERT INTO `cliente` (`ragione_sociale`,`codice_fiscale`)
 VALUES ('Sergio Bianchi', 'SRGBNC58D13H501F');
 
 
+INSERT INTO `stato_pratica` (`stato`) VALUES ('nuova');
+INSERT INTO `stato_pratica` (`stato`) VALUES ('in lavorazione');
+INSERT INTO `stato_pratica` (`stato`) VALUES ('da presentare');
+INSERT INTO `stato_pratica` (`stato`) VALUES ('in dibattimento');
+INSERT INTO `stato_pratica` (`stato`) VALUES ('da fatturare');
+INSERT INTO `stato_pratica` (`stato`) VALUES ('chiusa');
+
+INSERT INTO `tipo_pratica` (`tipo`) VALUES ('tributario primo grado');
+INSERT INTO `tipo_pratica` (`tipo`) VALUES ('tributario appello');
+INSERT INTO `tipo_pratica` (`tipo`) VALUES ('tributario cassazione');
+INSERT INTO `tipo_pratica` (`tipo`) VALUES ('civile primo grado');
+INSERT INTO `tipo_pratica` (`tipo`) VALUES ('civile appello');
+INSERT INTO `tipo_pratica` (`tipo`) VALUES ('civile cassazione');
+INSERT INTO `tipo_pratica` (`tipo`) VALUES ('penale primo grado');
+INSERT INTO `tipo_pratica` (`tipo`) VALUES ('penale appello');
+INSERT INTO `tipo_pratica` (`tipo`) VALUES ('penale cassazione');
 
 
 INSERT INTO `professionista` (`nome`,`cognome`)

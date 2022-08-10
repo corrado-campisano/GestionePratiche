@@ -26,6 +26,8 @@
 					<th>Identificativo</th>
 					<th>Descrizione</th>
 					<th>Cliente</th>
+					<th>Tipo</th>
+					<th>Stato</th>
 					<th>Professionisti</th>
 					<th sec:authorize="hasRole('ADMIN')">Azioni</th>
 
@@ -37,6 +39,8 @@
 					<td th:text="${pratica.identificativo}">Identificativo</td>
 					<td th:text="${pratica.descrizione}">Descrizione</td>
 					<td th:text="${pratica.cliente}">Cliente</td>
+					<td th:text="${pratica.tipo}">Tipo</td>
+					<td th:text="${pratica.stato}">Stato</td>
 					<td>
 						<table><tr th:each="professionista : ${pratica.professionisti}">
 							<td th:text="${professionista}">Professionisti</td>

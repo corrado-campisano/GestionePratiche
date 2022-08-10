@@ -38,6 +38,28 @@
 					</td>
 				</tr>
 				<tr>
+					<td>Tipo:</td>
+					<td>
+						<select name="tipo">
+							<option th:each="tipo : ${listaTipi}"
+				            th:text="${tipo.tipo}"
+				            th:value="${tipo.id}"
+				            th:field="*{tipo}"></option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Stato:</td>
+					<td>
+						<select name="stato">
+							<option th:each="stato : ${listaStati}"
+				            th:text="${stato.stato}"
+				            th:value="${stato.id}"
+				            th:field="*{stato}"></option>
+						</select>
+					</td>
+				</tr>				
+				<tr>
 					<td>Professionisti:</td>
 					<td>
 						<input type="checkbox" name="professionisti"

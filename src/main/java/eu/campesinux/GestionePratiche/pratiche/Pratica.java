@@ -17,6 +17,8 @@ import javax.persistence.OneToOne;
 
 import eu.campesinux.GestionePratiche.clienti.Cliente;
 import eu.campesinux.GestionePratiche.professionisti.Professionista;
+import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
+import eu.campesinux.GestionePratiche.tipoPratica.TipoPratica;
 
 @Entity
 public class Pratica {
@@ -35,10 +37,17 @@ public class Pratica {
 	private Set<Professionista> professionisti = new HashSet<>();
 
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
+	@JoinColumn(name = "cliente_id", referencedColumnName = "id")
 	private Cliente cliente;
-	
-	
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "stato_id", referencedColumnName = "id")
+	private StatoPratica stato;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "tipo_id", referencedColumnName = "id")
+	private TipoPratica tipo;
+
 	protected Pratica() {
 	}
 
@@ -70,7 +79,7 @@ public class Pratica {
 		this.professionisti.add(professionista);
 	}
 
-	public Set<Professionista> getProfessionisti(){
+	public Set<Professionista> getProfessionisti() {
 		return this.professionisti;
 	}
 
@@ -80,5 +89,21 @@ public class Pratica {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public StatoPratica getStato() {
+		return stato;
+	}
+
+	public void setStato(StatoPratica stato) {
+		this.stato = stato;
+	}
+
+	public TipoPratica getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoPratica tipo) {
+		this.tipo = tipo;
 	}
 }

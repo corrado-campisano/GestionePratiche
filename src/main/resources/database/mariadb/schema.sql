@@ -9,17 +9,6 @@ CREATE TABLE `users` (
   PRIMARY KEY (`user_id`)
 );
 
-
-DROP TABLE IF EXISTS `pratica`;
-CREATE TABLE `pratica` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `identificativo` varchar(255) NOT NULL,
-  `descrizione` varchar(255) NOT NULL,
-  `cliente_id` INT(11) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
 DROP TABLE IF EXISTS `cliente`;
 CREATE TABLE `cliente` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -27,6 +16,36 @@ CREATE TABLE `cliente` (
   `codice_fiscale` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `stato_pratica`;
+CREATE TABLE `stato_pratica` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `stato` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `tipo_pratica`;
+CREATE TABLE `tipo_pratica` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tipo` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `pratica`;
+CREATE TABLE `pratica` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identificativo` varchar(255) NOT NULL,
+  `descrizione` varchar(255) NOT NULL,
+  `cliente_id` INT(11) UNSIGNED NOT NULL,
+  `tipo_id` INT(11) UNSIGNED NOT NULL,
+  `stato_id` INT(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 DROP TABLE IF EXISTS `professionista`;
