@@ -31,6 +31,17 @@
 					<td><input type="text" th:field="*{cognome}" /></td>
 				</tr>
 				<tr>
+					<td>Specializzazioni:</td>
+					<td>
+						<input type="checkbox" name="specializzazioni"
+				            th:each="specializzazione : ${listaSpecializzazioni}"
+				            th:text="${specializzazione.descrizione}"
+				            th:value="${specializzazione.id}"
+				            th:field="*{specializzazioni}"
+				        />
+					</td >
+				</tr>
+				<tr>
 					<td colspan="2"><button type="submit">Save</button></td>
 				</tr>
 			</table>

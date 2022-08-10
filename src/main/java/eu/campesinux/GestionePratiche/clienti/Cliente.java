@@ -1,5 +1,6 @@
 package eu.campesinux.GestionePratiche.clienti;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,6 +9,9 @@ import javax.persistence.Id;
 @Entity
 public class Cliente {
 
+	@Id
+    @Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String ragioneSociale;
 	private String codiceFiscale;
@@ -15,8 +19,6 @@ public class Cliente {
 	protected Cliente() {
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
 	}

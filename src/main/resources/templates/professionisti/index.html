@@ -19,12 +19,13 @@
 		<a href="professionisti/new">Crea nuovo professionista</a>
 
 		<br /><br />
-		<table border="1" cellpadding="10">
+		<table border="0" cellpadding="10">
 			<thead>
 				<tr>
 					<th>ID</th>
 					<th>Nome</th>
 					<th>Cognome</th>
+					<th>Specializzazioni</th>
 					<th sec:authorize="hasRole('ADMIN')">Azioni</th>
 
 				</tr>
@@ -34,6 +35,11 @@
 					<td th:text="${professionista.id}">ID</td>
 					<td th:text="${professionista.nome}">Nome</td>
 					<td th:text="${professionista.cognome}">Cognome</td>
+					<td>
+						<table><tr th:each="specializzazione : ${professionista.specializzazioni}">
+							<td th:text="${specializzazione.descrizione}">Specializzazione</td>
+						</tr></table>
+					</td>
 					<td sec:authorize="hasRole('ADMIN')">
 						<a th:href="@{'/professionisti/edit/' + ${professionista.id}}">Edit</a>
 						&nbsp;&nbsp;&nbsp;

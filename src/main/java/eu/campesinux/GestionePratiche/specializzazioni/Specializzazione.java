@@ -1,5 +1,6 @@
 package eu.campesinux.GestionePratiche.specializzazioni;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,14 +9,15 @@ import javax.persistence.Id;
 @Entity
 public class Specializzazione {
 
+	@Id
+    @Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String descrizione;
 	
-	protected Specializzazione() {
+	public Specializzazione() {
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
 	}

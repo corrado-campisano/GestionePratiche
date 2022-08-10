@@ -1,5 +1,6 @@
 package eu.campesinux.GestionePratiche.pratiche;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,6 +9,9 @@ import javax.persistence.Id;
 @Entity
 public class Pratica {
 
+	@Id
+    @Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String identificativo;
 	private String descrizione;
@@ -15,8 +19,6 @@ public class Pratica {
 	protected Pratica() {
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
 	}

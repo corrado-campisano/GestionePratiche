@@ -26,6 +26,7 @@ public class Professionista {
 	
 	@Id
     @Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private String nome;
@@ -38,8 +39,6 @@ public class Professionista {
 	protected Professionista() {
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
 	}

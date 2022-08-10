@@ -41,6 +41,12 @@ CREATE TABLE `cliente` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `cliente` (`ragione_sociale`,`codice_fiscale`)
+VALUES ('Mario Rossi', 'MRORSS60P23T430D');
+
+INSERT INTO `cliente` (`ragione_sociale`,`codice_fiscale`)
+VALUES ('Sergio Bianchi', 'SRGBNC58D13H501F');
+
 
 
 CREATE TABLE `professionista` (
@@ -50,6 +56,18 @@ CREATE TABLE `professionista` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `professionista` (`nome`,`cognome`)
+VALUES ('Mario', 'Civile');
+
+INSERT INTO `professionista` (`nome`,`cognome`)
+VALUES ('Sergio', 'Penale');
+
+INSERT INTO `professionista` (`nome`,`cognome`)
+VALUES ('Marco', 'Tributario');
+
+INSERT INTO `professionista` (`nome`,`cognome`)
+VALUES ('Antonio', 'Commerciale');
+
 
 
 CREATE TABLE `specializzazione` (
@@ -57,6 +75,18 @@ CREATE TABLE `specializzazione` (
   `descrizione` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `specializzazione` (`descrizione`)
+VALUES ('avvocato civilista');
+
+INSERT INTO `specializzazione` (`descrizione`)
+VALUES ('avvocato penalista');
+
+INSERT INTO `specializzazione` (`descrizione`)
+VALUES ('avvocato tributarista');
+
+INSERT INTO `specializzazione` (`descrizione`)
+VALUES ('commercialista');
 
 
 
@@ -66,6 +96,17 @@ CREATE TABLE IF NOT EXISTS professionista_specializzazione (
   UNIQUE (professionista_id,specializzazione_id)
 ) engine=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `professionista_specializzazione` (`professionista_id`,`specializzazione_id`)
+VALUES (3, 5);
 
+INSERT INTO `professionista_specializzazione` (`professionista_id`,`specializzazione_id`)
+VALUES (3, 8);
 
+INSERT INTO `professionista_specializzazione` (`professionista_id`,`specializzazione_id`)
+VALUES (4, 6);
 
+INSERT INTO `professionista_specializzazione` (`professionista_id`,`specializzazione_id`)
+VALUES (5, 7);
+
+INSERT INTO `professionista_specializzazione` (`professionista_id`,`specializzazione_id`)
+VALUES (6, 8);
