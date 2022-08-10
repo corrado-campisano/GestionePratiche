@@ -13,7 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
+import eu.campesinux.GestionePratiche.clienti.Cliente;
 import eu.campesinux.GestionePratiche.professionisti.Professionista;
 
 @Entity
@@ -32,6 +34,11 @@ public class Pratica {
 	@JoinTable(name = "pratica_professionista", joinColumns = @JoinColumn(name = "pratica_id"), inverseJoinColumns = @JoinColumn(name = "professionista_id"))
 	private Set<Professionista> professionisti = new HashSet<>();
 
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
+	private Cliente cliente;
+	
+	
 	protected Pratica() {
 	}
 
@@ -65,5 +72,13 @@ public class Pratica {
 
 	public Set<Professionista> getProfessionisti(){
 		return this.professionisti;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 }

@@ -43,4 +43,9 @@ public class Cliente {
 	public void setRagioneSociale(String ragioneSociale) {
 		this.ragioneSociale = ragioneSociale;
 	}
+	
+	@Override
+	public String toString() {
+		return this.ragioneSociale + " (" + this.codiceFiscale + ")";
+	}
 }

@@ -15,6 +15,7 @@ CREATE TABLE `pratica` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `identificativo` varchar(255) NOT NULL,
   `descrizione` varchar(255) NOT NULL,
+  `cliente_id` INT(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

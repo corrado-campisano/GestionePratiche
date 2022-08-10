@@ -27,6 +27,17 @@
 					<td><input type="text" th:field="*{descrizione}" /></td>
 				</tr>
 				<tr>
+					<td>Cliente:</td>
+					<td>
+						<select name="cliente">
+							<option th:each="cliente : ${listaClienti}"
+				            th:text="${cliente}"
+				            th:value="${cliente.id}"
+				            th:field="*{cliente}"></option>
+						</select>
+					</td>
+				</tr>
+				<tr>
 					<td>Professionisti:</td>
 					<td>
 						<input type="checkbox" name="professionisti"

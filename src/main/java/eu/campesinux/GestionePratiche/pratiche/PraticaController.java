@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import eu.campesinux.GestionePratiche.clienti.Cliente;
+import eu.campesinux.GestionePratiche.clienti.ClienteService;
 import eu.campesinux.GestionePratiche.professionisti.Professionista;
 import eu.campesinux.GestionePratiche.professionisti.ProfessionistaService;
 import eu.campesinux.GestionePratiche.specializzazioni.Specializzazione;
@@ -22,6 +24,8 @@ public class PraticaController {
 	private PraticaService service;
 	@Autowired
 	private ProfessionistaService profService;
+	@Autowired
+	private ClienteService clienteService;
 	
 	@RequestMapping("/pratiche")
 	public String viewHomePage(Model model) {
@@ -38,6 +42,9 @@ public class PraticaController {
 		
 		List<Professionista> listaProfessionisti = profService.listAll();
 		model.addAttribute("listaProfessionisti", listaProfessionisti);
+
+		List<Cliente> listaClienti = clienteService.listAll();
+		model.addAttribute("listaClienti", listaClienti);
 		
 		return "pratiche/new";
 	}
@@ -66,6 +73,9 @@ public class PraticaController {
 		
 		List<Professionista> listaProfessionisti = profService.listAll();
 		mav.addObject("listaProfessionisti", listaProfessionisti);
+		
+		List<Cliente> listaClienti = clienteService.listAll();
+		mav.addObject("listaClienti", listaClienti);
 		
 		Pratica pratica = service.get(id);
 		mav.addObject("pratica", pratica);
