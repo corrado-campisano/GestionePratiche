@@ -17,7 +17,7 @@ public class SpecializzazioneController {
 	private SpecializzazioneService service;
 	
 	@RequestMapping("/specializzazioni")
-	public String viewHomePage(Model model) {
+	public String home(Model model) {
 		List<Specializzazione> listaSpecializzazioni = service.listAll();
 		model.addAttribute("listaSpecializzazioni", listaSpecializzazioni);
 		
@@ -25,7 +25,7 @@ public class SpecializzazioneController {
 	}
 	
 	@RequestMapping("/specializzazioni/new")
-	public String showNewProductForm(Model model) {
+	public String add(Model model) {
 		Specializzazione specializzazione = new Specializzazione();
 		model.addAttribute("specializzazione", specializzazione);
 		
@@ -33,14 +33,14 @@ public class SpecializzazioneController {
 	}
 	
 	@RequestMapping(value = "/specializzazioni/save", method = RequestMethod.POST)
-	public String saveProduct(@ModelAttribute("specializzazione") Specializzazione specializzazione) {
+	public String save(@ModelAttribute("specializzazione") Specializzazione specializzazione) {
 		service.save(specializzazione);
 		
 		return "redirect:/specializzazioni";
 	}
 	
 	@RequestMapping("/specializzazioni/edit/{id}")
-	public ModelAndView showEditProductForm(@PathVariable(name = "id") Long id) {
+	public ModelAndView edit(@PathVariable(name = "id") Long id) {
 		ModelAndView mav = new ModelAndView("specializzazioni/edit");
 		
 		Specializzazione specializzazione = service.get(id);
@@ -50,7 +50,7 @@ public class SpecializzazioneController {
 	}	
 	
 	@RequestMapping("/specializzazioni/delete/{id}")
-	public String deleteProduct(@PathVariable(name = "id") Long id) {
+	public String delete(@PathVariable(name = "id") Long id) {
 		service.delete(id);
 		
 		return "redirect:/specializzazioni";

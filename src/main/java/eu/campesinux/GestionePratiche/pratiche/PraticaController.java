@@ -36,7 +36,7 @@ public class PraticaController {
 	private StatoPraticaService statoService;
 
 	@RequestMapping("/pratiche")
-	public String viewHomePage(Model model) {
+	public String home(Model model) {
 		List<Pratica> listaPratiche = service.listAll();
 		model.addAttribute("listaPratiche", listaPratiche);
 
@@ -44,7 +44,7 @@ public class PraticaController {
 	}
 
 	@RequestMapping("/pratiche/new")
-	public String showNewProductForm(Model model) {
+	public String add(Model model) {
 		Pratica pratica = new Pratica();
 		model.addAttribute("pratica", pratica);
 
@@ -64,7 +64,7 @@ public class PraticaController {
 	}
 
 	@RequestMapping(value = "/pratiche/save", method = RequestMethod.POST)
-	public String saveProduct(@ModelAttribute("pratica") Pratica pratica,
+	public String save(@ModelAttribute("pratica") Pratica pratica,
 			@RequestParam(name = "professionisti", required = false) Long[] professionisti) {
 
 		if (professionisti != null) {
@@ -80,9 +80,11 @@ public class PraticaController {
 
 		return "redirect:/pratiche";
 	}
-
+	
+	
+	
 	@RequestMapping("/pratiche/edit/{id}")
-	public ModelAndView showEditProductForm(@PathVariable(name = "id") Long id) {
+	public ModelAndView edit(@PathVariable(name = "id") Long id) {
 		ModelAndView mav = new ModelAndView("pratiche/edit");
 
 		List<Professionista> listaProfessionisti = profService.listAll();
@@ -104,7 +106,7 @@ public class PraticaController {
 	}
 
 	@RequestMapping("/pratiche/delete/{id}")
-	public String deleteProduct(@PathVariable(name = "id") Long id) {
+	public String delete(@PathVariable(name = "id") Long id) {
 		service.delete(id);
 
 		return "redirect:/pratiche";

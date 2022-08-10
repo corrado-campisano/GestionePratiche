@@ -13,10 +13,10 @@ VALUES ('admin',
 
 
 INSERT INTO `cliente` (`ragione_sociale`,`codice_fiscale`)
-VALUES ('Mario Rossi', 'MRORSS60P23T430D');
+VALUES ('Mario Rossi', 'RSSMRO60P23T430D');
 
 INSERT INTO `cliente` (`ragione_sociale`,`codice_fiscale`)
-VALUES ('Sergio Bianchi', 'SRGBNC58D13H501F');
+VALUES ('Sergio Bianchi', 'BNCSRG58D13H501F');
 
 
 INSERT INTO `stato_pratica` (`stato`) VALUES ('nuova');

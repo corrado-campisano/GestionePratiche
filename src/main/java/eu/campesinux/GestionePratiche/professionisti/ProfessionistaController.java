@@ -23,7 +23,7 @@ public class ProfessionistaController {
 	private SpecializzazioneService specService;
 	
 	@RequestMapping("/professionisti")
-	public String viewHomePage(Model model) {
+	public String home(Model model) {
 		List<Professionista> listaProfessionisti = service.listAll();
 		model.addAttribute("listaProfessionisti", listaProfessionisti);
 		
@@ -31,7 +31,7 @@ public class ProfessionistaController {
 	}
 	
 	@RequestMapping("/professionisti/new")
-	public String showNewProductForm(Model model) {
+	public String add(Model model) {
 		
 		Professionista professionista = new Professionista();
 		model.addAttribute("professionista", professionista);
@@ -43,7 +43,7 @@ public class ProfessionistaController {
 	}
 	
 	@RequestMapping(value = "/professionisti/save", method = RequestMethod.POST)
-	public String saveProduct(@ModelAttribute("professionista") Professionista professionista, 
+	public String save(@ModelAttribute("professionista") Professionista professionista, 
 			@RequestParam (name="specializzazioni", required=false) Long[] specializzazioni) {
 		
 		if (specializzazioni!=null) {
@@ -61,7 +61,7 @@ public class ProfessionistaController {
 	}
 	
 	@RequestMapping("/professionisti/edit/{id}")
-	public ModelAndView showEditProductForm(@PathVariable(name = "id") Long id) {
+	public ModelAndView edit(@PathVariable(name = "id") Long id) {
 		ModelAndView mav = new ModelAndView("professionisti/edit");
 
 		List<Specializzazione> listaSpecializzazioni = specService.listAll();
@@ -74,7 +74,7 @@ public class ProfessionistaController {
 	}	
 	
 	@RequestMapping("/professionisti/delete/{id}")
-	public String deleteProduct(@PathVariable(name = "id") Long id) {
+	public String delete(@PathVariable(name = "id") Long id) {
 		service.delete(id);
 		
 		return "redirect:/professionisti";

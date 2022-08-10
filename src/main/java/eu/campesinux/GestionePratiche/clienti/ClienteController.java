@@ -17,7 +17,7 @@ public class ClienteController {
 	private ClienteService service;
 	
 	@RequestMapping("/clienti")
-	public String viewHomePage(Model model) {
+	public String home(Model model) {
 		List<Cliente> listaClienti = service.listAll();
 		model.addAttribute("listaClienti", listaClienti);
 		
@@ -25,7 +25,7 @@ public class ClienteController {
 	}
 	
 	@RequestMapping("/clienti/new")
-	public String showNewProductForm(Model model) {
+	public String add(Model model) {
 		Cliente cliente = new Cliente();
 		model.addAttribute("cliente", cliente);
 		
@@ -33,14 +33,14 @@ public class ClienteController {
 	}
 	
 	@RequestMapping(value = "/clienti/save", method = RequestMethod.POST)
-	public String saveProduct(@ModelAttribute("cliente") Cliente cliente) {
+	public String save(@ModelAttribute("cliente") Cliente cliente) {
 		service.save(cliente);
 		
 		return "redirect:/clienti";
 	}
 	
 	@RequestMapping("/clienti/edit/{id}")
-	public ModelAndView showEditProductForm(@PathVariable(name = "id") Long id) {
+	public ModelAndView edit(@PathVariable(name = "id") Long id) {
 		ModelAndView mav = new ModelAndView("clienti/edit");
 		
 		Cliente cliente = service.get(id);
@@ -50,7 +50,7 @@ public class ClienteController {
 	}	
 	
 	@RequestMapping("/clienti/delete/{id}")
-	public String deleteProduct(@PathVariable(name = "id") Long id) {
+	public String delete(@PathVariable(name = "id") Long id) {
 		service.delete(id);
 		
 		return "redirect:/clienti";
