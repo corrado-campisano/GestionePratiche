@@ -53,3 +53,12 @@ CREATE TABLE `professionista_specializzazione` (
 ) engine=InnoDB DEFAULT CHARSET=utf8;
 
 
+DROP TABLE IF EXISTS `pratica_professionista`;
+CREATE TABLE `pratica_professionista` (
+  pratica_id INT(11) UNSIGNED NOT NULL,
+  professionista_id INT(11) UNSIGNED NOT NULL,
+  UNIQUE (pratica_id,professionista_id)
+) engine=InnoDB DEFAULT CHARSET=utf8;
+
+
+

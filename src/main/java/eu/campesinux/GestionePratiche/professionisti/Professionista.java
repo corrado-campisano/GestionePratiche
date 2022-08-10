@@ -72,4 +72,8 @@ public class Professionista {
 		return this.specializzazioni;
 	}
 	
+	@Override
+	public String toString() {
+		return this.nome + " " + this.cognome;
+	}
 }

@@ -25,6 +25,7 @@
 					<th>ID</th>
 					<th>Identificativo</th>
 					<th>Descrizione</th>
+					<th>Professionisti</th>
 					<th sec:authorize="hasRole('ADMIN')">Azioni</th>
 
 				</tr>
@@ -34,6 +35,11 @@
 					<td th:text="${pratica.id}">ID</td>
 					<td th:text="${pratica.identificativo}">Identificativo</td>
 					<td th:text="${pratica.descrizione}">Descrizione</td>
+					<td>
+						<table><tr th:each="professionista : ${pratica.professionisti}">
+							<td th:text="${professionista}">Professionisti</td>
+						</tr></table>
+					</td>
 					<td sec:authorize="hasRole('ADMIN')">
 						<a th:href="@{'/pratiche/edit/' + ${pratica.id}}">Edit</a>
 						&nbsp;&nbsp;&nbsp;
