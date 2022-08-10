@@ -51,4 +51,15 @@ VALUES ('commercialista');
 
 
 
+INSERT INTO `professionista_specializzazione` (`professionista_id`,`specializzazione_id`)
+VALUES (1, 1);
+
+INSERT INTO `professionista_specializzazione` (`professionista_id`,`specializzazione_id`)
+VALUES (2, 2);
+
+INSERT INTO `professionista_specializzazione` (`professionista_id`,`specializzazione_id`)
+VALUES (3, 3);
+
+INSERT INTO `professionista_specializzazione` (`professionista_id`,`specializzazione_id`)
+VALUES (4, 4);
 
