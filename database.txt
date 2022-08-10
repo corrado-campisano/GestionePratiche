@@ -97,16 +97,16 @@ CREATE TABLE IF NOT EXISTS professionista_specializzazione (
 ) engine=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `professionista_specializzazione` (`professionista_id`,`specializzazione_id`)
-VALUES (3, 5);
+VALUES (1, 1);
 
 INSERT INTO `professionista_specializzazione` (`professionista_id`,`specializzazione_id`)
-VALUES (3, 8);
+VALUES (2, 2);
 
 INSERT INTO `professionista_specializzazione` (`professionista_id`,`specializzazione_id`)
-VALUES (4, 6);
+VALUES (3, 3);
 
 INSERT INTO `professionista_specializzazione` (`professionista_id`,`specializzazione_id`)
-VALUES (5, 7);
+VALUES (4, 4);
 
 INSERT INTO `professionista_specializzazione` (`professionista_id`,`specializzazione_id`)
-VALUES (6, 8);
+VALUES (1, 4);

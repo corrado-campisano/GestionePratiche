@@ -44,7 +44,7 @@ public class ProfessionistaController {
 	
 	@RequestMapping(value = "/professionisti/save", method = RequestMethod.POST)
 	public String saveProduct(@ModelAttribute("professionista") Professionista professionista, 
-			@RequestParam (name="specializzazioni", required=true) Long[] specializzazioni) {
+			@RequestParam (name="specializzazioni", required=false) Long[] specializzazioni) {
 		
 		if (specializzazioni!=null) {
 			Specializzazione spec = null;
