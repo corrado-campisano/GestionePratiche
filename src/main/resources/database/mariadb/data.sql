@@ -21,10 +21,11 @@ VALUES ('Sergio Bianchi', 'BNCSRG58D13H501F');
 
 INSERT INTO `stato_pratica` (`stato`) VALUES ('nuova');
 INSERT INTO `stato_pratica` (`stato`) VALUES ('in lavorazione');
-INSERT INTO `stato_pratica` (`stato`) VALUES ('da presentare');
+INSERT INTO `stato_pratica` (`stato`) VALUES ('da depositare');
+INSERT INTO `stato_pratica` (`stato`) VALUES ('in scadenza');
 INSERT INTO `stato_pratica` (`stato`) VALUES ('in dibattimento');
 INSERT INTO `stato_pratica` (`stato`) VALUES ('da fatturare');
-INSERT INTO `stato_pratica` (`stato`) VALUES ('chiusa');
+INSERT INTO `stato_pratica` (`stato`) VALUES ('evasa');
 
 INSERT INTO `tipo_pratica` (`tipo`) VALUES ('tributario primo grado');
 INSERT INTO `tipo_pratica` (`tipo`) VALUES ('tributario appello');

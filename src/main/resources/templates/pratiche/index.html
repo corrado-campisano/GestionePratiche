@@ -29,6 +29,7 @@
 					<th>Tipo</th>
 					<th>Stato</th>
 					<th>Professionisti</th>
+					<th>Avanzamento</th>
 					<th sec:authorize="hasRole('ADMIN')">Azioni</th>
 
 				</tr>
@@ -45,6 +46,9 @@
 						<table><tr th:each="professionista : ${pratica.professionisti}">
 							<td th:text="${professionista}">Professionisti</td>
 						</tr></table>
+					</td>
+					<td>
+						<a th:href="@{'/pratiche/manage/' + ${pratica.id}}">Gestisci</a>
 					</td>
 					<td sec:authorize="hasRole('ADMIN')">
 						<a th:href="@{'/pratiche/edit/' + ${pratica.id}}">Edit</a>
