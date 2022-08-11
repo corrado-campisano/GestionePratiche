@@ -35,10 +35,12 @@ public class Avanzamento {
 	
 	private String descrizione;
 
+	// TODO: @OneToOne??
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "statoPrecedente_id", referencedColumnName = "id")
 	private StatoPratica statoPrecedente;
 
+	// TODO: @OneToOne??
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "statoAttuale_id", referencedColumnName = "id")
 	private StatoPratica statoAttuale;
