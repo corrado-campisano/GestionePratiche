@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Gestionale Pratiche</title>
+</head>
+
+<body>
+	<div align="center">
+
+		<div th:replace="fragments/page-header :: header"></div>
+
+	</div>
+	<div align="center">
+	
+		<h3>Creazione nuovo avanzamento</h3>
+		<form action="#" th:action="@{/avanzamenti/save}" th:object="${avanzamento}" method="post">
+			<table border="0" cellpadding="10">
+				<tr>
+					<td>Data:</td>
+					<td><input type="text" th:field="*{data}" /></td>
+				</tr>
+				<tr>
+					<td>Descrizione:</td>
+					<td><input type="text" th:field="*{descrizione}" /></td>
+				</tr>
+				<tr>
+					<td>Stato attuale:</td>
+					<td>
+						<select name="statoAttuale">
+							<option th:each="stato : ${listaStatiAttuali}"
+				            th:text="${stato.stato}"
+				            th:value="${stato.id}"
+				            th:field="*{statoAttuale}"></option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Stato precedente:</td>
+					<td>
+						<select name="statoPrecedente">
+							<option th:each="stato : ${listaStatiPrecedenti}"
+				            th:text="${stato.stato}"
+				            th:value="${stato.id}"
+				            th:field="*{statoPrecedente}"></option>
+						</select>
+					</td>
+				</tr>	
+				<tr>
+					<td colspan="2"><button type="submit">Save</button></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+
+</html>

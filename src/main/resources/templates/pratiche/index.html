@@ -48,7 +48,7 @@
 						</tr></table>
 					</td>
 					<td>
-						<a th:href="@{'/pratiche/manage/' + ${pratica.id}}">Gestisci</a>
+						<a th:href="@{'/avanzamenti/?pratica=' + ${pratica.id}}">Gestisci</a>
 					</td>
 					<td sec:authorize="hasRole('ADMIN')">
 						<a th:href="@{'/pratiche/edit/' + ${pratica.id}}">Edit</a>

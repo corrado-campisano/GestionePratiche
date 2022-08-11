@@ -9,6 +9,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`user_id`)
 );
 
+
 DROP TABLE IF EXISTS `cliente`;
 CREATE TABLE `cliente` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -34,6 +35,30 @@ CREATE TABLE `tipo_pratica` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+DROP TABLE IF EXISTS `specializzazione`;
+CREATE TABLE `specializzazione` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descrizione` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `professionista`;
+CREATE TABLE `professionista` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) NOT NULL,
+  `cognome` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `professionista_specializzazione`;
+CREATE TABLE `professionista_specializzazione` (
+  professionista_id INT(11) UNSIGNED NOT NULL,
+  specializzazione_id INT(11) UNSIGNED NOT NULL,
+  UNIQUE (professionista_id,specializzazione_id)
+) engine=InnoDB DEFAULT CHARSET=utf8;
+
 
 DROP TABLE IF EXISTS `pratica`;
 CREATE TABLE `pratica` (
@@ -47,32 +72,6 @@ CREATE TABLE `pratica` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-
-DROP TABLE IF EXISTS `professionista`;
-CREATE TABLE `professionista` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(255) NOT NULL,
-  `cognome` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `specializzazione`;
-CREATE TABLE `specializzazione` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `descrizione` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `professionista_specializzazione`;
-CREATE TABLE `professionista_specializzazione` (
-  professionista_id INT(11) UNSIGNED NOT NULL,
-  specializzazione_id INT(11) UNSIGNED NOT NULL,
-  UNIQUE (professionista_id,specializzazione_id)
-) engine=InnoDB DEFAULT CHARSET=utf8;
-
-
 DROP TABLE IF EXISTS `pratica_professionista`;
 CREATE TABLE `pratica_professionista` (
   pratica_id INT(11) UNSIGNED NOT NULL,
@@ -81,4 +80,12 @@ CREATE TABLE `pratica_professionista` (
 ) engine=InnoDB DEFAULT CHARSET=utf8;
 
 
-
+DROP TABLE IF EXISTS `avanzamento`;
+CREATE TABLE `avanzamento` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `data` DATE NOT NULL,
+  `descrizione` varchar(255) NOT NULL,
+  `stato_precedente_id` INT(11) UNSIGNED NOT NULL,
+  `stato_attuale_id` INT(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+) engine=InnoDB DEFAULT CHARSET=utf8;
