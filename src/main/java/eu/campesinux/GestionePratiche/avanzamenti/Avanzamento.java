@@ -9,12 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import eu.campesinux.GestionePratiche.pratiche.Pratica;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
 
 @Entity
@@ -26,6 +24,7 @@ public class Avanzamento {
 	private Long id;
 	
 	/*
+	 * TODO : implementare
 	@OneToMany
 	private Pratica pratica;
 	*/
@@ -35,12 +34,10 @@ public class Avanzamento {
 	
 	private String descrizione;
 
-	// TODO: @OneToOne??
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "statoPrecedente_id", referencedColumnName = "id")
 	private StatoPratica statoPrecedente;
 
-	// TODO: @OneToOne??
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "statoAttuale_id", referencedColumnName = "id")
 	private StatoPratica statoAttuale;

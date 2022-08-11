@@ -16,7 +16,6 @@ import eu.campesinux.GestionePratiche.clienti.Cliente;
 import eu.campesinux.GestionePratiche.clienti.ClienteService;
 import eu.campesinux.GestionePratiche.professionisti.Professionista;
 import eu.campesinux.GestionePratiche.professionisti.ProfessionistaService;
-import eu.campesinux.GestionePratiche.specializzazioni.Specializzazione;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPraticaService;
 import eu.campesinux.GestionePratiche.tipoPratica.TipoPratica;

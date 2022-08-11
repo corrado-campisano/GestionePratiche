@@ -7,7 +7,7 @@ CREATE TABLE `users` (
   `role` varchar(45) NOT NULL,
   `enabled` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 DROP TABLE IF EXISTS `cliente`;

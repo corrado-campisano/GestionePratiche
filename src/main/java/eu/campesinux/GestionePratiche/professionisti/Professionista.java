@@ -32,7 +32,6 @@ public class Professionista {
 	private String nome;
 	private String cognome;
 	
-	// TODO: @ManyToMany should be OK here
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, targetEntity = Specializzazione.class)
 	@JoinTable(name = "professionista_specializzazione", joinColumns = @JoinColumn(name = "professionista_id"),	inverseJoinColumns = @JoinColumn(name = "specializzazione_id"))
 	private Set<Specializzazione> specializzazioni= new HashSet<>();
