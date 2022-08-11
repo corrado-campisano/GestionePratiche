@@ -72,6 +72,16 @@ public class Professionista {
 	
 	@Override
 	public String toString() {
-		return this.nome + " " + this.cognome;
+		String ret = this.nome + " " + this.cognome;
+		
+		if (this.specializzazioni.size()>0) {
+			ret += " (";
+			for(Specializzazione spec : this.specializzazioni) {
+				ret += spec.getDescrizione();
+			}
+			ret += " )";
+		}
+		
+		return ret;
 	}
 }

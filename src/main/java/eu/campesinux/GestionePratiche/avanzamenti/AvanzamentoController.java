@@ -63,8 +63,10 @@ public class AvanzamentoController {
 			@RequestParam(name = "pratica_id", required = true) Long pratica_id) {
 		
 		Pratica pratica = praticaService.get(pratica_id);
-		avanzamento.setPratica(pratica);
+		pratica.setStato(avanzamento.getStatoAttuale());
+		praticaService.save(pratica);
 		
+		avanzamento.setPratica(pratica);
 		service.save(avanzamento);
 		
 		return "redirect:/avanzamenti/?pratica=" + pratica.getId();
