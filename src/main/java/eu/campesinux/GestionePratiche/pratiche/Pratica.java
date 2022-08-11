@@ -32,19 +32,19 @@ public class Pratica {
 
 	private String descrizione;
 
-	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, targetEntity = Professionista.class)
+	@ManyToMany// TODO : restore? (cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, targetEntity = Professionista.class)
 	@JoinTable(name = "pratica_professionista", joinColumns = @JoinColumn(name = "pratica_id"), inverseJoinColumns = @JoinColumn(name = "professionista_id"))
 	private Set<Professionista> professionisti = new HashSet<>();
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne// TODO : restore? (cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "cliente_id", referencedColumnName = "id")
 	private Cliente cliente;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne// TODO : restore? (cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "stato_id", referencedColumnName = "id")
 	private StatoPratica stato;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne// TODO : restore? (cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "tipo_id", referencedColumnName = "id")
 	private TipoPratica tipo;
 
