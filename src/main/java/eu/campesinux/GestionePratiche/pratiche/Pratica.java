@@ -1,20 +1,21 @@
 package eu.campesinux.GestionePratiche.pratiche;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import eu.campesinux.GestionePratiche.avanzamenti.Avanzamento;
 import eu.campesinux.GestionePratiche.clienti.Cliente;
 import eu.campesinux.GestionePratiche.professionisti.Professionista;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
@@ -31,7 +32,10 @@ public class Pratica {
 	private String identificativo;
 
 	private String descrizione;
-
+	
+	@OneToMany (mappedBy="pratica")
+	private List<Avanzamento> avanzamenti;
+	
 	@ManyToMany// TODO : restore? (cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, targetEntity = Professionista.class)
 	@JoinTable(name = "pratica_professionista", joinColumns = @JoinColumn(name = "pratica_id"), inverseJoinColumns = @JoinColumn(name = "professionista_id"))
 	private Set<Professionista> professionisti = new HashSet<>();

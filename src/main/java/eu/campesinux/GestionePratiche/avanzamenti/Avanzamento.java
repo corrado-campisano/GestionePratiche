@@ -2,17 +2,18 @@ package eu.campesinux.GestionePratiche.avanzamenti;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import eu.campesinux.GestionePratiche.pratiche.Pratica;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
 
 @Entity
@@ -23,12 +24,11 @@ public class Avanzamento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	/*
-	 * TODO : implementare
-	@OneToMany
+
+	@ManyToOne
+	@JoinColumn (name="pratica_id")
 	private Pratica pratica;
-	*/
-	
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date data;
 	
@@ -88,5 +88,13 @@ public class Avanzamento {
 
 	public void setStatoAttuale(StatoPratica statoAttuale) {
 		this.statoAttuale = statoAttuale;
+	}
+	
+	public Pratica getPratica() {
+		return pratica;
+	}
+
+	public void setPratica(Pratica pratica) {
+		this.pratica = pratica;
 	}
 }

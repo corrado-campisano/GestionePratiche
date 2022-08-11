@@ -16,10 +16,27 @@
 
 		<h3>Lista avanzamenti per la pratica</h3>
 		
-		<p>qui va il recap della pratica</p>
+		<table border="1" cellpadding="10">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Identificativo</th>
+					<th>Descrizione</th>
+					<th>Cliente</th>
+				</tr>
+				</thead>
+			<tbody>
+				<tr>
+					<td th:text="${pratica.id}">ID</td>
+					<td th:text="${pratica.identificativo}">Identificativo</td>
+					<td th:text="${pratica.descrizione}">Descrizione</td>
+					<td th:text="${pratica.cliente}">Cliente</td>
+				</tr>
+			</tbody>
+		</table>		
 		<hr>
 		
-		<a sec:authorize="hasRole('ADMIN')" href="/avanzamenti/new">Crea nuovo avanzamento</a>
+		<a sec:authorize="hasRole('ADMIN')" th:href="@{'/avanzamenti/new?pratica=' + ${pratica.id}}">Crea nuovo avanzamento</a>
 
 		<br /><br />
 		<table border="1" cellpadding="10">
@@ -41,9 +58,9 @@
 					<td th:text="${avanzamento.statoPrecedente}">Stato precedente</td>
 					<td th:text="${avanzamento.statoAttuale}">Stato attuale</td>
 					<td sec:authorize="hasRole('ADMIN')">
-						<a th:href="@{'/pratiche/edit/' + ${pratica.id}}">Edit</a>
+						<a th:href="@{'/avanzamento/edit/' + ${avanzamento.id}}">Edit</a>
 						&nbsp;&nbsp;&nbsp;
-						<a th:href="@{'/pratiche/delete/' + ${pratica.id}}">Delete</a>
+						<a th:href="@{'/avanzamento/delete/' + ${avanzamento.id}}">Delete</a>
 					</td>
 				</tr>
 			</tbody>

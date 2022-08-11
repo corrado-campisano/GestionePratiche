@@ -14,9 +14,35 @@
 	</div>
 	<div align="center">
 	
+		<h3>Creazione avanzamento per la pratica</h3>
+		
+		<table border="1" cellpadding="10">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Identificativo</th>
+					<th>Descrizione</th>
+					<th>Cliente</th>
+				</tr>
+				</thead>
+			<tbody>
+				<tr>
+					<td th:text="${pratica.id}">ID</td>
+					<td th:text="${pratica.identificativo}">Identificativo</td>
+					<td th:text="${pratica.descrizione}">Descrizione</td>
+					<td th:text="${pratica.cliente}">Cliente</td>
+				</tr>
+			</tbody>
+		</table>		
+		<hr>
+	
 		<h3>Creazione nuovo avanzamento</h3>
 		<form action="#" th:action="@{/avanzamenti/save}" th:object="${avanzamento}" method="post">
 			<table border="0" cellpadding="10">
+				<tr>
+					<td>Pratica ID:</td>
+					<td><input type="text" id="pratica_id" name="pratica_id" th:value="${pratica.id}" readonly /></td>
+				</tr>
 				<tr>
 					<td>Data:</td>
 					<td><input type="text" th:field="*{data}" /></td>
