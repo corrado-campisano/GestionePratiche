@@ -33,7 +33,7 @@ public class AvanzamentoController {
 		Pratica pratica = praticaService.get(pratica_id);
 		model.addAttribute("pratica", pratica);
 		
-		List<Avanzamento> listaAvanzamenti = service.listAll();
+		List<Avanzamento> listaAvanzamenti = service.listByPraticaId(pratica_id);
 		model.addAttribute("listaAvanzamenti", listaAvanzamenti);
 		
 		return "avanzamenti/index";

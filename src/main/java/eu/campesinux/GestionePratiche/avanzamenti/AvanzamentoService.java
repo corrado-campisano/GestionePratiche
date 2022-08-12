@@ -14,7 +14,11 @@ public class AvanzamentoService {
 	public List<Avanzamento> listAll() {
 		return repo.findAll();
 	}
-
+	
+	public List<Avanzamento> listByPraticaId(Long pratica_id) {
+		return repo.findByPraticaId(pratica_id);
+	}
+	
 	public void save(Avanzamento avanzamento) {
 		repo.save(avanzamento);
 	}
