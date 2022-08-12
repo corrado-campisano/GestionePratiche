@@ -90,9 +90,9 @@
 					<td th:text="${avanzamento.statoPrecedente}">Stato precedente</td>
 					<td th:text="${avanzamento.statoAttuale}">Stato attuale</td>
 					<td sec:authorize="hasRole('ADMIN')">
-						<a th:href="@{'/avanzamento/edit/' + ${avanzamento.id}}">Edit</a>
+						<a th:href="@{'/avanzamenti/edit/' + ${avanzamento.id}}">Edit</a>
 						&nbsp;&nbsp;&nbsp;
-						<a th:href="@{'/avanzamento/delete/' + ${avanzamento.id}}">Delete</a>
+						<a th:href="@{'/avanzamenti/delete/' + ${avanzamento.id}}">Delete</a>
 					</td>
 				</tr>
 			</tbody>

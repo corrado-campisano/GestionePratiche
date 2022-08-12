@@ -79,13 +79,26 @@ public class AvanzamentoController {
 		Avanzamento avanzamento = service.get(id);
 		mav.addObject("avanzamento", avanzamento);
 		
+		Pratica pratica = avanzamento.getPratica();
+		mav.addObject("pratica", pratica);
+		
+		List<StatoPratica> listaStatiPrecedenti = statoService.listAll();
+		mav.addObject("listaStatiPrecedenti", listaStatiPrecedenti);
+		
+		List<StatoPratica> listaStatiAttuali = statoService.listAll();
+		mav.addObject("listaStatiAttuali", listaStatiAttuali);
+		
 		return mav;
 	}	
 	
 	@RequestMapping("/avanzamenti/delete/{id}")
 	public String delete(@PathVariable(name = "id") Long id) {
+		
+		Avanzamento avanzamento = service.get(id);
+		Pratica pratica = avanzamento.getPratica();
+		
 		service.delete(id);
 		
-		return "redirect:/avanzamenti/?pratica=";
+		return "redirect:/avanzamenti/?pratica=" + pratica.getId();
 	}
 }
