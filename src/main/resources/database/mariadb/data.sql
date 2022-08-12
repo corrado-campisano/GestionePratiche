@@ -83,3 +83,10 @@ VALUES (3, 3);
 INSERT INTO `professionista_specializzazione` (`professionista_id`,`specializzazione_id`)
 VALUES (4, 4);
 
+
+
+
+INSERT INTO `pratica` VALUES (1,'2022-01','cartella per TARI',1,1,2),(2,'2022-02','cartella per IMU',2,2,1);
+
+INSERT INTO `avanzamento` VALUES (1,1,'2022-09-08','presa in carico',1,3),(2,1,'2022-09-09','rigettata importo esiguo',3,2);
+
