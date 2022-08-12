@@ -35,10 +35,21 @@ public class PraticaController {
 	private StatoPraticaService statoService;
 
 	@RequestMapping("/pratiche")
-	public String home(Model model) {
-		List<Pratica> listaPratiche = service.listAll();
-		model.addAttribute("listaPratiche", listaPratiche);
-
+	public String home(Model model, @RequestParam(name = "filtro", required = false) String filtro) {
+		
+		if (filtro == null) {
+			List<Pratica> listaPratiche = service.listAll();
+			model.addAttribute("listaPratiche", listaPratiche);
+		} else {
+			if (filtro.equals("inScadenza")) {
+				List<Pratica> listaPratiche = service.listInScadenza(statoService);
+				model.addAttribute("listaPratiche", listaPratiche);
+			}
+			if (filtro.equals("daFatturare")) {
+				List<Pratica> listaPratiche = service.listDaFatturare(statoService);
+				model.addAttribute("listaPratiche", listaPratiche);
+			}
+		}
 		return "pratiche/index";
 	}
 
@@ -64,7 +75,7 @@ public class PraticaController {
 
 	@RequestMapping(value = "/pratiche/save", method = RequestMethod.POST)
 	public String save(@ModelAttribute("pratica") Pratica pratica,
-			@RequestParam(name = "professionisti", required = false) Long[] professionisti) {
+			@RequestParam(name = "professionisti", required = true) Long[] professionisti) {
 
 		if (professionisti != null) {
 			Professionista prof = null;

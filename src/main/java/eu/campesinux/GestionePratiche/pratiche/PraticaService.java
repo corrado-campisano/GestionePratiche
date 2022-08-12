@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import eu.campesinux.GestionePratiche.avanzamenti.Avanzamento;
 import eu.campesinux.GestionePratiche.avanzamenti.AvanzamentoRepository;
+import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
+import eu.campesinux.GestionePratiche.statoPratica.StatoPraticaService;
 
 @Service
 public class PraticaService {
@@ -36,5 +38,15 @@ public class PraticaService {
 		}
 		
 		repo.deleteById(id);
+	}
+
+	public List<Pratica> listInScadenza(StatoPraticaService statoService) {
+		StatoPratica inScadenza = statoService.findByStato(StatoPratica.STATO_IN_SCADENZA);
+		return repo.findByStato(inScadenza);
+	}
+
+	public List<Pratica> listDaFatturare(StatoPraticaService statoService) {
+		StatoPratica daFatturare = statoService.findByStato(StatoPratica.STATO_DA_FATTURARE);
+		return repo.findByStato(daFatturare);
 	}
 }
