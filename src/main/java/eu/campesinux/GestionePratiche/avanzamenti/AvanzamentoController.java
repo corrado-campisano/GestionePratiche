@@ -45,12 +45,13 @@ public class AvanzamentoController {
 	
 	@RequestMapping("/avanzamenti/presaInCarico")
 	public String presaInCarico(Model model,
-			@RequestParam(name = "pratica", required = true) Long pratica_id) {
+			@RequestParam(name = "pratica", required = true) Long pratica_id,
+			@RequestParam(name = "commento", required = true) String commento) {
 		
 		Pratica pratica = praticaService.get(pratica_id);
 		model.addAttribute("pratica", pratica);
 		
-		PraticaBusinessLogic.presaInCarico(pratica, praticaService, statoService, avanzamentoService);
+		PraticaBusinessLogic.presaInCarico(pratica, praticaService, statoService, avanzamentoService, commento);
 		
 		String stato = pratica.getStato().getStato();
 		model.addAttribute("stato", stato);

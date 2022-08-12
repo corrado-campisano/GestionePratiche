@@ -48,7 +48,12 @@
 				<tr>
 					<td th:switch="${stato}">
 					    
-					    <div th:case="'nuova'"><a th:href="@{'/avanzamenti/presaInCarico/?pratica=' + ${pratica.id}}">prendi in carico pratica</a></div>
+					    <div th:case="'nuova'">
+					    	<form action="#" th:action="@{'/avanzamenti/presaInCarico/?pratica=' + ${pratica.id}}" method="post">
+					    		Commento alla presa in carico: <input type="text" id="commento" name="commento" />
+					    		<button type="submit">Prendi in carico</button>
+					    	</form>
+					    </div>
 					    
 					    <div th:case="'rigettata'">la pratica e' stata rigettata, nessuna altra operazione possibile</div>
 					    

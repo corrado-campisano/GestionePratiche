@@ -11,13 +11,13 @@ import eu.campesinux.GestionePratiche.statoPratica.StatoPraticaService;
 public class PraticaBusinessLogic {
 		
 	public static void presaInCarico(Pratica pratica, PraticaService praticaService, 
-			StatoPraticaService statoService, AvanzamentoService avanzamentoService) {
+			StatoPraticaService statoService, AvanzamentoService avanzamentoService, String commento) {
 		
 		StatoPratica nuovo = statoService.findByStato(StatoPratica.STATO_IN_LAVORAZIONE);
 				
 		Avanzamento avanzamento = new Avanzamento();
 		avanzamento.setData(new Date());
-		avanzamento.setDescrizione("maciao per ora");
+		avanzamento.setDescrizione(commento);
 		avanzamento.setPratica(pratica);
 		avanzamento.setStatoAttuale(nuovo);
 		avanzamento.setStatoPrecedente(pratica.getStato());
