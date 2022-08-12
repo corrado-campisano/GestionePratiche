@@ -3,6 +3,9 @@ package eu.campesinux.GestionePratiche.pratiche;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,19 +37,29 @@ public class PraticaController {
 	@Autowired
 	private StatoPraticaService statoService;
 
+	int itemsPerPage = 2;
+	
 	@RequestMapping("/pratiche")
-	public String home(Model model, @RequestParam(name = "filtro", required = false) String filtro) {
+	public String home(Model model, @RequestParam(name = "filtro", required = false) String filtro,
+			@RequestParam(name = "page", required = false) Integer page) {
+		
+		int startFrom = 0;
+		if (page!=null) {
+			startFrom = page.intValue();
+		}
+		model.addAttribute("startFrom", startFrom);
+		Pageable pageRequest = PageRequest.of(startFrom, itemsPerPage);
 		
 		if (filtro == null) {
-			List<Pratica> listaPratiche = service.listAll();
+			Page<Pratica> listaPratiche = service.listAll(pageRequest);
 			model.addAttribute("listaPratiche", listaPratiche);
 		} else {
 			if (filtro.equals("inScadenza")) {
-				List<Pratica> listaPratiche = service.listInScadenza(statoService);
+				Page<Pratica> listaPratiche = service.listInScadenza(statoService);
 				model.addAttribute("listaPratiche", listaPratiche);
 			}
 			if (filtro.equals("daFatturare")) {
-				List<Pratica> listaPratiche = service.listDaFatturare(statoService);
+				Page<Pratica> listaPratiche = service.listDaFatturare(statoService);
 				model.addAttribute("listaPratiche", listaPratiche);
 			}
 		}

@@ -2,12 +2,15 @@ package eu.campesinux.GestionePratiche.pratiche;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
 
-public interface PraticaRepository extends JpaRepository<Pratica, Long> {
+public interface PraticaRepository extends PagingAndSortingRepository<Pratica, Long> {
 
-	List<Pratica> findByStato(StatoPratica stato);
+	Page<Pratica> findAll(Pageable pageable);
+	Page<Pratica> findByStato(StatoPratica stato, Pageable pageable);
 
 }

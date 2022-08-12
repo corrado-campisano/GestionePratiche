@@ -16,10 +16,29 @@
 
 		<h3>Lista pratiche</h3>
 		
-		<a href="/pratiche/?filtro=inScadenza">Pratiche in scadenza</a> - 
-		<a href="/pratiche/?filtro=daFatturare">Pratiche da fatturare</a> - 
-		<a href="/pratiche/new">Crea nuova pratica</a>
-
+		
+		<table border="1" cellpadding="10">
+			<tbody>
+				<tr>
+					<td><a href="/pratiche/?filtro=inScadenza">Pratiche in scadenza</a></td>
+					<td><a href="/pratiche/?filtro=daFatturare">Pratiche da fatturare</a></td>
+					<td><a href="/pratiche/new">Crea nuova pratica</a></td>
+					
+					<td> - </td>
+					
+					<td th:if="${listaPratiche.getNumber() GT 0}">
+						<a th:href="@{'/pratiche/?page=' + ${listaPratiche.getNumber()-1}}">Prev</a>
+					</td>
+					<td>
+						Pagina <span th:text="${listaPratiche.getNumber()+1}"></span> 
+						di <span th:text="${listaPratiche.getTotalPages()}"></span></td>
+					<td th:if="${listaPratiche.getNumber()+1 LT listaPratiche.getTotalPages()}">
+						<a th:href="@{'/pratiche/?page=' + ${listaPratiche.getNumber()+1}}">Next</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
 		<br /><br />
 		<table border="1" cellpadding="10">
 			<thead>

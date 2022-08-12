@@ -3,6 +3,9 @@ package eu.campesinux.GestionePratiche.pratiche;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import eu.campesinux.GestionePratiche.avanzamenti.Avanzamento;
@@ -18,8 +21,8 @@ public class PraticaService {
 	@Autowired
 	private AvanzamentoRepository avaRepo;
 	
-	public List<Pratica> listAll() {		
-		return repo.findAll();
+	public Page<Pratica> listAll(Pageable pageRequest) {
+		return repo.findAll(pageRequest);
 	}
 	
 	public void save(Pratica pratica) {
@@ -40,13 +43,15 @@ public class PraticaService {
 		repo.deleteById(id);
 	}
 
-	public List<Pratica> listInScadenza(StatoPraticaService statoService) {
+	public Page<Pratica> listInScadenza(StatoPraticaService statoService) {
+		Pageable pageRequest = PageRequest.of(0, 2);
 		StatoPratica inScadenza = statoService.findByStato(StatoPratica.STATO_IN_SCADENZA);
-		return repo.findByStato(inScadenza);
+		return repo.findByStato(inScadenza, pageRequest);
 	}
 
-	public List<Pratica> listDaFatturare(StatoPraticaService statoService) {
+	public Page<Pratica> listDaFatturare(StatoPraticaService statoService) {
+		Pageable pageRequest = PageRequest.of(0, 2);
 		StatoPratica daFatturare = statoService.findByStato(StatoPratica.STATO_DA_FATTURARE);
-		return repo.findByStato(daFatturare);
+		return repo.findByStato(daFatturare, pageRequest);
 	}
 }
