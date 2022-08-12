@@ -42,7 +42,7 @@ public class Avanzamento {
 	@JoinColumn(name = "statoAttuale_id", referencedColumnName = "id")
 	private StatoPratica statoAttuale;
 
-	protected Avanzamento() {
+	public Avanzamento() {
 	}
 
 	public Long getId() {

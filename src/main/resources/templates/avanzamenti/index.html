@@ -46,24 +46,29 @@
 		<table border="1" cellpadding="10">
 			<thead>
 				<tr>
-					<td>th:switch e th:if non mi funzionano, stato pratica: </td>
-					<td th:text="${pratica.stato}"></td>
-					
-					<td th:switch="${pratica.stato}">qui dovrebbe riuscire lo stato, oltre al bottone indietro...
-					    <div th:case="'nuova'">nuova</div>
-					    <div th:case="'rigettata'">rigettata</div>
-					    <div th:case="'in lavorazione'">in lavorazione</div>
+					<td th:switch="${stato}">
+					    
+					    <div th:case="'nuova'"><a th:href="@{'/avanzamenti/presaInCarico/?pratica=' + ${pratica.id}}">prendi in carico pratica</a></div>
+					    
+					    <div th:case="'rigettata'">la pratica e' stata rigettata, nessuna altra operazione possibile</div>
+					    
+					    <div th:case="'in lavorazione'">spostare a "da notificare se pronti"</div>
+					    
 					    <div th:case="'da notificare'">da notificare</div>
+					    
 					    <div th:case="'da depositare'">da depositare</div>
+					    
 					    <div th:case="'in scadenza'">in scadenza</div>
+					    
 					    <div th:case="'scaduta'">scaduta</div>
+					    
 					    <div th:case="'in dibattimento'">in dibattimento</div>
+					    
 					    <div th:case="'da fatturare'">da fatturare</div>
-					    <div th:case="'evasa'">evasa</div>
-					    <div th:case="*"><form><input type="button" value="Indietro" onclick="history.back()"></form></div>
+					    
+					    <div th:case="'evasa'">la pratica e' stata evasa, nessuna altra operazione possibile</div>
 					</td>
-					
-					<td>qui dovrebbe riuscire lo stato, se la pratica e' rigettata...<div th:if="${pratica.stato} eq 'rigettata'">rigettata</div></td>
+					<td><form><input type="button" value="Indietro" onclick="history.back()"></form></td>
 				</tr>
 			</tbody>
 		</table>

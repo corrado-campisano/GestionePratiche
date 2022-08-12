@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import eu.campesinux.GestionePratiche.pratiche.Pratica;
+import eu.campesinux.GestionePratiche.pratiche.PraticaBusinessLogic;
 import eu.campesinux.GestionePratiche.pratiche.PraticaService;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPraticaService;
@@ -20,7 +21,7 @@ import eu.campesinux.GestionePratiche.statoPratica.StatoPraticaService;
 @Controller
 public class AvanzamentoController {
 	@Autowired
-	private AvanzamentoService service;
+	private AvanzamentoService avanzamentoService;
 	@Autowired
 	private StatoPraticaService statoService;	
 	@Autowired
@@ -33,11 +34,32 @@ public class AvanzamentoController {
 		Pratica pratica = praticaService.get(pratica_id);
 		model.addAttribute("pratica", pratica);
 		
-		List<Avanzamento> listaAvanzamenti = service.listByPraticaId(pratica_id);
+		String stato = pratica.getStato().getStato();
+		model.addAttribute("stato", stato);
+		
+		List<Avanzamento> listaAvanzamenti = avanzamentoService.listByPraticaId(pratica_id);
 		model.addAttribute("listaAvanzamenti", listaAvanzamenti);
 		
 		return "avanzamenti/index";
 	}
+	
+	@RequestMapping("/avanzamenti/presaInCarico")
+	public String presaInCarico(Model model,
+			@RequestParam(name = "pratica", required = true) Long pratica_id) {
+		
+		Pratica pratica = praticaService.get(pratica_id);
+		model.addAttribute("pratica", pratica);
+		
+		PraticaBusinessLogic.presaInCarico(pratica, praticaService, statoService, avanzamentoService);
+		
+		String stato = pratica.getStato().getStato();
+		model.addAttribute("stato", stato);
+		
+		List<Avanzamento> listaAvanzamenti = avanzamentoService.listByPraticaId(pratica_id);
+		model.addAttribute("listaAvanzamenti", listaAvanzamenti);
+		
+		return "avanzamenti/index";
+	}	
 	
 	@RequestMapping("/avanzamenti/new")
 	public String add(Model model,
@@ -67,7 +89,7 @@ public class AvanzamentoController {
 		praticaService.save(pratica);
 		
 		avanzamento.setPratica(pratica);
-		service.save(avanzamento);
+		avanzamentoService.save(avanzamento);
 		
 		return "redirect:/avanzamenti/?pratica=" + pratica.getId();
 	}
@@ -76,7 +98,7 @@ public class AvanzamentoController {
 	public ModelAndView edit(@PathVariable(name = "id") Long id) {
 		ModelAndView mav = new ModelAndView("avanzamenti/edit");
 		
-		Avanzamento avanzamento = service.get(id);
+		Avanzamento avanzamento = avanzamentoService.get(id);
 		mav.addObject("avanzamento", avanzamento);
 		
 		Pratica pratica = avanzamento.getPratica();
@@ -94,10 +116,10 @@ public class AvanzamentoController {
 	@RequestMapping("/avanzamenti/delete/{id}")
 	public String delete(@PathVariable(name = "id") Long id) {
 		
-		Avanzamento avanzamento = service.get(id);
+		Avanzamento avanzamento = avanzamentoService.get(id);
 		Pratica pratica = avanzamento.getPratica();
 		
-		service.delete(id);
+		avanzamentoService.delete(id);
 		
 		return "redirect:/avanzamenti/?pratica=" + pratica.getId();
 	}

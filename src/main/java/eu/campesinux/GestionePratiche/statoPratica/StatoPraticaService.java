@@ -25,4 +25,8 @@ public class StatoPraticaService {
 	public void delete(Long id) {
 		repo.deleteById(id);
 	}
+	
+	public StatoPratica findByStato(String stato) {
+		return repo.findByStato(stato);
+	}
 }
