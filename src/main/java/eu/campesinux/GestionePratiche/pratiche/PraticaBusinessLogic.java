@@ -115,4 +115,21 @@ public class PraticaBusinessLogic {
 		pratica.setStato(nuovo);
 		praticaService.save(pratica);
 	}
+
+	public static void praticaRigettata(Pratica pratica, PraticaService praticaService,
+			StatoPraticaService statoService, AvanzamentoService avanzamentoService, String commento) {
+
+		StatoPratica nuovo = statoService.findByStato(StatoPratica.STATO_RIGETTATA);
+		
+		Avanzamento avanzamento = new Avanzamento();
+		avanzamento.setData(new Date());
+		avanzamento.setDescrizione(commento);
+		avanzamento.setPratica(pratica);
+		avanzamento.setStatoAttuale(nuovo);
+		avanzamento.setStatoPrecedente(pratica.getStato());
+		avanzamentoService.save(avanzamento);
+		
+		pratica.setStato(nuovo);
+		praticaService.save(pratica);
+	}
 }

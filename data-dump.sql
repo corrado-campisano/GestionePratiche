@@ -30,7 +30,7 @@ CREATE TABLE `avanzamento` (
   `stato_precedente_id` int(11) unsigned NOT NULL,
   `stato_attuale_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `avanzamento` (
 
 LOCK TABLES `avanzamento` WRITE;
 /*!40000 ALTER TABLE `avanzamento` DISABLE KEYS */;
-INSERT INTO `avanzamento` VALUES (1,1,'2022-09-08','presa in carico',1,3),(2,1,'2022-09-09','rigettata importo esiguo',3,2);
+INSERT INTO `avanzamento` VALUES (1,1,'2022-09-08','presa in carico',1,3),(2,1,'2022-09-09','rigettata importo esiguo',3,2),(3,2,'2022-08-12','materiale archiviato su //server/share/folder ...',1,3),(4,2,'2022-08-12','da notificare entro 2022-08-23',3,4),(5,2,'2022-08-12','da depositare entro 2022-09-04',4,5),(6,2,'2022-08-12','sentenza prevista per il 2022-10-12',5,8),(7,2,'2022-08-12','fatturare entro il trimestre',8,9),(8,2,'2022-08-12','fattura emessa n. 34/2022',9,10);
 /*!40000 ALTER TABLE `avanzamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -92,7 +92,7 @@ CREATE TABLE `pratica` (
 
 LOCK TABLES `pratica` WRITE;
 /*!40000 ALTER TABLE `pratica` DISABLE KEYS */;
-INSERT INTO `pratica` VALUES (1,'2022-01','cartella per TARI',1,1,2),(2,'2022-02','cartella per IMU',2,2,1);
+INSERT INTO `pratica` VALUES (1,'2022-01','cartella per TARI',1,1,2),(2,'2022-02','cartella per IMU',2,2,10);
 /*!40000 ALTER TABLE `pratica` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -277,4 +277,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-12  7:48:21
+-- Dump completed on 2022-08-12 10:50:00

@@ -24,6 +24,7 @@
 					<th>Descrizione</th>
 					<th>Cliente</th>
 					<th>Stato</th>
+					<th>Professionisti</th>
 				</tr>
 				</thead>
 			<tbody>
@@ -33,6 +34,11 @@
 					<td th:text="${pratica.descrizione}">Descrizione</td>
 					<td th:text="${pratica.cliente}">Cliente</td>
 					<td th:text="${pratica.stato}">Stato</td>
+					<td>
+						<table><tr th:each="professionista : ${pratica.professionisti}">
+							<td th:text="${professionista}">Professionisti</td>
+						</tr></table>
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -61,6 +67,11 @@
 					    	<form action="#" th:action="@{'/avanzamenti/prontoPerNotifica/?pratica=' + ${pratica.id}}" method="post">
 					    		Commento: <input type="text" id="commento" name="commento" />
 					    		<button type="submit">Pronto per notifica</button>
+					    	</form>
+					    	<br>
+					    	<form action="#" th:action="@{'/avanzamenti/praticaRigettata/?pratica=' + ${pratica.id}}" method="post">
+					    		Commento: <input type="text" id="commento" name="commento" />
+					    		<button type="submit">Rigetta pratica</button>
 					    	</form>
 						</div>
 					    

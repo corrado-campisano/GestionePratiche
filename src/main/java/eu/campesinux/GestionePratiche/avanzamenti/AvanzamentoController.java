@@ -163,6 +163,30 @@ public class AvanzamentoController {
 		return "avanzamenti/index";
 	}
 	
+	//praticaRigettata
+	@RequestMapping("/avanzamenti/praticaRigettata")
+	public String praticaRigettata(Model model,
+			@RequestParam(name = "pratica", required = true) Long pratica_id,
+			@RequestParam(name = "commento", required = true) String commento) {
+		
+		Pratica pratica = praticaService.get(pratica_id);
+		model.addAttribute("pratica", pratica);
+		
+		PraticaBusinessLogic.praticaRigettata(pratica, praticaService, statoService, avanzamentoService, commento);
+		
+		String stato = pratica.getStato().getStato();
+		model.addAttribute("stato", stato);
+		
+		List<Avanzamento> listaAvanzamenti = avanzamentoService.listByPraticaId(pratica_id);
+		model.addAttribute("listaAvanzamenti", listaAvanzamenti);
+		
+		return "avanzamenti/index";
+	}
+	
+	//praticaInScadenza
+	//praticaScaduta
+	
+	
 	@RequestMapping("/avanzamenti/new")
 	public String add(Model model,
 			@RequestParam(name = "pratica", required = true) Long pratica_id) {
