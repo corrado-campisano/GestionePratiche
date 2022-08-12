@@ -8,6 +8,6 @@
 
 
 ### Default users:
-* namhm has role USER and password is codejava
-* admin has role ADMIN with password is nimda
+* marisa has role USER and password is marisa
+* admin has role ADMIN with password is corrado
 
