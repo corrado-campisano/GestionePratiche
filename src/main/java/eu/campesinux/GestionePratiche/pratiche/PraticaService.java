@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import eu.campesinux.GestionePratiche.avanzamenti.Avanzamento;
 import eu.campesinux.GestionePratiche.avanzamenti.AvanzamentoRepository;
+import eu.campesinux.GestionePratiche.professionisti.Professionista;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPraticaService;
 
@@ -53,5 +54,9 @@ public class PraticaService {
 		Pageable pageRequest = PageRequest.of(0, 2);
 		StatoPratica daFatturare = statoService.findByStato(StatoPratica.STATO_DA_FATTURARE);
 		return repo.findByStato(daFatturare, pageRequest);
+	}
+
+	public List<Pratica> listByProfessionisti(Professionista prof) {
+		return repo.findByProfessionisti(prof);
 	}
 }

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import eu.campesinux.GestionePratiche.pratiche.Pratica;
+import eu.campesinux.GestionePratiche.pratiche.PraticaService;
 import eu.campesinux.GestionePratiche.specializzazioni.Specializzazione;
 import eu.campesinux.GestionePratiche.specializzazioni.SpecializzazioneService;
 
@@ -21,6 +23,8 @@ public class ProfessionistaController {
 	private ProfessionistaService service;
 	@Autowired
 	private SpecializzazioneService specService;
+	@Autowired
+	private PraticaService praticheService;
 	
 	@RequestMapping("/professionisti")
 	public String home(Model model) {
@@ -77,6 +81,7 @@ public class ProfessionistaController {
 	public String delete(@PathVariable(name = "id") Long id) throws Exception {
 				
 		Professionista prof = service.get(id);
+		
 		List<Specializzazione> specializzazioni = specService.listByProfessionisti(prof);		
 		if (specializzazioni.size()>0) {
 			String msg = "Errore, impossibile eliminare il professionista '" + prof.toString();
@@ -87,6 +92,15 @@ public class ProfessionistaController {
 			throw new Exception(msg);
 		}
 		
+		List<Pratica> pratiche = praticheService.listByProfessionisti(prof); 
+		if (pratiche.size()>0) {
+			String msg = "Errore, impossibile eliminare il professionista '" + prof.toString();
+			msg += "', in quanto gli sono state assegnate le seguenti pratiche: ";
+			for (Pratica pratica : pratiche) {
+				msg += "(" + pratica.getId() + ") " + pratica.getDescrizione() + " ";
+			}
+			throw new Exception(msg);
+		}
 		
 		service.delete(id);
 		
