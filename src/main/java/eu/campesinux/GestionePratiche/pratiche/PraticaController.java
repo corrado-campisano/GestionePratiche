@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import eu.campesinux.GestionePratiche.avanzamenti.Avanzamento;
+import eu.campesinux.GestionePratiche.avanzamenti.AvanzamentoService;
 import eu.campesinux.GestionePratiche.clienti.Cliente;
 import eu.campesinux.GestionePratiche.clienti.ClienteService;
 import eu.campesinux.GestionePratiche.professionisti.Professionista;
@@ -36,6 +38,8 @@ public class PraticaController {
 	private TipoPraticaService tipoService;
 	@Autowired
 	private StatoPraticaService statoService;
+	@Autowired
+	private AvanzamentoService avanzamentoService;
 
 	int itemsPerPage = 2;
 	
@@ -129,7 +133,20 @@ public class PraticaController {
 	}
 
 	@RequestMapping("/pratiche/delete/{id}")
-	public String delete(@PathVariable(name = "id") Long id) {
+	public String delete(@PathVariable(name = "id") Long id) throws Exception {
+		
+		Pratica pratica = service.get(id);
+		
+		List<Avanzamento> avanzamenti = avanzamentoService.listByPratica(pratica); 
+		if (avanzamenti.size()>0) {
+			String msg = "Errore, impossibile eliminare la pratica (" + pratica.getId() + ") " + pratica.getDescrizione();
+			msg += ", in quanto le sono stati assegnati i seguenti avanzamenti: ";
+			for (Avanzamento avanz : avanzamenti) {
+				msg += "(" + avanz.getId() + ") " + avanz.getDescrizione() + " ";
+			}
+			throw new Exception(msg);
+		}
+		
 		service.delete(id);
 
 		return "redirect:/pratiche";

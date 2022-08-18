@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import eu.campesinux.GestionePratiche.avanzamenti.Avanzamento;
 import eu.campesinux.GestionePratiche.avanzamenti.AvanzamentoRepository;
+import eu.campesinux.GestionePratiche.clienti.Cliente;
 import eu.campesinux.GestionePratiche.professionisti.Professionista;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPraticaService;
@@ -58,5 +59,9 @@ public class PraticaService {
 
 	public List<Pratica> listByProfessionisti(Professionista prof) {
 		return repo.findByProfessionisti(prof);
+	}
+
+	public List<Pratica> listByCliente(Cliente cliente) {
+		return repo.findByCliente(cliente);
 	}
 }

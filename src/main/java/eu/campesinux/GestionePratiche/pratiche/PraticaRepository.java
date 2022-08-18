@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import eu.campesinux.GestionePratiche.clienti.Cliente;
 import eu.campesinux.GestionePratiche.professionisti.Professionista;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
 
@@ -16,5 +17,7 @@ public interface PraticaRepository extends PagingAndSortingRepository<Pratica, L
 	Page<Pratica> findByStato(StatoPratica stato, Pageable pageable);
 
 	List<Pratica> findByProfessionisti(Professionista prof);
+
+	List<Pratica> findByCliente(Cliente cliente);
 
 }

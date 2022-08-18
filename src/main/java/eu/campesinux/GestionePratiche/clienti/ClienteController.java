@@ -11,10 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import eu.campesinux.GestionePratiche.pratiche.Pratica;
+import eu.campesinux.GestionePratiche.pratiche.PraticaService;
+
 @Controller
 public class ClienteController {
 	@Autowired
 	private ClienteService service;
+	@Autowired
+	private PraticaService praticaService;
 	
 	@RequestMapping("/clienti")
 	public String home(Model model) {
@@ -50,7 +55,20 @@ public class ClienteController {
 	}	
 	
 	@RequestMapping("/clienti/delete/{id}")
-	public String delete(@PathVariable(name = "id") Long id) {
+	public String delete(@PathVariable(name = "id") Long id) throws Exception {
+		
+		Cliente cliente = service.get(id);
+		
+		List<Pratica> pratiche = praticaService.listByCliente(cliente); 
+		if (pratiche.size()>0) {
+			String msg = "Errore, impossibile eliminare il cliente '" + cliente.toString();
+			msg += "', in quanto gli sono state assegnate le seguenti pratiche: ";
+			for (Pratica pratica : pratiche) {
+				msg += "(" + pratica.getId() + ") " + pratica.getDescrizione() + " ";
+			}
+			throw new Exception(msg);
+		}
+		
 		service.delete(id);
 		
 		return "redirect:/clienti";

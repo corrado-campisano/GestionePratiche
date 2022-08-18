@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import eu.campesinux.GestionePratiche.pratiche.Pratica;
+
 @Service
 public class AvanzamentoService {
 
@@ -29,5 +31,9 @@ public class AvanzamentoService {
 
 	public void delete(Long id) {
 		repo.deleteById(id);
+	}
+
+	public List<Avanzamento> listByPratica(Pratica pratica) {
+		return repo.findByPratica(pratica);
 	}
 }
