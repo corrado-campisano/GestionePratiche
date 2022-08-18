@@ -1,4 +1,4 @@
-package eu.campesinux.GestionePratiche;
+package eu.campesinux.GestionePratiche.config;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
