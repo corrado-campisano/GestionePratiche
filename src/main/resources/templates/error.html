@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>Gestionale Pratiche</title>
+</head>
+<body>
+<div align="center">	
+
+	<div th:replace="fragments/page-header :: header"></div>
+	
+	<h3>Errore</h3>
+
+	<p th:if="${timestamp}" id='created'>
+		<b>Errore occorso il:</b> <span th:text="${timestamp}">Timestamp</span>
+	</p>
+
+	<p th:if="${status}">
+		<b>Response Status:</b> <span th:text="${status}">status-code</span> <span
+			th:if="${error}" th:text="'('+${error}+')'">error ...</span>
+	</p>
+
+	<!-- ${exception} or ${message} are set internally by Spring Boot. */-->
+	<div
+		th:if="${exception} or (${message} and ${message.length() != 0})">
+		<b>Causa:</b>
+		<span th:if="${exception}" th:text="${exception}">exception ...</span>
+		<span th:if="${message} and ${message.length() != 0}" th:text="${message}">message ...</span>
+	</div>
+
+</body>
+</html>
