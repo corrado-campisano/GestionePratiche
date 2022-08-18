@@ -1,10 +1,15 @@
 package eu.campesinux.GestionePratiche.specializzazioni;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+import eu.campesinux.GestionePratiche.professionisti.Professionista;
 
 @Entity
 public class Specializzazione {
@@ -14,6 +19,9 @@ public class Specializzazione {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String descrizione;
+	
+	@ManyToMany(mappedBy = "specializzazioni")
+	List<Professionista> professionisti;
 	
 	public Specializzazione() {
 	}

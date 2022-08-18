@@ -74,7 +74,20 @@ public class ProfessionistaController {
 	}	
 	
 	@RequestMapping("/professionisti/delete/{id}")
-	public String delete(@PathVariable(name = "id") Long id) {
+	public String delete(@PathVariable(name = "id") Long id) throws Exception {
+				
+		Professionista prof = service.get(id);
+		List<Specializzazione> specializzazioni = specService.listByProfessionisti(prof);		
+		if (specializzazioni.size()>0) {
+			String msg = "Errore, impossibile eliminare il professionista '" + prof.toString();
+			msg += "', in quanto gli sono attribuite le seguenti specializzazioni: ";
+			for (Specializzazione spec : specializzazioni) {
+				msg += spec.getDescrizione() + " ";
+			}
+			throw new Exception(msg);
+		}
+		
+		
 		service.delete(id);
 		
 		return "redirect:/professionisti";
