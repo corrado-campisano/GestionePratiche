@@ -32,6 +32,9 @@ public class Avanzamento {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date data;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date scadenza;
+	
 	private String descrizione;
 
 	@OneToOne// TODO : restore? (cascade = CascadeType.PERSIST)
@@ -64,6 +67,14 @@ public class Avanzamento {
 
 	public void setData(Date data) {
 		this.data = data;
+	}
+
+	public Date getScadenza() {
+		return scadenza;
+	}
+
+	public void setScadenza(Date scadenza) {
+		this.scadenza = scadenza;
 	}
 
 	public String getDescrizione() {

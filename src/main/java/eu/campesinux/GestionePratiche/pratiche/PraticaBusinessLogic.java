@@ -12,12 +12,13 @@ import eu.campesinux.GestionePratiche.statoPratica.StatoPraticaService;
 public class PraticaBusinessLogic {
 		
 	public static void presaInCarico(Pratica pratica, PraticaService praticaService, 
-			StatoPraticaService statoService, AvanzamentoService avanzamentoService, String commento) {
+			StatoPraticaService statoService, AvanzamentoService avanzamentoService, String commento, Date scadenza) {
 		
 		StatoPratica nuovo = statoService.findByStato(StatoPratica.STATO_IN_LAVORAZIONE);
 				
 		Avanzamento avanzamento = new Avanzamento();
 		avanzamento.setData(new Date());
+		avanzamento.setScadenza(scadenza);
 		avanzamento.setDescrizione(commento);
 		avanzamento.setPratica(pratica);
 		avanzamento.setStatoAttuale(nuovo);
@@ -29,12 +30,13 @@ public class PraticaBusinessLogic {
 	}
 
 	public static void prontoPerNotifica(Pratica pratica, PraticaService praticaService,
-			StatoPraticaService statoService, AvanzamentoService avanzamentoService, String commento) {
+			StatoPraticaService statoService, AvanzamentoService avanzamentoService, String commento, Date scadenza) {
 		
 		StatoPratica nuovo = statoService.findByStato(StatoPratica.STATO_DA_NOTIFICARE);
 		
 		Avanzamento avanzamento = new Avanzamento();
 		avanzamento.setData(new Date());
+		avanzamento.setScadenza(scadenza);
 		avanzamento.setDescrizione(commento);
 		avanzamento.setPratica(pratica);
 		avanzamento.setStatoAttuale(nuovo);
@@ -47,12 +49,13 @@ public class PraticaBusinessLogic {
 	}
 
 	public static void prontoPerDeposito(Pratica pratica, PraticaService praticaService,
-			StatoPraticaService statoService, AvanzamentoService avanzamentoService, String commento) {
+			StatoPraticaService statoService, AvanzamentoService avanzamentoService, String commento, Date scadenza) {
 		
 		StatoPratica nuovo = statoService.findByStato(StatoPratica.STATO_DA_DEPOSITARE);
 		
 		Avanzamento avanzamento = new Avanzamento();
 		avanzamento.setData(new Date());
+		avanzamento.setScadenza(scadenza);
 		avanzamento.setDescrizione(commento);
 		avanzamento.setPratica(pratica);
 		avanzamento.setStatoAttuale(nuovo);
@@ -65,12 +68,13 @@ public class PraticaBusinessLogic {
 	}
 
 	public static void inDibattimento(Pratica pratica, PraticaService praticaService, StatoPraticaService statoService,
-			AvanzamentoService avanzamentoService, String commento) {
+			AvanzamentoService avanzamentoService, String commento, Date scadenza) {
 		
 		StatoPratica nuovo = statoService.findByStato(StatoPratica.STATO_IN_DIBATTIMENTO);
 		
 		Avanzamento avanzamento = new Avanzamento();
 		avanzamento.setData(new Date());
+		avanzamento.setScadenza(scadenza);
 		avanzamento.setDescrizione(commento);
 		avanzamento.setPratica(pratica);
 		avanzamento.setStatoAttuale(nuovo);
@@ -83,12 +87,13 @@ public class PraticaBusinessLogic {
 	}
 
 	public static void daFatturare(Pratica pratica, PraticaService praticaService, StatoPraticaService statoService,
-			AvanzamentoService avanzamentoService, String commento) {
+			AvanzamentoService avanzamentoService, String commento, Date scadenza) {
 		
 		StatoPratica nuovo = statoService.findByStato(StatoPratica.STATO_DA_FATTURARE);
 		
 		Avanzamento avanzamento = new Avanzamento();
 		avanzamento.setData(new Date());
+		avanzamento.setScadenza(scadenza);
 		avanzamento.setDescrizione(commento);
 		avanzamento.setPratica(pratica);
 		avanzamento.setStatoAttuale(nuovo);
@@ -107,6 +112,7 @@ public class PraticaBusinessLogic {
 		
 		Avanzamento avanzamento = new Avanzamento();
 		avanzamento.setData(new Date());
+		avanzamento.setScadenza(new Date());
 		avanzamento.setDescrizione(commento);
 		avanzamento.setPratica(pratica);
 		avanzamento.setStatoAttuale(nuovo);
@@ -124,6 +130,7 @@ public class PraticaBusinessLogic {
 		
 		Avanzamento avanzamento = new Avanzamento();
 		avanzamento.setData(new Date());
+		avanzamento.setScadenza(new Date());
 		avanzamento.setDescrizione(commento);
 		avanzamento.setPratica(pratica);
 		avanzamento.setStatoAttuale(nuovo);

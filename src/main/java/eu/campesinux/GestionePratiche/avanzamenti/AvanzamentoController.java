@@ -1,5 +1,8 @@
 package eu.campesinux.GestionePratiche.avanzamenti;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,10 +60,21 @@ public class AvanzamentoController {
 			@RequestParam(name = "pratica", required = true) Long pratica_id,
 			@RequestParam(name = "azione", required = true) String azione,
 			@RequestParam(name = "commento", required = true) String commento,
+			@RequestParam(name = "scadenza", required = false) String scadenzaParam,
 			@RequestParam(name = "professionisti", required = false) Long[] professionisti) throws Exception {
 		
 		Pratica pratica = praticaService.get(pratica_id);
 		model.addAttribute("pratica", pratica);
+		
+		Date scadenza = null;
+		if (scadenzaParam!=null) {
+			try {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				scadenza = sdf.parse(scadenzaParam);
+			} catch (Exception e) {
+				throw new Exception("Specificare una data nel formato yyyy-MM-dd");
+			}
+		}
 		
 		switch (azione) {
 		case "presaInCarico":
@@ -75,23 +89,23 @@ public class AvanzamentoController {
 				pratica.addProfessionista(prof);
 			}
 			
-			PraticaBusinessLogic.presaInCarico(pratica, praticaService, statoService, avanzamentoService, commento);
+			PraticaBusinessLogic.presaInCarico(pratica, praticaService, statoService, avanzamentoService, commento, scadenza);
 			break;
 
 		case "prontoPerNotifica":
-			PraticaBusinessLogic.prontoPerNotifica(pratica, praticaService, statoService, avanzamentoService, commento);
+			PraticaBusinessLogic.prontoPerNotifica(pratica, praticaService, statoService, avanzamentoService, commento, scadenza);
 			break;
 			
 		case "prontoPerDeposito":
-			PraticaBusinessLogic.prontoPerDeposito(pratica, praticaService, statoService, avanzamentoService, commento);
+			PraticaBusinessLogic.prontoPerDeposito(pratica, praticaService, statoService, avanzamentoService, commento, scadenza);
 			break;
 			
 		case "inDibattimento":
-			PraticaBusinessLogic.inDibattimento(pratica, praticaService, statoService, avanzamentoService, commento);
+			PraticaBusinessLogic.inDibattimento(pratica, praticaService, statoService, avanzamentoService, commento, scadenza);
 			break;
 
 		case "daFatturare":
-			PraticaBusinessLogic.daFatturare(pratica, praticaService, statoService, avanzamentoService, commento);
+			PraticaBusinessLogic.daFatturare(pratica, praticaService, statoService, avanzamentoService, commento, scadenza);
 			break;
 			
 		case "praticaEvasa":
