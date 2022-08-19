@@ -103,7 +103,7 @@ public class JobController {
 		JobDetail jobDetail = buildJobDetail(giorniAnticipo);
 		
 		LocalDateTime afterNight = LocalDateTime.now();
-		afterNight = afterNight.plusMinutes(5);
+		afterNight = afterNight.plusMinutes(2);
 //		afterNight = afterNight.withHour(3);
 //		afterNight = afterNight.withMinute(0);
 //		afterNight = afterNight.withSecond(0);

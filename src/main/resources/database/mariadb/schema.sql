@@ -84,8 +84,8 @@ DROP TABLE IF EXISTS `avanzamento`;
 CREATE TABLE `avanzamento` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pratica_id`  INT(11) UNSIGNED NOT NULL,
-  `data` DATE NOT NULL,
-  `scadenza` DATE NOT NULL,
+  `data` DATETIME NOT NULL,
+  `scadenza` DATETIME NOT NULL,
   `descrizione` varchar(255) NOT NULL,
   `stato_precedente_id` INT(11) UNSIGNED NOT NULL,
   `stato_attuale_id` INT(11) UNSIGNED NOT NULL,

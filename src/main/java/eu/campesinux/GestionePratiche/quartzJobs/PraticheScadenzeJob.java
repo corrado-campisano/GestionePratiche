@@ -1,5 +1,6 @@
 package eu.campesinux.GestionePratiche.quartzJobs;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +14,6 @@ import eu.campesinux.GestionePratiche.avanzamenti.Avanzamento;
 import eu.campesinux.GestionePratiche.avanzamenti.AvanzamentoService;
 import eu.campesinux.GestionePratiche.pratiche.Pratica;
 import eu.campesinux.GestionePratiche.pratiche.PraticaService;
-import eu.campesinux.GestionePratiche.statoPratica.StatoPraticaService;
 
 public class PraticheScadenzeJob extends QuartzJobBean {
 
@@ -37,14 +37,14 @@ public class PraticheScadenzeJob extends QuartzJobBean {
 		for (Pratica pratica : praticheAperte) {
 			System.out.println("Processamento della pratica" + pratica.getIdentificativo());
 			List<Avanzamento> avanzamenti = aService.listByPratica(pratica);
-			Date dataAvanzamentoMax=null;
-			Date dataScadenzaMax=null;
+			LocalDateTime dataAvanzamentoMax=null;
+			LocalDateTime dataScadenzaMax=null;
 			for (Avanzamento avanzamento : avanzamenti) {
 				if (dataAvanzamentoMax==null) {
 					dataAvanzamentoMax = avanzamento.getData(); 
 					dataScadenzaMax = avanzamento.getScadenza();
 				} else {
-					if (avanzamento.getData().after(dataAvanzamentoMax)) {
+					if (avanzamento.getData().isAfter(dataAvanzamentoMax)) {
 						dataAvanzamentoMax = avanzamento.getData(); 
 						dataScadenzaMax = avanzamento.getScadenza();
 					}					

@@ -1,7 +1,6 @@
 package eu.campesinux.GestionePratiche.avanzamenti;
 
-import java.util.Date;
-
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,11 +28,11 @@ public class Avanzamento {
 	@JoinColumn (name="pratica_id")
 	private Pratica pratica;
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date data;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime data;
 	
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date scadenza;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime scadenza;
 	
 	private String descrizione;
 
@@ -61,19 +60,21 @@ public class Avanzamento {
 		return this.descrizione;
 	}
 
-	public Date getData() {
+	
+
+	public LocalDateTime getData() {
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(LocalDateTime data) {
 		this.data = data;
 	}
 
-	public Date getScadenza() {
+	public LocalDateTime getScadenza() {
 		return scadenza;
 	}
 
-	public void setScadenza(Date scadenza) {
+	public void setScadenza(LocalDateTime scadenza) {
 		this.scadenza = scadenza;
 	}
 

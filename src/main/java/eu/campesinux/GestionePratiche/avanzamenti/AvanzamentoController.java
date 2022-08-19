@@ -1,7 +1,7 @@
 package eu.campesinux.GestionePratiche.avanzamenti;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,12 +65,14 @@ public class AvanzamentoController {
 		Pratica pratica = praticaService.get(pratica_id);
 		model.addAttribute("pratica", pratica);
 		
-		Date scadenza = null;
+		LocalDateTime scadenza = null;
 		if (scadenzaParam!=null) {
+			scadenzaParam+=" 00:00:00";
 			try {
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				scadenza = sdf.parse(scadenzaParam);
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+				scadenza = LocalDateTime.parse(scadenzaParam, dtf);
 			} catch (Exception e) {
+				e.printStackTrace();
 				throw new Exception("Specificare una data nel formato yyyy-MM-dd");
 			}
 		}
