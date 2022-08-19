@@ -64,4 +64,10 @@ public class PraticaService {
 	public List<Pratica> listByCliente(Cliente cliente) {
 		return repo.findByCliente(cliente);
 	}
+
+	public Page<Pratica> listNuove(StatoPraticaService statoService) {
+		Pageable pageRequest = PageRequest.of(0, 2);
+		StatoPratica nuova = statoService.findByStato(StatoPratica.STATO_NUOVA);
+		return repo.findByStato(nuova, pageRequest);
+	}
 }
