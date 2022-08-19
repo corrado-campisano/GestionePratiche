@@ -52,24 +52,13 @@
 					<td>Stato:</td>
 					<td>
 						<select name="stato">
-							<option th:each="stato : ${listaStati}"
-				            th:text="${stato.stato}"
-				            th:value="${stato.id}"
+							<option 
+				            th:text="nuova"
+				            th:value="1"
 				            th:field="*{stato}"></option>
 						</select>
 					</td>
 				</tr>				
-				<tr>
-					<td>Professionisti:</td>
-					<td>
-						<input type="checkbox" name="professionisti"
-				            th:each="professionista : ${listaProfessionisti}"
-				            th:text="${professionista}"
-				            th:value="${professionista.id}"
-				            th:field="*{professionisti}"
-				        />
-					</td>
-				</tr>
 				<tr>
 					<td colspan="2"><button type="submit">Save</button></td>
 				</tr>

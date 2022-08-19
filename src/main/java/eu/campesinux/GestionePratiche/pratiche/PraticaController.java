@@ -42,18 +42,18 @@ public class PraticaController {
 	private AvanzamentoService avanzamentoService;
 
 	int itemsPerPage = 2;
-	
+
 	@RequestMapping("/pratiche")
 	public String home(Model model, @RequestParam(name = "filtro", required = false) String filtro,
 			@RequestParam(name = "page", required = false) Integer page) {
-		
+
 		int startFrom = 0;
-		if (page!=null) {
+		if (page != null) {
 			startFrom = page.intValue();
 		}
 		model.addAttribute("startFrom", startFrom);
 		Pageable pageRequest = PageRequest.of(startFrom, itemsPerPage);
-		
+
 		if (filtro == null) {
 			Page<Pratica> listaPratiche = service.listAll(pageRequest);
 			model.addAttribute("listaPratiche", listaPratiche);
@@ -75,24 +75,18 @@ public class PraticaController {
 		Pratica pratica = new Pratica();
 		model.addAttribute("pratica", pratica);
 
-		List<Professionista> listaProfessionisti = profService.listAll();
-		model.addAttribute("listaProfessionisti", listaProfessionisti);
-
 		List<Cliente> listaClienti = clienteService.listAll();
 		model.addAttribute("listaClienti", listaClienti);
 
-		List<StatoPratica> listaStati = statoService.listAll();
-		model.addAttribute("listaStati", listaStati);
-		
 		List<TipoPratica> listaTipi = tipoService.listAll();
 		model.addAttribute("listaTipi", listaTipi);
-		
+
 		return "pratiche/new";
 	}
 
 	@RequestMapping(value = "/pratiche/save", method = RequestMethod.POST)
 	public String save(@ModelAttribute("pratica") Pratica pratica,
-			@RequestParam(name = "professionisti", required = true) Long[] professionisti) {
+			@RequestParam(name = "professionisti", required = false) Long[] professionisti) {
 
 		if (professionisti != null) {
 			Professionista prof = null;
@@ -107,9 +101,7 @@ public class PraticaController {
 
 		return "redirect:/pratiche";
 	}
-	
-	
-	
+
 	@RequestMapping("/pratiche/edit/{id}")
 	public ModelAndView edit(@PathVariable(name = "id") Long id) {
 		ModelAndView mav = new ModelAndView("pratiche/edit");
@@ -119,13 +111,13 @@ public class PraticaController {
 
 		List<Cliente> listaClienti = clienteService.listAll();
 		mav.addObject("listaClienti", listaClienti);
-		
+
 		List<StatoPratica> listaStati = statoService.listAll();
 		mav.addObject("listaStati", listaStati);
-		
+
 		List<TipoPratica> listaTipi = tipoService.listAll();
 		mav.addObject("listaTipi", listaTipi);
-		
+
 		Pratica pratica = service.get(id);
 		mav.addObject("pratica", pratica);
 
@@ -134,19 +126,20 @@ public class PraticaController {
 
 	@RequestMapping("/pratiche/delete/{id}")
 	public String delete(@PathVariable(name = "id") Long id) throws Exception {
-		
+
 		Pratica pratica = service.get(id);
-		
-		List<Avanzamento> avanzamenti = avanzamentoService.listByPratica(pratica); 
-		if (avanzamenti.size()>0) {
-			String msg = "Errore, impossibile eliminare la pratica (" + pratica.getId() + ") " + pratica.getDescrizione();
+
+		List<Avanzamento> avanzamenti = avanzamentoService.listByPratica(pratica);
+		if (avanzamenti.size() > 0) {
+			String msg = "Errore, impossibile eliminare la pratica (" + pratica.getId() + ") "
+					+ pratica.getDescrizione();
 			msg += ", in quanto le sono stati assegnati i seguenti avanzamenti: ";
 			for (Avanzamento avanz : avanzamenti) {
 				msg += "(" + avanz.getId() + ") " + avanz.getDescrizione() + " ";
 			}
 			throw new Exception(msg);
 		}
-		
+
 		service.delete(id);
 
 		return "redirect:/pratiche";

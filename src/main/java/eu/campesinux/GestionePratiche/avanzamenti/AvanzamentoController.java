@@ -15,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import eu.campesinux.GestionePratiche.pratiche.Pratica;
 import eu.campesinux.GestionePratiche.pratiche.PraticaBusinessLogic;
 import eu.campesinux.GestionePratiche.pratiche.PraticaService;
+import eu.campesinux.GestionePratiche.professionisti.Professionista;
+import eu.campesinux.GestionePratiche.professionisti.ProfessionistaService;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPraticaService;
 
@@ -26,10 +28,15 @@ public class AvanzamentoController {
 	private StatoPraticaService statoService;	
 	@Autowired
 	private PraticaService praticaService;
+	@Autowired
+	private ProfessionistaService profService;
 	
 	@RequestMapping("/avanzamenti")
 	public String home(Model model,
 			@RequestParam(name = "pratica", required = true) Long pratica_id) {
+		
+		List<Professionista> listaProfessionisti = profService.listAll();
+		model.addAttribute("listaProfessionisti", listaProfessionisti);
 		
 		Pratica pratica = praticaService.get(pratica_id);
 		model.addAttribute("pratica", pratica);
@@ -49,13 +56,25 @@ public class AvanzamentoController {
 	public String gestione(Model model,
 			@RequestParam(name = "pratica", required = true) Long pratica_id,
 			@RequestParam(name = "azione", required = true) String azione,
-			@RequestParam(name = "commento", required = true) String commento) {
+			@RequestParam(name = "commento", required = true) String commento,
+			@RequestParam(name = "professionisti", required = false) Long[] professionisti) throws Exception {
 		
 		Pratica pratica = praticaService.get(pratica_id);
 		model.addAttribute("pratica", pratica);
 		
 		switch (azione) {
 		case "presaInCarico":
+			if (professionisti==null) {
+				throw new Exception("Errore, specificare almeno un professionista a cui assegnare la pratica");
+			}
+			
+			Professionista prof = null;
+			for (int i = 0; i < professionisti.length; i++) {
+				Long id = professionisti[i];
+				prof = profService.get(id);
+				pratica.addProfessionista(prof);
+			}
+			
 			PraticaBusinessLogic.presaInCarico(pratica, praticaService, statoService, avanzamentoService, commento);
 			break;
 

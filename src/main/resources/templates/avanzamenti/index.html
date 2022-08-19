@@ -56,8 +56,27 @@
 					    
 					    <div th:case="'nuova'">
 					    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
-					    		Commento: <input type="text" id="commento" name="commento" />
-					    		<button type="submit" name="azione" value="presaInCarico">Prendi in carico</button>
+					    		<table>
+					    			<tr>
+										<td>Professionisti:</td>
+										<td colspan="3">
+											<input type="checkbox" name="professionisti"
+									            th:each="professionista : ${listaProfessionisti}"
+									            th:text="${professionista}"
+									            th:value="${professionista.id}"
+									        />
+										</td>
+									</tr>
+									<tr>
+										<td>Commento:</td>
+										<td><input type="text" id="commento" name="commento" /></td>
+										<td>Scadenza:</td>
+										<td>
+											<input type="text" id="scadenza" name="scadenza" />
+											<button type="submit" name="azione" value="presaInCarico">Prendi in carico</button>
+										</td>
+									</tr>
+					    		</table>
 					    	</form>
 					    </div>
 					    
