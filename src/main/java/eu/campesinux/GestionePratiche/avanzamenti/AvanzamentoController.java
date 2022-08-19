@@ -43,17 +43,50 @@ public class AvanzamentoController {
 		return "avanzamenti/index";
 	}
 	
-	//presaInCarico
-	@RequestMapping("/avanzamenti/presaInCarico")
-	public String presaInCarico(Model model,
+	
+	//gestione
+	@RequestMapping("/avanzamenti/gestione")
+	public String gestione(Model model,
 			@RequestParam(name = "pratica", required = true) Long pratica_id,
+			@RequestParam(name = "azione", required = true) String azione,
 			@RequestParam(name = "commento", required = true) String commento) {
 		
 		Pratica pratica = praticaService.get(pratica_id);
 		model.addAttribute("pratica", pratica);
 		
-		PraticaBusinessLogic.presaInCarico(pratica, praticaService, statoService, avanzamentoService, commento);
-		
+		switch (azione) {
+		case "presaInCarico":
+			PraticaBusinessLogic.presaInCarico(pratica, praticaService, statoService, avanzamentoService, commento);
+			break;
+
+		case "prontoPerNotifica":
+			PraticaBusinessLogic.prontoPerNotifica(pratica, praticaService, statoService, avanzamentoService, commento);
+			break;
+			
+		case "prontoPerDeposito":
+			PraticaBusinessLogic.prontoPerDeposito(pratica, praticaService, statoService, avanzamentoService, commento);
+			break;
+			
+		case "inDibattimento":
+			PraticaBusinessLogic.inDibattimento(pratica, praticaService, statoService, avanzamentoService, commento);
+			break;
+
+		case "daFatturare":
+			PraticaBusinessLogic.daFatturare(pratica, praticaService, statoService, avanzamentoService, commento);
+			break;
+			
+		case "praticaEvasa":
+			PraticaBusinessLogic.praticaEvasa(pratica, praticaService, statoService, avanzamentoService, commento);
+			break;
+
+		case "praticaRigettata":
+			PraticaBusinessLogic.praticaRigettata(pratica, praticaService, statoService, avanzamentoService, commento);
+			break;
+			
+		default:
+			break;
+		}
+				
 		String stato = pratica.getStato().getStato();
 		model.addAttribute("stato", stato);
 		
@@ -62,131 +95,7 @@ public class AvanzamentoController {
 		
 		return "avanzamenti/index";
 	}
-	
-	//prontoPerNotifica
-	@RequestMapping("/avanzamenti/prontoPerNotifica")
-	public String prontoPerNotifica(Model model,
-			@RequestParam(name = "pratica", required = true) Long pratica_id,
-			@RequestParam(name = "commento", required = true) String commento) {
 		
-		Pratica pratica = praticaService.get(pratica_id);
-		model.addAttribute("pratica", pratica);
-		
-		PraticaBusinessLogic.prontoPerNotifica(pratica, praticaService, statoService, avanzamentoService, commento);
-		
-		String stato = pratica.getStato().getStato();
-		model.addAttribute("stato", stato);
-		
-		List<Avanzamento> listaAvanzamenti = avanzamentoService.listByPraticaId(pratica_id);
-		model.addAttribute("listaAvanzamenti", listaAvanzamenti);
-		
-		return "avanzamenti/index";
-	}
-	
-	//prontoPerDeposito
-	@RequestMapping("/avanzamenti/prontoPerDeposito")
-	public String prontoPerDeposito(Model model,
-			@RequestParam(name = "pratica", required = true) Long pratica_id,
-			@RequestParam(name = "commento", required = true) String commento) {
-		
-		Pratica pratica = praticaService.get(pratica_id);
-		model.addAttribute("pratica", pratica);
-		
-		PraticaBusinessLogic.prontoPerDeposito(pratica, praticaService, statoService, avanzamentoService, commento);
-		
-		String stato = pratica.getStato().getStato();
-		model.addAttribute("stato", stato);
-		
-		List<Avanzamento> listaAvanzamenti = avanzamentoService.listByPraticaId(pratica_id);
-		model.addAttribute("listaAvanzamenti", listaAvanzamenti);
-		
-		return "avanzamenti/index";
-	}
-	
-	// inDibattimento
-	@RequestMapping("/avanzamenti/inDibattimento")
-	public String inDibattimento(Model model,
-			@RequestParam(name = "pratica", required = true) Long pratica_id,
-			@RequestParam(name = "commento", required = true) String commento) {
-		
-		Pratica pratica = praticaService.get(pratica_id);
-		model.addAttribute("pratica", pratica);
-		
-		PraticaBusinessLogic.inDibattimento(pratica, praticaService, statoService, avanzamentoService, commento);
-		
-		String stato = pratica.getStato().getStato();
-		model.addAttribute("stato", stato);
-		
-		List<Avanzamento> listaAvanzamenti = avanzamentoService.listByPraticaId(pratica_id);
-		model.addAttribute("listaAvanzamenti", listaAvanzamenti);
-		
-		return "avanzamenti/index";
-	}
-	
-	// daFatturare
-	@RequestMapping("/avanzamenti/daFatturare")
-	public String daFatturare(Model model,
-			@RequestParam(name = "pratica", required = true) Long pratica_id,
-			@RequestParam(name = "commento", required = true) String commento) {
-		
-		Pratica pratica = praticaService.get(pratica_id);
-		model.addAttribute("pratica", pratica);
-		
-		PraticaBusinessLogic.daFatturare(pratica, praticaService, statoService, avanzamentoService, commento);
-		
-		String stato = pratica.getStato().getStato();
-		model.addAttribute("stato", stato);
-		
-		List<Avanzamento> listaAvanzamenti = avanzamentoService.listByPraticaId(pratica_id);
-		model.addAttribute("listaAvanzamenti", listaAvanzamenti);
-		
-		return "avanzamenti/index";
-	}
-	
-	// praticaEvasa
-	@RequestMapping("/avanzamenti/praticaEvasa")
-	public String praticaEvasa(Model model,
-			@RequestParam(name = "pratica", required = true) Long pratica_id,
-			@RequestParam(name = "commento", required = true) String commento) {
-		
-		Pratica pratica = praticaService.get(pratica_id);
-		model.addAttribute("pratica", pratica);
-		
-		PraticaBusinessLogic.praticaEvasa(pratica, praticaService, statoService, avanzamentoService, commento);
-		
-		String stato = pratica.getStato().getStato();
-		model.addAttribute("stato", stato);
-		
-		List<Avanzamento> listaAvanzamenti = avanzamentoService.listByPraticaId(pratica_id);
-		model.addAttribute("listaAvanzamenti", listaAvanzamenti);
-		
-		return "avanzamenti/index";
-	}
-	
-	//praticaRigettata
-	@RequestMapping("/avanzamenti/praticaRigettata")
-	public String praticaRigettata(Model model,
-			@RequestParam(name = "pratica", required = true) Long pratica_id,
-			@RequestParam(name = "commento", required = true) String commento) {
-		
-		Pratica pratica = praticaService.get(pratica_id);
-		model.addAttribute("pratica", pratica);
-		
-		PraticaBusinessLogic.praticaRigettata(pratica, praticaService, statoService, avanzamentoService, commento);
-		
-		String stato = pratica.getStato().getStato();
-		model.addAttribute("stato", stato);
-		
-		List<Avanzamento> listaAvanzamenti = avanzamentoService.listByPraticaId(pratica_id);
-		model.addAttribute("listaAvanzamenti", listaAvanzamenti);
-		
-		return "avanzamenti/index";
-	}
-	
-	//praticaInScadenza
-	//praticaScaduta
-	
-	
 	@RequestMapping("/avanzamenti/new")
 	public String add(Model model,
 			@RequestParam(name = "pratica", required = true) Long pratica_id) {

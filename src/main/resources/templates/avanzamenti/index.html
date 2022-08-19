@@ -55,37 +55,33 @@
 					<td th:switch="${stato}">
 					    
 					    <div th:case="'nuova'">
-					    	<form action="#" th:action="@{'/avanzamenti/presaInCarico/?pratica=' + ${pratica.id}}" method="post">
+					    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
 					    		Commento: <input type="text" id="commento" name="commento" />
-					    		<button type="submit">Prendi in carico</button>
+					    		<button type="submit" name="azione" value="presaInCarico">Prendi in carico</button>
 					    	</form>
 					    </div>
 					    
 					    <div th:case="'rigettata'">la pratica e' stata rigettata, nessuna altra operazione possibile</div>
 					    
 					    <div th:case="'in lavorazione'">
-					    	<form action="#" th:action="@{'/avanzamenti/prontoPerNotifica/?pratica=' + ${pratica.id}}" method="post">
+					    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
 					    		Commento: <input type="text" id="commento" name="commento" />
-					    		<button type="submit">Pronto per notifica</button>
-					    	</form>
-					    	<br>
-					    	<form action="#" th:action="@{'/avanzamenti/praticaRigettata/?pratica=' + ${pratica.id}}" method="post">
-					    		Commento: <input type="text" id="commento" name="commento" />
-					    		<button type="submit">Rigetta pratica</button>
+					    		<button type="submit" name="azione" value="prontoPerNotifica">Pronto per notifica</button>
+					    		<button type="submit" name="azione" value="praticaRigettata">Rigetta pratica</button>
 					    	</form>
 						</div>
 					    
 					    <div th:case="'da notificare'">
-					    	<form action="#" th:action="@{'/avanzamenti/prontoPerDeposito/?pratica=' + ${pratica.id}}" method="post">
+					    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
 					    		Commento: <input type="text" id="commento" name="commento" />
-					    		<button type="submit">Pronto per deposito</button>
+					    		<button type="submit" name="azione" value="prontoPerDeposito">Pronto per deposito</button>
 					    	</form>
 						</div>
 					    
 					    <div th:case="'da depositare'">
-							<form action="#" th:action="@{'/avanzamenti/inDibattimento/?pratica=' + ${pratica.id}}" method="post">
+							<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
 					    		Commento: <input type="text" id="commento" name="commento" />
-					    		<button type="submit">In dibattimento</button>
+					    		<button type="submit" name="azione" value="inDibattimento">In dibattimento</button>
 					    	</form>
 						</div>
 					    
@@ -94,16 +90,16 @@
 					    <div th:case="'scaduta'">la pratica e' scaduta, nessuna altra operazione possibile</div>
 					    
 					    <div th:case="'in dibattimento'">
-					    	<form action="#" th:action="@{'/avanzamenti/daFatturare/?pratica=' + ${pratica.id}}" method="post">
+					    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
 					    		Commento: <input type="text" id="commento" name="commento" />
-					    		<button type="submit">Da fatturare</button>
+					    		<button type="submit" name="azione" value="daFatturare">Da fatturare</button>
 					    	</form>
 					    </div>
 					    
 					    <div th:case="'da fatturare'">
-					   		<form action="#" th:action="@{'/avanzamenti/praticaEvasa/?pratica=' + ${pratica.id}}" method="post">
+					   		<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
 					    		Commento: <input type="text" id="commento" name="commento" />
-					    		<button type="submit">Evasa</button>
+					    		<button type="submit" name="azione" value="praticaEvasa">Evasa</button>
 					    	</form>
 					    </div>
 					    
