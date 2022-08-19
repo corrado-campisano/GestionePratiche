@@ -59,15 +59,15 @@ public class PraticaController {
 			model.addAttribute("listaPratiche", listaPratiche);
 		} else {
 			if (filtro.equals("nuove")) {
-				Page<Pratica> listaPratiche = service.listNuove(statoService);
+				Page<Pratica> listaPratiche = service.listNuove();
 				model.addAttribute("listaPratiche", listaPratiche);
 			}
 			if (filtro.equals("inScadenza")) {
-				Page<Pratica> listaPratiche = service.listInScadenza(statoService);
+				Page<Pratica> listaPratiche = service.listInScadenza();
 				model.addAttribute("listaPratiche", listaPratiche);
 			}
 			if (filtro.equals("daFatturare")) {
-				Page<Pratica> listaPratiche = service.listDaFatturare(statoService);
+				Page<Pratica> listaPratiche = service.listDaFatturare();
 				model.addAttribute("listaPratiche", listaPratiche);
 			}
 		}

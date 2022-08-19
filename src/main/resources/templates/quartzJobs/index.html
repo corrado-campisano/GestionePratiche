@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Gestionale Pratiche</title>
+</head>
+
+<body>
+	<div align="center">
+
+		<div th:replace="fragments/page-header :: header"></div>
+
+	</div>
+	<div align="center">
+
+		<h3>Lista jobs</h3>
+		
+		<a sec:authorize="hasRole('ADMIN')" href="quartzJobs/new">Crea nuovo job</a>
+
+		<br /><br />
+		<table border="1" cellpadding="10">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Gruppo</th>
+					<th>Prossima Exec</th>
+					<th sec:authorize="hasRole('ADMIN')">Azioni</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="job : ${listaJobs}">
+					<td th:text="${job.jobName}">ID</td>
+					<td th:text="${job.groupName}">Gruppo</td>
+					<td th:text="${job.nextExec}">Prossima Exec</td>
+					<td sec:authorize="hasRole('ADMIN')">
+						<a th:href="@{'/quartzJobs/delete/?jobName=' + ${job.jobName}}">Delete</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+</html>

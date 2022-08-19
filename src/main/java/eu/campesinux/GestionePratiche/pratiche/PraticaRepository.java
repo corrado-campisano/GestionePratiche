@@ -16,6 +16,8 @@ public interface PraticaRepository extends PagingAndSortingRepository<Pratica, L
 
 	Page<Pratica> findByStato(StatoPratica stato, Pageable pageable);
 
+	List<Pratica> findByStato(StatoPratica stato);
+	
 	List<Pratica> findByProfessionisti(Professionista prof);
 
 	List<Pratica> findByCliente(Cliente cliente);
