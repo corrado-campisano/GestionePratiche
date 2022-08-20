@@ -1,13 +1,37 @@
 package eu.campesinux.GestionePratiche.pratiche;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 import eu.campesinux.GestionePratiche.avanzamenti.Avanzamento;
 import eu.campesinux.GestionePratiche.avanzamenti.AvanzamentoService;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPraticaService;
 
 public class PraticaBusinessLogic {
+	
+	public static Avanzamento getUltimoAvanzamento(Pratica pratica, AvanzamentoService avanzamentoService) {
 		
+		List<Avanzamento> avanzamenti = avanzamentoService.listByPratica(pratica);
+		Avanzamento ret = null;
+		
+		LocalDateTime dataAvanzamentoMax=null;
+		
+		for (Avanzamento avanzamento : avanzamenti) {
+			if (dataAvanzamentoMax==null) {
+				dataAvanzamentoMax = avanzamento.getData();
+				ret = avanzamento;
+			} else {
+				if (avanzamento.getData().isAfter(dataAvanzamentoMax)) {
+					dataAvanzamentoMax = avanzamento.getData();
+					ret = avanzamento;
+				}					
+			}
+		}
+		
+		return ret;
+	}
+	
 	public static void presaInCarico(Pratica pratica, PraticaService praticaService, 
 			StatoPraticaService statoService, AvanzamentoService avanzamentoService, String commento, LocalDateTime scadenza) {
 		

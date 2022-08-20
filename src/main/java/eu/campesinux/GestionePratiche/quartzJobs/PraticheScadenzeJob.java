@@ -13,6 +13,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 import eu.campesinux.GestionePratiche.avanzamenti.Avanzamento;
 import eu.campesinux.GestionePratiche.avanzamenti.AvanzamentoService;
 import eu.campesinux.GestionePratiche.pratiche.Pratica;
+import eu.campesinux.GestionePratiche.pratiche.PraticaBusinessLogic;
 import eu.campesinux.GestionePratiche.pratiche.PraticaService;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPraticaService;
@@ -42,33 +43,16 @@ public class PraticheScadenzeJob extends QuartzJobBean {
 		for (Pratica pratica : praticheDaMettereInScadenza) {
 			
 			System.out.println("Processamento della pratica: " + pratica.getIdentificativo());
-			List<Avanzamento> avanzamenti = aService.listByPratica(pratica);
+			Avanzamento ultimoAvanzamento = PraticaBusinessLogic.getUltimoAvanzamento(pratica, aService);
 			
-			LocalDateTime dataAvanzamentoMax=null;
-			LocalDateTime dataScadenzaMax=null;
-			StatoPratica statoPrecedente=null;
-			
-			for (Avanzamento avanzamento : avanzamenti) {
-				if (dataAvanzamentoMax==null) {
-					dataAvanzamentoMax = avanzamento.getData(); 
-					dataScadenzaMax = avanzamento.getScadenza();
-					statoPrecedente = avanzamento.getStatoAttuale();
-				} else {
-					if (avanzamento.getData().isAfter(dataAvanzamentoMax)) {
-						dataAvanzamentoMax = avanzamento.getData(); 
-						dataScadenzaMax = avanzamento.getScadenza();
-						statoPrecedente = avanzamento.getStatoAttuale();
-					}					
-				}
-			}
-			System.out.println("L'ultimo avanzamento e' in data: " + dataAvanzamentoMax);
-			System.out.println("La relativa data di scadenza e': " + dataScadenzaMax);
+			System.out.println("L'ultimo avanzamento e' in data: " + ultimoAvanzamento.getData());
+			System.out.println("La relativa data di scadenza e': " + ultimoAvanzamento.getScadenza());
 			
 			// pratiche da mettere in scadenza
 			// se l'ultima data di scadenza e' prima di oggi + giorniAnticipo
 			LocalDateTime oggi = LocalDateTime.now();
 			oggi.plusDays(giorniAnticipo);
-			if(dataScadenzaMax.isBefore(oggi.plusDays(giorniAnticipo))) {
+			if(ultimoAvanzamento.getScadenza().isBefore(oggi.plusDays(giorniAnticipo))) {
 				
 				System.out.println("la pratica verra' messa in scadenza");
 				
@@ -77,10 +61,10 @@ public class PraticheScadenzeJob extends QuartzJobBean {
 				inScadenza.setPratica(pratica);
 				inScadenza.setDescrizione("Pratica messa 'in scadenza' in automatico");
 				inScadenza.setData(oggi);
-				inScadenza.setScadenza(dataScadenzaMax);
+				inScadenza.setScadenza(ultimoAvanzamento.getScadenza());
 				StatoPratica statoAttuale = spService.findByStato(StatoPratica.STATO_IN_SCADENZA);
 				inScadenza.setStatoAttuale(statoAttuale);
-				inScadenza.setStatoPrecedente(statoPrecedente);
+				inScadenza.setStatoPrecedente(ultimoAvanzamento.getStatoAttuale());
 				aService.save(inScadenza);
 				// aggiorna lo stato della pratica
 				pratica.setStato(statoAttuale);
@@ -95,32 +79,15 @@ public class PraticheScadenzeJob extends QuartzJobBean {
 		for (Pratica pratica : praticheDaMettereScadute) {	
 
 			System.out.println("Processamento della pratica: " + pratica.getIdentificativo());
-			List<Avanzamento> avanzamenti = aService.listByPratica(pratica);
-			
-			LocalDateTime dataAvanzamentoMax=null;
-			LocalDateTime dataScadenzaMax=null;
-			StatoPratica statoPrecedente=null;
-			
-			for (Avanzamento avanzamento : avanzamenti) {
-				if (dataAvanzamentoMax==null) {
-					dataAvanzamentoMax = avanzamento.getData(); 
-					dataScadenzaMax = avanzamento.getScadenza();
-					statoPrecedente = avanzamento.getStatoAttuale();
-				} else {
-					if (avanzamento.getData().isAfter(dataAvanzamentoMax)) {
-						dataAvanzamentoMax = avanzamento.getData(); 
-						dataScadenzaMax = avanzamento.getScadenza();
-						statoPrecedente = avanzamento.getStatoAttuale();
-					}					
-				}
-			}
-			System.out.println("L'ultimo avanzamento e' in data: " + dataAvanzamentoMax);
-			System.out.println("La relativa data di scadenza e': " + dataScadenzaMax);			
+			Avanzamento ultimoAvanzamento = PraticaBusinessLogic.getUltimoAvanzamento(pratica, aService);
+
+			System.out.println("L'ultimo avanzamento e' in data: " + ultimoAvanzamento.getData());
+			System.out.println("La relativa data di scadenza e': " + ultimoAvanzamento.getScadenza());		
 			
 			// pratiche da mettere in scadute
 			// se l'ultima data di scadenza e' prima di oggi
 			LocalDateTime oggi = LocalDateTime.now();
-			if(dataScadenzaMax.isBefore(oggi)) {
+			if(ultimoAvanzamento.getScadenza().isBefore(oggi)) {
 				
 				System.out.println("la pratica verra' considerata scaduta");
 				
@@ -129,10 +96,10 @@ public class PraticheScadenzeJob extends QuartzJobBean {
 				inScadenza.setPratica(pratica);
 				inScadenza.setDescrizione("Pratica divenuta 'scaduta' in automatico");
 				inScadenza.setData(oggi);
-				inScadenza.setScadenza(dataScadenzaMax);
+				inScadenza.setScadenza(ultimoAvanzamento.getScadenza());
 				StatoPratica statoAttuale = spService.findByStato(StatoPratica.STATO_SCADUTA);
 				inScadenza.setStatoAttuale(statoAttuale);
-				inScadenza.setStatoPrecedente(statoPrecedente);
+				inScadenza.setStatoPrecedente(ultimoAvanzamento.getStatoAttuale());
 				aService.save(inScadenza);
 				// aggiorna lo stato della pratica
 				pratica.setStato(statoAttuale);
