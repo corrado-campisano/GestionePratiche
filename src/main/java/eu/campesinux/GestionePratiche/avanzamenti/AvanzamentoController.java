@@ -123,7 +123,7 @@ public class AvanzamentoController {
 		default:
 			break;
 		}
-						
+		
 		String stato = pratica.getStato().getStato();
 		model.addAttribute("stato", stato);
 		
