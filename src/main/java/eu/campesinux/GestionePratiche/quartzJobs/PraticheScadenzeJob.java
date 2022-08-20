@@ -37,13 +37,17 @@ public class PraticheScadenzeJob extends QuartzJobBean {
 		Long giorniAnticipo = jobDataMap.getLong("giorniAnticipo");
 		System.out.println("Esecuzione del job con parametro 'giorniAnticipo' = " + giorniAnticipo);
 		
-		List<Pratica> praticheAperte = pService.listAperte();
-		for (Pratica pratica : praticheAperte) {
+		System.out.println("Processamento pratiche candidate ad andare in scadenza");
+		List<Pratica> praticheDaMettereInScadenza = pService.listDaMettereInScadenzaPerJob();
+		for (Pratica pratica : praticheDaMettereInScadenza) {
+			
 			System.out.println("Processamento della pratica: " + pratica.getIdentificativo());
 			List<Avanzamento> avanzamenti = aService.listByPratica(pratica);
+			
 			LocalDateTime dataAvanzamentoMax=null;
 			LocalDateTime dataScadenzaMax=null;
 			StatoPratica statoPrecedente=null;
+			
 			for (Avanzamento avanzamento : avanzamenti) {
 				if (dataAvanzamentoMax==null) {
 					dataAvanzamentoMax = avanzamento.getData(); 
@@ -83,8 +87,39 @@ public class PraticheScadenzeJob extends QuartzJobBean {
 				pService.save(pratica);
 				
 			}
+		}
+			
+			
+		System.out.println("Processamento pratiche candidate a diventare scadute");
+		List<Pratica> praticheDaMettereScadute = pService.listDaMettereScadutePerJob();
+		for (Pratica pratica : praticheDaMettereScadute) {	
+
+			System.out.println("Processamento della pratica: " + pratica.getIdentificativo());
+			List<Avanzamento> avanzamenti = aService.listByPratica(pratica);
+			
+			LocalDateTime dataAvanzamentoMax=null;
+			LocalDateTime dataScadenzaMax=null;
+			StatoPratica statoPrecedente=null;
+			
+			for (Avanzamento avanzamento : avanzamenti) {
+				if (dataAvanzamentoMax==null) {
+					dataAvanzamentoMax = avanzamento.getData(); 
+					dataScadenzaMax = avanzamento.getScadenza();
+					statoPrecedente = avanzamento.getStatoAttuale();
+				} else {
+					if (avanzamento.getData().isAfter(dataAvanzamentoMax)) {
+						dataAvanzamentoMax = avanzamento.getData(); 
+						dataScadenzaMax = avanzamento.getScadenza();
+						statoPrecedente = avanzamento.getStatoAttuale();
+					}					
+				}
+			}
+			System.out.println("L'ultimo avanzamento e' in data: " + dataAvanzamentoMax);
+			System.out.println("La relativa data di scadenza e': " + dataScadenzaMax);			
+			
 			// pratiche da mettere in scadute
 			// se l'ultima data di scadenza e' prima di oggi
+			LocalDateTime oggi = LocalDateTime.now();
 			if(dataScadenzaMax.isBefore(oggi)) {
 				
 				System.out.println("la pratica verra' considerata scaduta");

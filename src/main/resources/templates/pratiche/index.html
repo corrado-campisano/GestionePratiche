@@ -20,6 +20,8 @@
 		<table border="1" cellpadding="10">
 			<tbody>
 				<tr>
+					<td sec:authorize="hasRole('ADMIN')"><a href="/pratiche/?filtro=daMettereInScadenza">daMettereInScadenza</a></td>
+					<td sec:authorize="hasRole('ADMIN')"><a href="/pratiche/?filtro=daMettereScadute">daMettereScadute</a></td>
 					<td><a href="/pratiche/?filtro=nuove">Pratiche nuove</a></td>
 					<td><a href="/pratiche/?filtro=inScadenza">Pratiche in scadenza</a></td>
 					<td><a href="/pratiche/?filtro=daFatturare">Pratiche da fatturare</a></td>

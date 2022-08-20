@@ -70,6 +70,14 @@ public class PraticaController {
 				Page<Pratica> listaPratiche = service.listDaFatturare();
 				model.addAttribute("listaPratiche", listaPratiche);
 			}
+			if (filtro.equals("daMettereInScadenza")) {
+				Page<Pratica> listaPratiche = service.listDaMettereInScadenza();
+				model.addAttribute("listaPratiche", listaPratiche);
+			}
+			if (filtro.equals("daMettereScadute")) {
+				Page<Pratica> listaPratiche = service.listDaMettereScadute();
+				model.addAttribute("listaPratiche", listaPratiche);
+			}
 		}
 		return "pratiche/index";
 	}

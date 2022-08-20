@@ -1,6 +1,5 @@
 package eu.campesinux.GestionePratiche.pratiche;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +57,12 @@ public class PraticaService {
 		StatoPratica daFatturare = statoService.findByStato(StatoPratica.STATO_DA_FATTURARE);
 		return repo.findByStato(daFatturare, pageRequest);
 	}
+	
+	public Page<Pratica> listNuove() {
+		Pageable pageRequest = PageRequest.of(0, 2);
+		StatoPratica nuova = statoService.findByStato(StatoPratica.STATO_NUOVA);
+		return repo.findByStato(nuova, pageRequest);
+	}
 
 	public List<Pratica> listByProfessionisti(Professionista prof) {
 		return repo.findByProfessionisti(prof);
@@ -67,35 +72,23 @@ public class PraticaService {
 		return repo.findByCliente(cliente);
 	}
 	
-	public List<Pratica> listAperte() {
-		List<Pratica> praticheAperte = new ArrayList<>();
-		
-		StatoPratica stato = statoService.findByStato(StatoPratica.STATO_IN_LAVORAZIONE);
-		List<Pratica> pratiche = repo.findByStato(stato);
-		for (Pratica pratica : pratiche) praticheAperte.add(pratica);
-
-		stato = statoService.findByStato(StatoPratica.STATO_DA_NOTIFICARE);
-		pratiche = repo.findByStato(stato);
-		for (Pratica pratica : pratiche) praticheAperte.add(pratica);
-		
-		stato = statoService.findByStato(StatoPratica.STATO_DA_DEPOSITARE);
-		pratiche = repo.findByStato(stato);
-		for (Pratica pratica : pratiche) praticheAperte.add(pratica);
-		
-		stato = statoService.findByStato(StatoPratica.STATO_IN_DIBATTIMENTO);
-		pratiche = repo.findByStato(stato);
-		for (Pratica pratica : pratiche) praticheAperte.add(pratica);
-
-		stato = statoService.findByStato(StatoPratica.STATO_DA_FATTURARE);
-		pratiche = repo.findByStato(stato);
-		for (Pratica pratica : pratiche) praticheAperte.add(pratica);
-		
-		return praticheAperte;
+	
+	public Page<Pratica> listDaMettereInScadenza(){
+		Pageable pageRequest = PageRequest.of(0, 2);
+		return repo.findDaMettereInScadenza(pageRequest);
 	}
 	
-	public Page<Pratica> listNuove() {
-		Pageable pageRequest = PageRequest.of(0, 2);
-		StatoPratica nuova = statoService.findByStato(StatoPratica.STATO_NUOVA);
-		return repo.findByStato(nuova, pageRequest);
+	public List<Pratica> listDaMettereInScadenzaPerJob() {
+		return repo.findDaMettereInScadenza();
 	}
+	
+	public Page<Pratica> listDaMettereScadute() {
+		Pageable pageRequest = PageRequest.of(0, 2);
+		return repo.findDaMettereScadute(pageRequest);
+	}
+	
+	public List<Pratica> listDaMettereScadutePerJob() {
+		return repo.findDaMettereScadute();
+	}
+	
 }
