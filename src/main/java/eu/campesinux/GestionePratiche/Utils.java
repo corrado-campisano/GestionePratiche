@@ -1,4 +1,4 @@
-package eu.campesinux.GestionePratiche.config;
+package eu.campesinux.GestionePratiche;
 
 import java.time.Instant;
 import java.time.LocalDateTime;

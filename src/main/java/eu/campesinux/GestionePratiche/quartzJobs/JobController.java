@@ -24,7 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import eu.campesinux.GestionePratiche.config.Utils;
+import eu.campesinux.GestionePratiche.Utils;
 
 @Controller
 public class JobController {

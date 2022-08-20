@@ -67,13 +67,12 @@ public class AvanzamentoController {
 		
 		LocalDateTime scadenza = null;
 		if (scadenzaParam!=null) {
-			//scadenzaParam+=" 00:00:00";
 			try {
 				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 				scadenza = LocalDateTime.parse(scadenzaParam, dtf);
 			} catch (Exception e) {
 				e.printStackTrace();
-				throw new Exception("Specificare una data nel formato yyyy-MM-dd");
+				throw new Exception("Specificare una data nel formato yyyy-MM-dd HH:mm:ss");
 			}
 		}
 		
@@ -117,10 +116,14 @@ public class AvanzamentoController {
 			PraticaBusinessLogic.praticaRigettata(pratica, praticaService, statoService, avanzamentoService, commento);
 			break;
 			
+		case "prorogaPratica":
+			PraticaBusinessLogic.prorogaPratica(pratica, praticaService, statoService, avanzamentoService, commento);
+			break;
+			
 		default:
 			break;
 		}
-				
+						
 		String stato = pratica.getStato().getStato();
 		model.addAttribute("stato", stato);
 		

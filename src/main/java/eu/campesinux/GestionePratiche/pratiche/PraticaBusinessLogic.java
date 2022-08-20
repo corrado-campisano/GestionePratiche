@@ -161,4 +161,26 @@ public class PraticaBusinessLogic {
 		pratica.setStato(nuovo);
 		praticaService.save(pratica);
 	}
+
+	public static void prorogaPratica(Pratica pratica, PraticaService praticaService, StatoPraticaService statoService,
+			AvanzamentoService avanzamentoService, String commento) {
+		
+		Avanzamento ultimoAv = getUltimoAvanzamento(pratica, avanzamentoService);
+		StatoPratica statoDaProrogare = ultimoAv.getStatoPrecedente();
+		StatoPratica statoInScadenza = ultimoAv.getStatoAttuale();
+		
+		// avanzamento di proroga: da in scadenza allo stato precedente
+		Avanzamento avanzamento = new Avanzamento();
+		avanzamento.setData(LocalDateTime.now());
+		avanzamento.setScadenza(LocalDateTime.now());
+		avanzamento.setDescrizione(commento);
+		avanzamento.setPratica(pratica);
+		avanzamento.setStatoAttuale(statoDaProrogare);
+		avanzamento.setStatoPrecedente(statoInScadenza);
+		avanzamentoService.save(avanzamento);
+		
+		pratica.setStato(statoDaProrogare);
+		praticaService.save(pratica);
+		
+	}
 }

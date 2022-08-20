@@ -86,7 +86,8 @@
 					    	</form>
 					    </div>
 					    
-					    <div th:case="'rigettata'">la pratica e' stata rigettata, nessuna altra operazione possibile</div>
+					    <div th:case="'rigettata'">La pratica e' stata rigettata, nessuna altra operazione possibile.
+					    	<br><br>Contattare l'amministratore per una forzatura dello stato.</div>
 					    
 					    <div th:case="'in lavorazione'">
 					    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
@@ -134,9 +135,23 @@
 					    	</form>
 						</div>
 					    
-					    <div th:case="'in scadenza'">la pratica e' in scadenza, sollecitare i professionisti coinvolti</div>
+					    <div th:case="'in scadenza'">La pratica e' in scadenza, sollecitare i professionisti coinvolti prima di prorogarla.
+					    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
+					    		<table>
+					    			<tr>
+					    				<td>Commento:</td>
+										<td><input type="text" size="50" id="commento" name="commento" /></td>
+										<td>Scadenza:</td>
+										<td><input type="text" id="scadenza" name="scadenza" /></td>
+										<td><button type="submit" name="azione" value="prorogaPratica">Proroga</button></td>
+					    			</tr>
+					    		</table>
+					    	</form>
+					    </div>
 					    
-					    <div th:case="'scaduta'">la pratica e' scaduta, nessuna altra operazione possibile</div>
+					    <div th:case="'scaduta'">La pratica e' scaduta, nessuna altra operazione possibile.
+					    	<br><br>Contattare l'amministratore per una forzatura dello stato.
+					    </div>
 					    
 					    <div th:case="'in dibattimento'">
 					    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
@@ -159,7 +174,8 @@
 					    	</form>
 					    </div>
 					    
-					    <div th:case="'evasa'">la pratica e' stata evasa, nessuna altra operazione possibile</div>
+					    <div th:case="'evasa'">La pratica e' stata evasa, nessuna altra operazione possibile.
+					    	<br><br>Contattare l'amministratore per una forzatura dello stato.</div>
 					</td>
 				</tr>
 			</tbody>
