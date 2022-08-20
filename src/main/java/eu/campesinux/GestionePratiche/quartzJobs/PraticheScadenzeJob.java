@@ -1,7 +1,6 @@
 package eu.campesinux.GestionePratiche.quartzJobs;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import org.quartz.JobDataMap;
@@ -22,7 +21,7 @@ public class PraticheScadenzeJob extends QuartzJobBean {
 
 	String jobName;
 	String groupName;
-	Date nextExec;
+	LocalDateTime nextExec;
 	
 	@Autowired
 	private PraticaService pService;
@@ -124,11 +123,11 @@ public class PraticheScadenzeJob extends QuartzJobBean {
 		this.groupName = groupName;
 	}
 
-	public Date getNextExec() {
+	public LocalDateTime getNextExec() {
 		return nextExec;
 	}
 
-	public void setNextExec(Date nextExec) {
+	public void setNextExec(LocalDateTime nextExec) {
 		this.nextExec = nextExec;
 	}
 	
