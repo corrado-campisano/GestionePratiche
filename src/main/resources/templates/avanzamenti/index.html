@@ -4,6 +4,14 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<title>Gestionale Pratiche</title>
+	
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	
+	<script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css"/>
 </head>
 
 <body>
@@ -190,5 +198,11 @@
 		</table>
 	</div>
 </body>
-
+<script type="text/javascript">
+$(document).ready(function() {
+	$(function() {
+	$("#scadenza").datetimepicker({format:'Y-m-d H:i:s'});
+	});
+});
+</script>
 </html>

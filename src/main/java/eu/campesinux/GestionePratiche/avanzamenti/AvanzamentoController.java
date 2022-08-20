@@ -67,7 +67,7 @@ public class AvanzamentoController {
 		
 		LocalDateTime scadenza = null;
 		if (scadenzaParam!=null) {
-			scadenzaParam+=" 00:00:00";
+			//scadenzaParam+=" 00:00:00";
 			try {
 				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 				scadenza = LocalDateTime.parse(scadenzaParam, dtf);
@@ -127,7 +127,8 @@ public class AvanzamentoController {
 		List<Avanzamento> listaAvanzamenti = avanzamentoService.listByPraticaId(pratica_id);
 		model.addAttribute("listaAvanzamenti", listaAvanzamenti);
 		
-		return "avanzamenti/index";
+		//return "avanzamenti/index";
+		return "redirect:/avanzamenti/?pratica=" + pratica.getId();
 	}
 		
 	@RequestMapping("/avanzamenti/new")

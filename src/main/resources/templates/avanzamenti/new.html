@@ -4,6 +4,14 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<title>Gestionale Pratiche</title>
+	
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	
+	<script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css"/>
 </head>
 
 <body>
@@ -47,11 +55,11 @@
 				</tr>
 				<tr>
 					<td>Data:</td>
-					<td><input type="text" th:field="*{data}" /></td>
+					<td><input id="data" type="text" th:field="*{data}" /></td>
 				</tr>
 				<tr>
 					<td>Scadenza:</td>
-					<td><input type="text" th:field="*{scadenza}" /></td>
+					<td><input id="scadenza" type="text" th:field="*{scadenza}" /></td>
 				</tr>
 				<tr>
 					<td>Descrizione:</td>
@@ -86,5 +94,12 @@
 		</form>
 	</div>
 </body>
-
+<script type="text/javascript">
+$(document).ready(function() {
+	$(function() {
+	$("#data").datetimepicker({format:'Y-m-d H:i:s'});
+	$("#scadenza").datetimepicker({format:'Y-m-d H:i:s'});
+	});
+});
+</script>
 </html>
