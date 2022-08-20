@@ -127,8 +127,8 @@ public class JobController {
         jobDataMap.put("giorniAnticipo", giorniAnticipo);
 
         return JobBuilder.newJob(PraticheScadenzeJob.class)
-                .withIdentity(UUID.randomUUID().toString(), "PraticheScaduteJob")
-                .withDescription("PraticheScaduteJob")
+                .withIdentity(UUID.randomUUID().toString(), "PraticheScadenzeJob")
+                .withDescription("PraticheScadenzeJob")
                 .usingJobData(jobDataMap)
                 .storeDurably()
                 .build();
@@ -137,8 +137,8 @@ public class JobController {
     private Trigger buildJobTrigger(JobDetail jobDetail, ZonedDateTime startAt) {
         return TriggerBuilder.newTrigger()
                 .forJob(jobDetail)
-                .withIdentity(jobDetail.getKey().getName(), "PraticheScaduteJob-triggers")
-                .withDescription("PraticheScaduteJob Trigger")
+                .withIdentity(jobDetail.getKey().getName(), "PraticheScadenzeJob-triggers")
+                .withDescription("PraticheScadenzeJob Trigger")
                 .startAt(Date.from(startAt.toInstant()))
                 .withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatForever().withIntervalInHours(24))
                 .build();

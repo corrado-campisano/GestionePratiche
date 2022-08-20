@@ -14,6 +14,11 @@
 	
 	<h4>Stato del sistema</h4>
 		
+		<div th:if="${listaJobs.size() == 0}">
+		Nessun automatismo attualmente configurato, richiedere all'amministratore di farlo.
+		</div>
+		<div th:if="${listaJobs.size() > 0}">
+		Automatismo correttamente configurato.
 		<table border="1" cellpadding="10">
 			<thead>
 				<tr>
@@ -28,6 +33,8 @@
 				</tr>
 			</tbody>
 		</table>
+		</div>
+		
 </div>
 </body>
 </html>
