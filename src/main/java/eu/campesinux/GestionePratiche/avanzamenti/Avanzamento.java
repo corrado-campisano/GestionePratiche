@@ -36,11 +36,11 @@ public class Avanzamento {
 	
 	private String descrizione;
 
-	@OneToOne// TODO : restore? (cascade = CascadeType.PERSIST)
+	@OneToOne
 	@JoinColumn(name = "statoPrecedente_id", referencedColumnName = "id")
 	private StatoPratica statoPrecedente;
 
-	@OneToOne// TODO : restore? (cascade = CascadeType.PERSIST)
+	@OneToOne
 	@JoinColumn(name = "statoAttuale_id", referencedColumnName = "id")
 	private StatoPratica statoAttuale;
 

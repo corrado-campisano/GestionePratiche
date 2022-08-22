@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
@@ -16,7 +19,9 @@ import org.quartz.impl.matchers.GroupMatcher;
 import eu.campesinux.GestionePratiche.quartzJobs.PraticheScadenzeJob;
 
 public class Utils {
-
+	
+	private final static Logger logger = LoggerFactory.getLogger(Utils.class);
+	
 	public static List<PraticheScadenzeJob> recuperaAutomatismi(Scheduler scheduler) {
 		
 		List<PraticheScadenzeJob> jobs = new ArrayList<PraticheScadenzeJob>();
@@ -44,9 +49,8 @@ public class Utils {
 					jobs.add(psj);
 				}
 			}
-		} catch (SchedulerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (SchedulerException ex) {
+			logger.error(ex.getMessage(), ex);
 		}
 		
 		return jobs;

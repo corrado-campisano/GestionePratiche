@@ -3,7 +3,6 @@ package eu.campesinux.GestionePratiche.quartzJobs;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -17,7 +16,8 @@ import org.quartz.SchedulerException;
 import org.quartz.SimpleScheduleBuilder;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
-import org.quartz.impl.matchers.GroupMatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +31,8 @@ public class JobController {
 
 	@Autowired
 	Scheduler scheduler;
+	
+	private final static Logger logger = LoggerFactory.getLogger(Utils.class);
 
 	@RequestMapping("/quartzJobs")
 	public String viewHomePage(Model model) {
@@ -57,14 +59,14 @@ public class JobController {
 		try {
 			boolean interrupted = scheduler.interrupt(jobKey);
 			if (!interrupted) {
-				System.out.println("Quartz failed to interrupt the job!");
+				logger.error("Quartz failed to interrupt the job!");
 			}
 			boolean deleted = scheduler.deleteJob(jobKey);
 			if (!deleted) {
-				System.out.println("Quartz failed to delete the job!");
+				logger.error("Quartz failed to delete the job!");
 			}
 		} catch (Exception ex) {
-			System.out.println(ex);
+			logger.error(ex.getMessage(), ex);
 		}
 
 		return "redirect:/quartzJobs";
@@ -76,19 +78,19 @@ public class JobController {
 		JobDetail jobDetail = buildJobDetail(giorniAnticipo);
 
 		LocalDateTime afterNight = LocalDateTime.now();
-		afterNight = afterNight.plusMinutes(2);
-//		afterNight = afterNight.withHour(3);
-//		afterNight = afterNight.withMinute(0);
-//		afterNight = afterNight.withSecond(0);
+		
+		afterNight = afterNight.withHour(4);
+		afterNight = afterNight.withMinute(0);
+		afterNight = afterNight.withSecond(0);
+		
 		ZonedDateTime zonedDateTime = afterNight.atZone(ZoneId.systemDefault());
 
 		Trigger trigger = buildJobTrigger(jobDetail, zonedDateTime);
 
 		try {
 			scheduler.scheduleJob(jobDetail, trigger);
-		} catch (SchedulerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (SchedulerException ex) {
+			logger.error(ex.getMessage(), ex);
 		}
 
 		return "redirect:/quartzJobs";
@@ -98,7 +100,7 @@ public class JobController {
 		JobDataMap jobDataMap = new JobDataMap();
 
 		jobDataMap.put("giorniAnticipo", giorniAnticipo);
-
+		
 		return JobBuilder.newJob(PraticheScadenzeJob.class)
 				.withIdentity(UUID.randomUUID().toString(), "PraticheScadenzeJob")
 				.withDescription("PraticheScadenzeJob").usingJobData(jobDataMap).storeDurably().build();
