@@ -60,23 +60,6 @@ CREATE TABLE `tipo_pratica` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `professionista`;
-CREATE TABLE `professionista` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(255) NOT NULL,
-  `cognome` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `professionista_specializzazione`;
-CREATE TABLE `professionista_specializzazione` (
-  professionista_id INT(11) UNSIGNED NOT NULL,
-  specializzazione_id INT(11) UNSIGNED NOT NULL,
-  UNIQUE (professionista_id,specializzazione_id)
-) engine=InnoDB DEFAULT CHARSET=utf8;
-
-
 DROP TABLE IF EXISTS `pratica`;
 CREATE TABLE `pratica` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -94,13 +77,6 @@ CREATE TABLE `pratica_utente` (
   pratica_id INT(11) UNSIGNED NOT NULL,
   utente_id INT(11) UNSIGNED NOT NULL,
   UNIQUE (pratica_id,utente_id)
-) engine=InnoDB DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `pratica_professionista`;
-CREATE TABLE `pratica_professionista` (
-  pratica_id INT(11) UNSIGNED NOT NULL,
-  professionista_id INT(11) UNSIGNED NOT NULL,
-  UNIQUE (pratica_id,professionista_id)
 ) engine=InnoDB DEFAULT CHARSET=utf8;
 
 

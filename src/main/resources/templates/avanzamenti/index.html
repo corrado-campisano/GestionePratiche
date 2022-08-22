@@ -43,8 +43,8 @@
 					<td th:text="${pratica.cliente}">Cliente</td>
 					<td th:text="${pratica.stato}">Stato</td>
 					<td>
-						<table><tr th:each="professionista : ${pratica.professionisti}">
-							<td th:text="${professionista}">Professionisti</td>
+						<table><tr th:each="utente : ${pratica.utenti}">
+							<td th:text="${utente}">Professionisti</td>
 						</tr></table>
 					</td>
 				</tr>
@@ -53,133 +53,159 @@
 				
 		<hr>
 		
-		<a sec:authorize="hasRole('ADMIN')" th:href="@{'/avanzamenti/new?pratica=' + ${pratica.id}}">Crea nuovo avanzamento</a>
+		<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/avanzamenti/new?pratica=' + ${pratica.id}}">Crea nuovo avanzamento</a>
 
 		<br><br>		
 
-		<table border="1" cellpadding="10">
-			<thead>
-				<tr>
-					<td th:switch="${stato}">
-					    
-					    <div th:case="'nuova'">
-					    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
-					    		<table>
-					    			<tr>
-										<td>Professionisti:</td>
-										<td colspan="4">
-											<input type="checkbox" name="professionisti"
-									            th:each="professionista : ${listaProfessionisti}"
-									            th:text="${professionista}"
-									            th:value="${professionista.id}"
-									        />
-										</td>
-									</tr>
-									<tr>
-										<td>Commento:</td>
-										<td><input type="text" size="50" id="commento" name="commento" /></td>
-										<td>Scadenza:</td>
-										<td><input type="text" id="scadenza" name="scadenza" /></td>
-										<td><button type="submit" name="azione" value="presaInCarico">Prendi in carico</button></td>
-									</tr>
-					    		</table>
-					    	</form>
-					    </div>
-					    
-					    <div th:case="'rigettata'">La pratica e' stata rigettata, nessuna altra operazione possibile.
-					    	<br><br>Contattare l'amministratore per una forzatura dello stato.</div>
-					    
-					    <div th:case="'in lavorazione'">
-					    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
-					    		<table>
-					    			<tr>
-					    				<td>Commento:</td>
-										<td><input type="text" size="50" id="commento" name="commento" /></td>
-										<td>Scadenza:</td>
-										<td><input type="text" id="scadenza" name="scadenza" /></td>
-										<td>
-											<button type="submit" name="azione" value="prontoPerNotifica">Pronto per notifica</button>
-								    		<button type="submit" name="azione" value="praticaRigettata">Rigetta pratica</button>
-										</td>
-					    			</tr>
-					    		</table>
+		<div th:switch="${stato}">
+			
+		    <div th:case="'nuova'">
+		    	<div sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')">
+			    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
+			    		<table>
+			    			<tr>
+								<td>Professionisti:</td>
+								<td colspan="4">
+									<input type="checkbox" name="utenti"
+							            th:each="utente : ${listaUtenti}"
+							            th:text="${utente}"
+							            th:value="${utente.id}"
+							        />
+								</td>
+							</tr>
+							<tr>
+								<td>Commento:</td>
+								<td><input type="text" size="50" id="commento" name="commento" /></td>
+								<td>Scadenza:</td>
+								<td><input type="text" id="scadenza" name="scadenza" /></td>
+								<td><button type="submit" name="azione" value="presaInCarico">Prendi in carico</button></td>
+							</tr>
+			    		</table>
+			    	</form>
+			    </div>
+		    	<div sec:authorize="hasAuthority('PROFESSIONISTA')">
+		    		La pratica non e' ancora stata assegnata a nessun professionista.
+		    	</div>
+		    </div>
+		    
+		    <div th:case="'rigettata'">La pratica e' stata rigettata, nessuna altra operazione possibile.
+		    	<br><br>Contattare l'amministratore per una forzatura dello stato.</div>
+		    
+		    <div th:case="'in lavorazione'">
+		    	<div sec:authorize="hasAnyAuthority('ADMIN', 'PROFESSIONISTA')">
+			    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
+			    		<table>
+			    			<tr>
+			    				<td>Commento:</td>
+								<td><input type="text" size="50" id="commento" name="commento" /></td>
+								<td>Scadenza:</td>
+								<td><input type="text" id="scadenza" name="scadenza" /></td>
+								<td>
+									<button type="submit" name="azione" value="prontoPerNotifica">Pronto per notifica</button>
+						    		<button type="submit" name="azione" value="praticaRigettata">Rigetta pratica</button>
+								</td>
+			    			</tr>
+			    		</table>
 
-					    	</form>
-						</div>
-					    
-					    <div th:case="'da notificare'">
-					    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
-					    		<table>
-					    			<tr>
-					    				<td>Commento:</td>
-										<td><input type="text" size="50" id="commento" name="commento" /></td>
-										<td>Scadenza:</td>
-										<td><input type="text" id="scadenza" name="scadenza" /></td>
-										<td><button type="submit" name="azione" value="prontoPerDeposito">Pronto per deposito</button></td>
-					    			</tr>
-					    		</table>
-					    	</form>
-						</div>
-					    
-					    <div th:case="'da depositare'">
-							<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
-					    		<table>
-					    			<tr>
-					    				<td>Commento:</td>
-										<td><input type="text" size="50" id="commento" name="commento" /></td>
-										<td>Scadenza:</td>
-										<td><input type="text" id="scadenza" name="scadenza" /></td>
-										<td><button type="submit" name="azione" value="inDibattimento">In dibattimento</button></td>
-					    			</tr>
-					    		</table>
-					    	</form>
-						</div>
-					    
-					    <div th:case="'in scadenza'">La pratica e' in scadenza, sollecitare i professionisti coinvolti prima di prorogarla.
-					    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
-					    		<table>
-					    			<tr>
-					    				<td>Commento:</td>
-										<td><input type="text" size="50" id="commento" name="commento" /></td>
-										<td>Scadenza:</td>
-										<td><input type="text" id="scadenza" name="scadenza" /></td>
-										<td><button type="submit" name="azione" value="prorogaPratica">Proroga</button></td>
-					    			</tr>
-					    		</table>
-					    	</form>
-					    </div>
-					    
-					    <div th:case="'scaduta'">La pratica e' scaduta, nessuna altra operazione possibile.
-					    	<br><br>Contattare l'amministratore per una forzatura dello stato.
-					    </div>
-					    
-					    <div th:case="'in dibattimento'">
-					    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
-					    		<table>
-					    			<tr>
-					    				<td>Commento:</td>
-										<td><input type="text" size="50" id="commento" name="commento" /></td>
-										<td>Scadenza:</td>
-										<td><input type="text" id="scadenza" name="scadenza" /></td>
-										<td><button type="submit" name="azione" value="daFatturare">Da fatturare</button></td>
-					    			</tr>
-					    		</table>
-					    	</form>
-					    </div>
-					    
-					    <div th:case="'da fatturare'">
-					   		<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
-					    		Commento: <input type="text" id="commento" name="commento" />
-					    		<button type="submit" name="azione" value="praticaEvasa">Evasa</button>
-					    	</form>
-					    </div>
-					    
-					    <div th:case="'evasa'">La pratica e' stata evasa, nessuna altra operazione possibile.
-					    	<br><br>Contattare l'amministratore per una forzatura dello stato.</div>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+			    	</form>
+			    </div>
+				<div sec:authorize="hasAuthority('MANAGER')">
+					La pratica e' in gestione ad uno o piu' professionisti.
+				</div>
+			</div>
+		    
+		    <div th:case="'da notificare'">
+		    	<div sec:authorize="hasAnyAuthority('ADMIN', 'PROFESSIONISTA')">
+			    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
+			    		<table>
+			    			<tr>
+			    				<td>Commento:</td>
+								<td><input type="text" size="50" id="commento" name="commento" /></td>
+								<td>Scadenza:</td>
+								<td><input type="text" id="scadenza" name="scadenza" /></td>
+								<td><button type="submit" name="azione" value="prontoPerDeposito">Pronto per deposito</button></td>
+			    			</tr>
+			    		</table>
+			    	</form>
+			    </div>
+				<div sec:authorize="hasAuthority('MANAGER')">
+					La pratica e' in gestione ad uno o piu' professionisti.
+				</div>
+			</div>
+		    
+		    <div th:case="'da depositare'">
+		    	<div sec:authorize="hasAnyAuthority('ADMIN', 'PROFESSIONISTA')">
+					<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
+			    		<table>
+			    			<tr>
+			    				<td>Commento:</td>
+								<td><input type="text" size="50" id="commento" name="commento" /></td>
+								<td>Scadenza:</td>
+								<td><input type="text" id="scadenza" name="scadenza" /></td>
+								<td><button type="submit" name="azione" value="inDibattimento">In dibattimento</button></td>
+			    			</tr>
+			    		</table>
+			    	</form>
+			    </div>
+				<div sec:authorize="hasAuthority('MANAGER')">
+					La pratica e' in gestione ad uno o piu' professionisti.
+				</div>
+			</div>
+		    
+		    <div th:case="'in scadenza'">La pratica e' in scadenza, sollecitare i professionisti coinvolti prima di prorogarla.
+		    	<div sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')">
+			    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
+			    		<table>
+			    			<tr>
+			    				<td>Commento:</td>
+								<td><input type="text" size="50" id="commento" name="commento" /></td>
+								<td>Scadenza:</td>
+								<td><input type="text" id="scadenza" name="scadenza" /></td>
+								<td><button type="submit" name="azione" value="prorogaPratica">Proroga</button></td>
+			    			</tr>
+			    		</table>
+			    	</form>
+			    </div>
+		    </div>
+		    
+		    <div th:case="'scaduta'">La pratica e' scaduta, nessuna altra operazione possibile.
+		    	<br><br>Contattare l'amministratore per una forzatura dello stato.
+		    </div>
+		    
+		    <div th:case="'in dibattimento'">
+		    	<div sec:authorize="hasAnyAuthority('ADMIN', 'PROFESSIONISTA')">
+			    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
+			    		<table>
+			    			<tr>
+			    				<td>Commento:</td>
+								<td><input type="text" size="50" id="commento" name="commento" /></td>
+								<td>Scadenza:</td>
+								<td><input type="text" id="scadenza" name="scadenza" /></td>
+								<td><button type="submit" name="azione" value="daFatturare">Da fatturare</button></td>
+			    			</tr>
+			    		</table>
+			    	</form>
+			    </div>
+				<div sec:authorize="hasAuthority('MANAGER')">
+					La pratica e' in gestione ad uno o piu' professionisti.
+				</div>
+		    </div>
+		    
+		    <div th:case="'da fatturare'">
+		    	<div sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')">					    	
+			   		<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
+			    		Commento: <input type="text" id="commento" name="commento" />
+			    		<button type="submit" name="azione" value="praticaEvasa">Evasa</button>
+			    	</form>
+			    </div>
+			    <div sec:authorize="hasAuthority('PROFESSIONISTA')">
+					La pratica e' in fatturazione.
+				</div>
+		    </div>
+		    
+		    <div th:case="'evasa'">La pratica e' stata evasa, nessuna altra operazione possibile.
+		    	<br><br>Contattare l'amministratore per una forzatura dello stato.</div>
+		</div>
 		
 
 		<br><br>

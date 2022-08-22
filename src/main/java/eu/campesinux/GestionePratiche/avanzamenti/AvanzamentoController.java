@@ -17,10 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 import eu.campesinux.GestionePratiche.pratiche.Pratica;
 import eu.campesinux.GestionePratiche.pratiche.PraticaBusinessLogic;
 import eu.campesinux.GestionePratiche.pratiche.PraticaService;
-import eu.campesinux.GestionePratiche.professionisti.Professionista;
-import eu.campesinux.GestionePratiche.professionisti.ProfessionistaService;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPraticaService;
+import eu.campesinux.GestionePratiche.utenti.Utente;
+import eu.campesinux.GestionePratiche.utenti.UtenteService;
 
 @Controller
 public class AvanzamentoController {
@@ -31,14 +31,14 @@ public class AvanzamentoController {
 	@Autowired
 	private PraticaService praticaService;
 	@Autowired
-	private ProfessionistaService profService;
+	private UtenteService utenteService;
 	
 	@RequestMapping("/avanzamenti")
 	public String home(Model model,
 			@RequestParam(name = "pratica", required = true) Long pratica_id) {
 		
-		List<Professionista> listaProfessionisti = profService.listAll();
-		model.addAttribute("listaProfessionisti", listaProfessionisti);
+		List<Utente> listaUtenti = utenteService.listAllProfessionals();
+		model.addAttribute("listaUtenti", listaUtenti);
 		
 		Pratica pratica = praticaService.get(pratica_id);
 		model.addAttribute("pratica", pratica);
@@ -52,6 +52,24 @@ public class AvanzamentoController {
 		return "avanzamenti/index";
 	}
 	
+	@RequestMapping("/avanzamenti/dettaglio")
+	public String dettaglio(Model model,
+			@RequestParam(name = "pratica", required = true) Long pratica_id) {
+		
+		List<Utente> listaUtenti = utenteService.listAllProfessionals();
+		model.addAttribute("listaUtenti", listaUtenti);
+		
+		Pratica pratica = praticaService.get(pratica_id);
+		model.addAttribute("pratica", pratica);
+		
+		String stato = pratica.getStato().getStato();
+		model.addAttribute("stato", stato);
+		
+		List<Avanzamento> listaAvanzamenti = avanzamentoService.listByPraticaId(pratica_id);
+		model.addAttribute("listaAvanzamenti", listaAvanzamenti);
+		
+		return "avanzamenti/dettaglio";
+	}
 	
 	//gestione
 	@RequestMapping("/avanzamenti/gestione")
@@ -60,13 +78,13 @@ public class AvanzamentoController {
 			@RequestParam(name = "azione", required = true) String azione,
 			@RequestParam(name = "commento", required = true) String commento,
 			@RequestParam(name = "scadenza", required = false) String scadenzaParam,
-			@RequestParam(name = "professionisti", required = false) Long[] professionisti) throws Exception {
+			@RequestParam(name = "utenti", required = false) Long[] utenti) throws Exception {
 		
 		Pratica pratica = praticaService.get(pratica_id);
 		model.addAttribute("pratica", pratica);
 		
 		LocalDateTime scadenza = null;
-		if (scadenzaParam!=null) {
+		if (scadenzaParam!=null && !scadenzaParam.equals("")) {
 			try {
 				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 				scadenza = LocalDateTime.parse(scadenzaParam, dtf);
@@ -78,33 +96,49 @@ public class AvanzamentoController {
 		
 		switch (azione) {
 		case "presaInCarico":
-			if (professionisti==null) {
-				throw new Exception("Errore, specificare almeno un professionista a cui assegnare la pratica");
+			if (utenti==null) {
+				throw new Exception("Errore, specificare almeno un utente a cui assegnare la pratica");
 			}
 			
-			Professionista prof = null;
-			for (int i = 0; i < professionisti.length; i++) {
-				Long id = professionisti[i];
-				prof = profService.get(id);
-				pratica.addProfessionista(prof);
+			Utente utente = null;
+			for (int i = 0; i < utenti.length; i++) {
+				Long id = utenti[i];
+				utente = utenteService.get(id);
+				pratica.addUtente(utente);
 			}
 			
 			PraticaBusinessLogic.presaInCarico(pratica, praticaService, statoService, avanzamentoService, commento, scadenza);
 			break;
 
 		case "prontoPerNotifica":
-			PraticaBusinessLogic.prontoPerNotifica(pratica, praticaService, statoService, avanzamentoService, commento, scadenza);
+			if (!PraticaBusinessLogic.doesUtenteGestiscePratica(utenteService, pratica)) {
+				String msg = "L'utente corrente non e' assegnatario della pratica";
+				throw new Exception(msg);
+			}
+			PraticaBusinessLogic.prontoPerNotifica(pratica, praticaService, statoService, avanzamentoService, utenteService, commento, scadenza);
 			break;
 			
 		case "prontoPerDeposito":
+			if (!PraticaBusinessLogic.doesUtenteGestiscePratica(utenteService, pratica)) {
+				String msg = "L'utente corrente non e' assegnatario della pratica";
+				throw new Exception(msg);
+			}
 			PraticaBusinessLogic.prontoPerDeposito(pratica, praticaService, statoService, avanzamentoService, commento, scadenza);
 			break;
 			
 		case "inDibattimento":
+			if (!PraticaBusinessLogic.doesUtenteGestiscePratica(utenteService, pratica)) {
+				String msg = "L'utente corrente non e' assegnatario della pratica";
+				throw new Exception(msg);
+			}
 			PraticaBusinessLogic.inDibattimento(pratica, praticaService, statoService, avanzamentoService, commento, scadenza);
 			break;
 
 		case "daFatturare":
+			if (!PraticaBusinessLogic.doesUtenteGestiscePratica(utenteService, pratica)) {
+				String msg = "L'utente corrente non e' assegnatario della pratica";
+				throw new Exception(msg);
+			}
 			PraticaBusinessLogic.daFatturare(pratica, praticaService, statoService, avanzamentoService, commento, scadenza);
 			break;
 			
@@ -113,6 +147,10 @@ public class AvanzamentoController {
 			break;
 
 		case "praticaRigettata":
+			if (!PraticaBusinessLogic.doesUtenteGestiscePratica(utenteService, pratica)) {
+				String msg = "L'utente corrente non e' assegnatario della pratica";
+				throw new Exception(msg);
+			}
 			PraticaBusinessLogic.praticaRigettata(pratica, praticaService, statoService, avanzamentoService, commento);
 			break;
 			
@@ -130,7 +168,6 @@ public class AvanzamentoController {
 		List<Avanzamento> listaAvanzamenti = avanzamentoService.listByPraticaId(pratica_id);
 		model.addAttribute("listaAvanzamenti", listaAvanzamenti);
 		
-		//return "avanzamenti/index";
 		return "redirect:/avanzamenti/?pratica=" + pratica.getId();
 	}
 		

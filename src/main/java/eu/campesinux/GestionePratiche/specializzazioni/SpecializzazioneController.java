@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import eu.campesinux.GestionePratiche.professionisti.Professionista;
-import eu.campesinux.GestionePratiche.professionisti.ProfessionistaService;
+import eu.campesinux.GestionePratiche.utenti.Utente;
+import eu.campesinux.GestionePratiche.utenti.UtenteService;
 
 @Controller
 public class SpecializzazioneController {
@@ -21,7 +21,7 @@ public class SpecializzazioneController {
 	private SpecializzazioneService service;
 	
 	@Autowired
-	private ProfessionistaService profService;
+	private UtenteService utenteService;
 	
 	@RequestMapping("/specializzazioni")
 	public String home(Model model) {
@@ -60,13 +60,13 @@ public class SpecializzazioneController {
 	public String delete(@PathVariable(name = "id") Long id) throws Exception {
 		
 		Specializzazione specializzazione = service.get(id);
-		List<Professionista> professionisti = profService.listBySpecializzazione(specializzazione);
+		List<Utente> utenti = utenteService.listBySpecializzazione(specializzazione);
 		
-		if (professionisti.size()>0) {
+		if (utenti.size()>0) {
 			String msg = "Errore, impossibile eliminare la specializzazione '" + specializzazione.getDescrizione();
 			msg += "', in quanto e' attribuita ai seguenti professionisti: ";
-			for (Professionista prof : professionisti) {
-				msg += prof.toString() + " ";
+			for (Utente utente : utenti) {
+				msg += utente.toString() + " ";
 			}
 			throw new Exception(msg);
 		}

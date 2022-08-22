@@ -16,7 +16,7 @@
 
 		<h3>Lista specializzazioni</h3>
 		
-		<a sec:authorize="hasRole('ADMIN')" href="specializzazioni/new">Crea nuova specializzazione</a>
+		<a sec:authorize="hasAuthority('ADMIN')" href="specializzazioni/new">Crea nuova specializzazione</a>
 
 		<br /><br />
 		<table border="1" cellpadding="10">
@@ -24,7 +24,7 @@
 				<tr>
 					<th>ID</th>
 					<th>Descrizione</th>
-					<th sec:authorize="hasRole('ADMIN')">Azioni</th>
+					<th sec:authorize="hasAuthority('ADMIN')">Azioni</th>
 
 				</tr>
 			</thead>
@@ -32,7 +32,7 @@
 				<tr th:each="specializzazione : ${listaSpecializzazioni}">
 					<td th:text="${specializzazione.id}">ID</td>
 					<td th:text="${specializzazione.descrizione}">Descrizione</td>
-					<td sec:authorize="hasRole('ADMIN')">
+					<td sec:authorize="hasAuthority('ADMIN')">
 						<a th:href="@{'/specializzazioni/edit/' + ${specializzazione.id}}">Edit</a>
 						&nbsp;&nbsp;&nbsp;
 						<a th:href="@{'/specializzazioni/delete/' + ${specializzazione.id}}">Delete</a>

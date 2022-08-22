@@ -20,12 +20,12 @@
 		<table border="1" cellpadding="10">
 			<tbody>
 				<tr>
-					<td sec:authorize="hasRole('ADMIN')"><a href="/pratiche/?filtro=daMettereInScadenza">daMettereInScadenza</a></td>
-					<td sec:authorize="hasRole('ADMIN')"><a href="/pratiche/?filtro=daMettereScadute">daMettereScadute</a></td>
+					<td sec:authorize="hasAuthority('ADMIN')"><a href="/pratiche/?filtro=daMettereInScadenza">daMettereInScadenza</a></td>
+					<td sec:authorize="hasAuthority('ADMIN')"><a href="/pratiche/?filtro=daMettereScadute">daMettereScadute</a></td>
 					<td><a href="/pratiche/?filtro=nuove">Pratiche nuove</a></td>
 					<td><a href="/pratiche/?filtro=inScadenza">Pratiche in scadenza</a></td>
 					<td><a href="/pratiche/?filtro=daFatturare">Pratiche da fatturare</a></td>
-					<td><a href="/pratiche/new">Crea nuova pratica</a></td>
+					<td sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')"><a href="/pratiche/new">Crea nuova pratica</a></td>
 					
 					<td> - </td>
 					
@@ -54,7 +54,7 @@
 					<th>Stato</th>
 					<th>Professionisti</th>
 					<th>Avanzamento</th>
-					<th sec:authorize="hasRole('ADMIN')">Azioni</th>
+					<th sec:authorize="hasAuthority('ADMIN')">Azioni</th>
 
 				</tr>
 			</thead>
@@ -67,14 +67,15 @@
 					<td th:text="${pratica.tipo}">Tipo</td>
 					<td th:text="${pratica.stato}">Stato</td>
 					<td>
-						<table><tr th:each="professionista : ${pratica.professionisti}">
-							<td th:text="${professionista}">Professionisti</td>
+						<table><tr th:each="utente : ${pratica.utenti}">
+							<td th:text="${utente}">Professionisti</td>
 						</tr></table>
 					</td>
 					<td>
-						<a th:href="@{'/avanzamenti/?pratica=' + ${pratica.id}}">Gestisci</a>
+						<a sec:authorize="hasAnyAuthority('USER')"th:href="@{'/avanzamenti/dettaglio?pratica=' + ${pratica.id}}">Dettaglio</a>
+						<a sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER', 'PROFESSIONISTA')" th:href="@{'/avanzamenti/?pratica=' + ${pratica.id}}">Gestisci</a>
 					</td>
-					<td sec:authorize="hasRole('ADMIN')">
+					<td sec:authorize="hasAuthority('ADMIN')">
 						<a th:href="@{'/pratiche/edit/' + ${pratica.id}}">Edit</a>
 						&nbsp;&nbsp;&nbsp;
 						<a th:href="@{'/pratiche/delete/' + ${pratica.id}}">Delete</a>

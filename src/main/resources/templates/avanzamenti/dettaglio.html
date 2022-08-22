@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Gestionale Pratiche</title>
+</head>
+
+<body>
+	<div align="center">
+
+		<div th:replace="fragments/page-header :: header"></div>
+
+	</div>
+	<div align="center">
+
+		<h3>Lista avanzamenti per la pratica</h3>
+		
+		<table border="1" cellpadding="10">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Identificativo</th>
+					<th>Descrizione</th>
+					<th>Cliente</th>
+					<th>Stato</th>
+					<th>Professionisti</th>
+				</tr>
+				</thead>
+			<tbody>
+				<tr>
+					<td th:text="${pratica.id}">ID</td>
+					<td th:text="${pratica.identificativo}">Identificativo</td>
+					<td th:text="${pratica.descrizione}">Descrizione</td>
+					<td th:text="${pratica.cliente}">Cliente</td>
+					<td th:text="${pratica.stato}">Stato</td>
+					<td>
+						<table><tr th:each="utente : ${pratica.utenti}">
+							<td th:text="${utente}">Professionisti</td>
+						</tr></table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+				
+		<hr>
+
+		<table border="1" cellpadding="10">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Data</th>
+					<th>Scadenza</th>
+					<th>Descrizione</th>
+					<th>Stato precedente</th>
+					<th>Stato attuale</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="avanzamento : ${listaAvanzamenti}">
+					<td th:text="${avanzamento.id}">ID</td>
+					<td th:text="${avanzamento.data}">Data</td>
+					<td th:text="${avanzamento.scadenza}">Scadenza</td>
+					<td th:text="${avanzamento.descrizione}">Descrizione</td>
+					<td th:text="${avanzamento.statoPrecedente}">Stato precedente</td>
+					<td th:text="${avanzamento.statoAttuale}">Stato attuale</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

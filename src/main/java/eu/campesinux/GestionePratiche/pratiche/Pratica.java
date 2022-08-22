@@ -17,7 +17,6 @@ import javax.persistence.OneToOne;
 
 import eu.campesinux.GestionePratiche.avanzamenti.Avanzamento;
 import eu.campesinux.GestionePratiche.clienti.Cliente;
-import eu.campesinux.GestionePratiche.professionisti.Professionista;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
 import eu.campesinux.GestionePratiche.tipoPratica.TipoPratica;
 import eu.campesinux.GestionePratiche.utenti.Utente;
@@ -37,10 +36,6 @@ public class Pratica {
 	@OneToMany (mappedBy="pratica")
 	private List<Avanzamento> avanzamenti;
 
-	@ManyToMany
-	@JoinTable(name = "pratica_professionista", joinColumns = @JoinColumn(name = "pratica_id"), inverseJoinColumns = @JoinColumn(name = "professionista_id"))
-	private Set<Professionista> professionisti = new HashSet<>();
-	
 	@ManyToMany
 	@JoinTable(name = "pratica_utente", joinColumns = @JoinColumn(name = "pratica_id"), inverseJoinColumns = @JoinColumn(name = "utente_id"))
 	private Set<Utente> utenti = new HashSet<>();
@@ -92,14 +87,6 @@ public class Pratica {
 		return this.utenti;
 	}
 	
-	public void addProfessionista(Professionista professionista) {
-		this.professionisti.add(professionista);
-	}
-
-	public Set<Professionista> getProfessionisti() {
-		return this.professionisti;
-	}
-
 	public Cliente getCliente() {
 		return cliente;
 	}

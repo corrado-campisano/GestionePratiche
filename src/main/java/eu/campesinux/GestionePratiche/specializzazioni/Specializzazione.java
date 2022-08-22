@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import eu.campesinux.GestionePratiche.professionisti.Professionista;
 import eu.campesinux.GestionePratiche.utenti.Utente;
 
 @Entity
@@ -21,9 +20,6 @@ public class Specializzazione {
 	private Long id;
 	private String descrizione;
 	
-	@ManyToMany(mappedBy = "specializzazioni")
-	List<Professionista> professionisti;
-
 	@ManyToMany(mappedBy = "specializzazioni")
 	List<Utente> utenti;
 	

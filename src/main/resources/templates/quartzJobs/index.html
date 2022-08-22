@@ -16,7 +16,7 @@
 
 		<h3>Lista jobs</h3>
 		
-		<a sec:authorize="hasRole('ADMIN')" href="quartzJobs/new">Crea nuovo job</a>
+		<a sec:authorize="hasAuthority('ADMIN')" href="quartzJobs/new">Crea nuovo job</a>
 
 		<br /><br />
 		<table border="1" cellpadding="10">
@@ -25,7 +25,7 @@
 					<th>ID</th>
 					<th>Gruppo</th>
 					<th>Prossima Exec</th>
-					<th sec:authorize="hasRole('ADMIN')">Azioni</th>
+					<th sec:authorize="hasAuthority('ADMIN')">Azioni</th>
 
 				</tr>
 			</thead>
@@ -34,7 +34,7 @@
 					<td th:text="${job.jobName}">ID</td>
 					<td th:text="${job.groupName}">Gruppo</td>
 					<td th:text="${job.nextExec}">Prossima Exec</td>
-					<td sec:authorize="hasRole('ADMIN')">
+					<td sec:authorize="hasAuthority('ADMIN')">
 						<a th:href="@{'/quartzJobs/delete/?jobName=' + ${job.jobName}}">Delete</a>
 					</td>
 				</tr>

@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import eu.campesinux.GestionePratiche.clienti.Cliente;
-import eu.campesinux.GestionePratiche.professionisti.Professionista;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
 import eu.campesinux.GestionePratiche.utenti.Utente;
 
@@ -20,8 +19,6 @@ public interface PraticaRepository extends PagingAndSortingRepository<Pratica, L
 
 	List<Pratica> findByStato(StatoPratica stato);
 	
-	List<Pratica> findByProfessionisti(Professionista prof);
-
 	List<Pratica> findByUtenti(Utente utente);
 
 	List<Pratica> findByCliente(Cliente cliente);

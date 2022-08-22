@@ -16,7 +16,7 @@
 
 		<h3>Lista clienti</h3>
 		
-		<a href="clienti/new">Crea nuovo cliente</a>
+		<a sec:authorize="hasAnyAuthority('ADMIN','MANAGER')" href="clienti/new">Crea nuovo cliente</a>
 
 		<br /><br />
 		<table border="1" cellpadding="10">
@@ -25,7 +25,7 @@
 					<th>ID</th>
 					<th>Ragione Sociale</th>
 					<th>Codice Fiscale</th>
-					<th sec:authorize="hasRole('ADMIN')">Azioni</th>
+					<th sec:authorize="hasAuthority('ADMIN')">Azioni</th>
 
 				</tr>
 			</thead>
@@ -34,7 +34,7 @@
 					<td th:text="${cliente.id}">ID</td>
 					<td th:text="${cliente.ragioneSociale}">Ragione Sociale</td>
 					<td th:text="${cliente.codiceFiscale}">Codice Fiscale</td>
-					<td sec:authorize="hasRole('ADMIN')">
+					<td sec:authorize="hasAuthority('ADMIN')">
 						<a th:href="@{'/clienti/edit/' + ${cliente.id}}">Edit</a>
 						&nbsp;&nbsp;&nbsp;
 						<a th:href="@{'/clienti/delete/' + ${cliente.id}}">Delete</a>

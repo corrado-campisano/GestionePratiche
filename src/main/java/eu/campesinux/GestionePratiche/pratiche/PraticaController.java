@@ -19,19 +19,17 @@ import eu.campesinux.GestionePratiche.avanzamenti.Avanzamento;
 import eu.campesinux.GestionePratiche.avanzamenti.AvanzamentoService;
 import eu.campesinux.GestionePratiche.clienti.Cliente;
 import eu.campesinux.GestionePratiche.clienti.ClienteService;
-import eu.campesinux.GestionePratiche.professionisti.Professionista;
-import eu.campesinux.GestionePratiche.professionisti.ProfessionistaService;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPraticaService;
 import eu.campesinux.GestionePratiche.tipoPratica.TipoPratica;
 import eu.campesinux.GestionePratiche.tipoPratica.TipoPraticaService;
+import eu.campesinux.GestionePratiche.utenti.Utente;
+import eu.campesinux.GestionePratiche.utenti.UtenteService;
 
 @Controller
 public class PraticaController {
 	@Autowired
 	private PraticaService service;
-	@Autowired
-	private ProfessionistaService profService;
 	@Autowired
 	private ClienteService clienteService;
 	@Autowired
@@ -40,6 +38,8 @@ public class PraticaController {
 	private StatoPraticaService statoService;
 	@Autowired
 	private AvanzamentoService avanzamentoService;
+	@Autowired
+	private UtenteService utenteService;
 
 	int itemsPerPage = 2;
 
@@ -98,14 +98,14 @@ public class PraticaController {
 
 	@RequestMapping(value = "/pratiche/save", method = RequestMethod.POST)
 	public String save(@ModelAttribute("pratica") Pratica pratica,
-			@RequestParam(name = "professionisti", required = false) Long[] professionisti) {
+			@RequestParam(name = "utenti", required = false) Long[] utenti) {
 
-		if (professionisti != null) {
-			Professionista prof = null;
-			for (int i = 0; i < professionisti.length; i++) {
-				Long id = professionisti[i];
-				prof = profService.get(id);
-				pratica.addProfessionista(prof);
+		if (utenti != null) {
+			Utente utente = null;
+			for (int i = 0; i < utenti.length; i++) {
+				Long id = utenti[i];
+				utente = utenteService.get(id);
+				pratica.addUtente(utente);
 			}
 		}
 
@@ -118,8 +118,8 @@ public class PraticaController {
 	public ModelAndView edit(@PathVariable(name = "id") Long id) {
 		ModelAndView mav = new ModelAndView("pratiche/edit");
 
-		List<Professionista> listaProfessionisti = profService.listAll();
-		mav.addObject("listaProfessionisti", listaProfessionisti);
+		List<Utente> listaUtenti = utenteService.listAll();
+		mav.addObject("listaUtenti", listaUtenti);
 
 		List<Cliente> listaClienti = clienteService.listAll();
 		mav.addObject("listaClienti", listaClienti);

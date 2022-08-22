@@ -1,14 +1,64 @@
 package eu.campesinux.GestionePratiche.pratiche;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
+
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import eu.campesinux.GestionePratiche.avanzamenti.Avanzamento;
 import eu.campesinux.GestionePratiche.avanzamenti.AvanzamentoService;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPraticaService;
+import eu.campesinux.GestionePratiche.utenti.Utente;
+import eu.campesinux.GestionePratiche.utenti.UtenteService;
 
 public class PraticaBusinessLogic {
+	
+	public static boolean isUtenteWithAuthority(String authority) {
+
+		boolean isUtenteWithAuthority = false;
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+		    Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+		    for (GrantedAuthority ga : authorities) {
+		    	if (ga.getAuthority().equals(authority)) {
+		    		isUtenteWithAuthority=true;
+		    		break;
+		    	}
+		    }
+		}
+				
+		return isUtenteWithAuthority;
+	}
+	
+	public static boolean doesUtenteGestiscePratica(UtenteService utenteService, Pratica pratica) {
+
+		boolean doesUtenteGestiscePratica = false;
+		Utente utente = null;
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+		    String currentUserName = authentication.getName();
+		    utente = utenteService.listByUsername(currentUserName);
+		}
+		
+		if (utente!=null) {
+			for (Utente professionista : pratica.getUtenti()) {
+				if (utente.getId()==professionista.getId()) {
+					doesUtenteGestiscePratica = true;
+					break;
+				}
+			}
+		}
+		
+		return doesUtenteGestiscePratica;
+	}
+	
 	
 	public static Avanzamento getUltimoAvanzamento(Pratica pratica, AvanzamentoService avanzamentoService) {
 		
@@ -34,7 +84,7 @@ public class PraticaBusinessLogic {
 	
 	public static void presaInCarico(Pratica pratica, PraticaService praticaService, 
 			StatoPraticaService statoService, AvanzamentoService avanzamentoService, String commento, LocalDateTime scadenza) {
-		
+				
 		StatoPratica nuovo = statoService.findByStato(StatoPratica.STATO_IN_LAVORAZIONE);
 				
 		Avanzamento avanzamento = new Avanzamento();
@@ -51,8 +101,8 @@ public class PraticaBusinessLogic {
 	}
 
 	public static void prontoPerNotifica(Pratica pratica, PraticaService praticaService,
-			StatoPraticaService statoService, AvanzamentoService avanzamentoService, String commento, LocalDateTime scadenza) {
-		
+			StatoPraticaService statoService, AvanzamentoService avanzamentoService, UtenteService utenteService, String commento, LocalDateTime scadenza) {
+						
 		StatoPratica nuovo = statoService.findByStato(StatoPratica.STATO_DA_NOTIFICARE);
 		
 		Avanzamento avanzamento = new Avanzamento();

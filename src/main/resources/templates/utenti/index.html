@@ -16,7 +16,7 @@
 
 		<h3>Lista utenti</h3>
 		
-		<a sec:authorize="hasRole('ADMIN')" href="utenti/new">Crea nuovo utente</a>
+		<a sec:authorize="hasAuthority('ADMIN')" href="utenti/new">Crea nuovo utente</a>
 
 		<br /><br />
 		<table border="1" cellpadding="10">
@@ -29,7 +29,7 @@
 					<th>Ruolo</th>
 					<th>Abilitato</th>
 					<th>Specializzazioni</th>
-					<th sec:authorize="hasRole('ADMIN')">Azioni</th>
+					<th sec:authorize="hasAuthority('ADMIN')">Azioni</th>
 
 				</tr>
 			</thead>
@@ -46,7 +46,7 @@
 							<td th:text="${specializzazione.descrizione}">Specializzazione</td>
 						</tr></table>
 					</td>
-					<td sec:authorize="hasRole('ADMIN')">
+					<td sec:authorize="hasAuthority('ADMIN')">
 						<a th:href="@{'/utenti/edit/' + ${utente.id}}">Edit</a>
 						&nbsp;&nbsp;&nbsp;
 						<a th:href="@{'/utenti/delete/' + ${utente.id}}">Delete</a>
