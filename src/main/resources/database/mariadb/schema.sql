@@ -1,13 +1,38 @@
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `utenti`;
+CREATE TABLE `utenti` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(45) NOT NULL,
   `password` varchar(64) NOT NULL,
+  `nome` varchar(45) NOT NULL,
+  `cognome` varchar(64) NOT NULL,
   `role` varchar(45) NOT NULL,
   `enabled` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`user_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ruoli`;
+CREATE TABLE `ruoli` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ruolo` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `specializzazione`;
+CREATE TABLE `specializzazione` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descrizione` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `utente_specializzazione`;
+CREATE TABLE `utente_specializzazione` (
+  utente_id INT(11) UNSIGNED NOT NULL,
+  specializzazione_id INT(11) UNSIGNED NOT NULL,
+  UNIQUE (utente_id,specializzazione_id)
+) engine=InnoDB DEFAULT CHARSET=utf8;
 
 
 DROP TABLE IF EXISTS `cliente`;
@@ -31,14 +56,6 @@ DROP TABLE IF EXISTS `tipo_pratica`;
 CREATE TABLE `tipo_pratica` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `tipo` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `specializzazione`;
-CREATE TABLE `specializzazione` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `descrizione` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -71,6 +88,13 @@ CREATE TABLE `pratica` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+DROP TABLE IF EXISTS `pratica_utente`;
+CREATE TABLE `pratica_utente` (
+  pratica_id INT(11) UNSIGNED NOT NULL,
+  utente_id INT(11) UNSIGNED NOT NULL,
+  UNIQUE (pratica_id,utente_id)
+) engine=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `pratica_professionista`;
 CREATE TABLE `pratica_professionista` (

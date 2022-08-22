@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import eu.campesinux.GestionePratiche.professionisti.Professionista;
+import eu.campesinux.GestionePratiche.utenti.Utente;
 
 @Service
 public class SpecializzazioneService {
@@ -31,5 +32,9 @@ public class SpecializzazioneService {
 	
 	public List<Specializzazione> listByProfessionisti(Professionista prof) {
 		return repo.findByProfessionisti(prof);
+	}
+
+	public List<Specializzazione> listByUtente(Utente utente) {
+		return repo.findByUtenti(utente);
 	}
 }

@@ -14,6 +14,7 @@ import eu.campesinux.GestionePratiche.clienti.Cliente;
 import eu.campesinux.GestionePratiche.professionisti.Professionista;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPraticaService;
+import eu.campesinux.GestionePratiche.utenti.Utente;
 
 @Service
 public class PraticaService {
@@ -89,6 +90,10 @@ public class PraticaService {
 	
 	public List<Pratica> listDaMettereScadutePerJob() {
 		return repo.findDaMettereScadute();
+	}
+
+	public List<Pratica> listByUtente(Utente utente) {
+		return repo.findByUtenti(utente);
 	}
 	
 }

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Gestionale Pratiche</title>
+</head>
+
+<body>
+	<div align="center">
+
+		<div th:replace="fragments/page-header :: header"></div>
+
+	</div>
+	<div align="center">
+	
+		<h3>Creazione nuovo utente</h3>
+		
+		<form action="#" th:action="@{/utenti/save}" th:object="${utente}" method="post">
+			<table border="1" cellpadding="10">
+				<tr>
+					<td>Nome:</td>
+					<td><input type="text" th:field="*{nome}" /></td>
+				</tr>
+				<tr>
+					<td>Cognome:</td>
+					<td><input type="text" th:field="*{cognome}" /></td>
+				</tr>
+				<tr>
+					<td>UserName:</td>
+					<td><input type="text" th:field="*{username}" /></td>
+				</tr>
+				<tr>
+					<td>Password:</td>
+					<td><input type="password" id="password" name="password" /></td>
+				</tr>
+				<tr>
+					<td>Ruolo:</td>
+					<td>
+						<select name="role">
+							<option th:each="ruolo : ${listaRuoli}"
+				            th:text="${ruolo.ruolo}"
+				            th:value="${ruolo.ruolo}"
+				            th:field="*{role}"></option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Abilitato:</td>
+					<td><input type="checkbox" th:field="*{enabled}" /></td>
+				</tr>
+				<tr>
+					<td>Specializzazioni:</td>
+					<td>
+						<input type="checkbox" name="specializzazioni"
+				            th:each="specializzazione : ${listaSpecializzazioni}"
+				            th:text="${specializzazione.descrizione}"
+				            th:value="${specializzazione.id}"
+				            th:field="*{specializzazioni}"
+				        />
+					</td >
+				</tr>
+				<tr>
+					<td colspan="2"><button type="submit">Save</button></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+</html>

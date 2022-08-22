@@ -14,8 +14,8 @@ public class StatoPraticaService {
 		return repo.findAll();
 	}
 	
-	public void save(StatoPratica pratica) {
-		repo.save(pratica);
+	public void save(StatoPratica statoPratica) {
+		repo.save(statoPratica);
 	}
 	
 	public StatoPratica get(Long id) {

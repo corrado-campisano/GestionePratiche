@@ -20,6 +20,7 @@ import eu.campesinux.GestionePratiche.clienti.Cliente;
 import eu.campesinux.GestionePratiche.professionisti.Professionista;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
 import eu.campesinux.GestionePratiche.tipoPratica.TipoPratica;
+import eu.campesinux.GestionePratiche.utenti.Utente;
 
 @Entity
 public class Pratica {
@@ -35,10 +36,14 @@ public class Pratica {
 	
 	@OneToMany (mappedBy="pratica")
 	private List<Avanzamento> avanzamenti;
-	
+
 	@ManyToMany
 	@JoinTable(name = "pratica_professionista", joinColumns = @JoinColumn(name = "pratica_id"), inverseJoinColumns = @JoinColumn(name = "professionista_id"))
 	private Set<Professionista> professionisti = new HashSet<>();
+	
+	@ManyToMany
+	@JoinTable(name = "pratica_utente", joinColumns = @JoinColumn(name = "pratica_id"), inverseJoinColumns = @JoinColumn(name = "utente_id"))
+	private Set<Utente> utenti = new HashSet<>();
 
 	@OneToOne
 	@JoinColumn(name = "cliente_id", referencedColumnName = "id")
@@ -79,6 +84,14 @@ public class Pratica {
 		this.descrizione = descrizione;
 	}
 
+	public void addUtente(Utente utente) {
+		this.utenti.add(utente);
+	}
+
+	public Set<Utente> getUtenti() {
+		return this.utenti;
+	}
+	
 	public void addProfessionista(Professionista professionista) {
 		this.professionisti.add(professionista);
 	}

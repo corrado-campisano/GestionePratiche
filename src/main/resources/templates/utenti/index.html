@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Gestionale Pratiche</title>
+</head>
+
+<body>
+	<div align="center">
+
+		<div th:replace="fragments/page-header :: header"></div>
+
+	</div>
+	<div align="center">
+
+		<h3>Lista utenti</h3>
+		
+		<a sec:authorize="hasRole('ADMIN')" href="utenti/new">Crea nuovo utente</a>
+
+		<br /><br />
+		<table border="1" cellpadding="10">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nome</th>
+					<th>Cognome</th>
+					<th>UserName</th>
+					<th>Ruolo</th>
+					<th>Abilitato</th>
+					<th>Specializzazioni</th>
+					<th sec:authorize="hasRole('ADMIN')">Azioni</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="utente : ${listaUtenti}">
+					<td th:text="${utente.id}">ID</td>
+					<td th:text="${utente.nome}">Nome</td>
+					<td th:text="${utente.cognome}">Cognome</td>
+					<td th:text="${utente.username}">UserName</td>
+					<td th:text="${utente.role}">Ruolo</td>
+					<td th:text="${utente.enabled}">Abilitato</td>
+					<td>
+						<table><tr th:each="specializzazione : ${utente.specializzazioni}">
+							<td th:text="${specializzazione.descrizione}">Specializzazione</td>
+						</tr></table>
+					</td>
+					<td sec:authorize="hasRole('ADMIN')">
+						<a th:href="@{'/utenti/edit/' + ${utente.id}}">Edit</a>
+						&nbsp;&nbsp;&nbsp;
+						<a th:href="@{'/utenti/delete/' + ${utente.id}}">Delete</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+</html>

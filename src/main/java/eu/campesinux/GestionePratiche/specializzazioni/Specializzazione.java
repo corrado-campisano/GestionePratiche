@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 import eu.campesinux.GestionePratiche.professionisti.Professionista;
+import eu.campesinux.GestionePratiche.utenti.Utente;
 
 @Entity
 public class Specializzazione {
@@ -22,6 +23,9 @@ public class Specializzazione {
 	
 	@ManyToMany(mappedBy = "specializzazioni")
 	List<Professionista> professionisti;
+
+	@ManyToMany(mappedBy = "specializzazioni")
+	List<Utente> utenti;
 	
 	public Specializzazione() {
 	}
