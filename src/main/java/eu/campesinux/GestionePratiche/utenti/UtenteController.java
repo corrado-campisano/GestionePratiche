@@ -57,7 +57,14 @@ public class UtenteController {
 	@RequestMapping(value = "/utenti/save", method = RequestMethod.POST)
 	public String save(@ModelAttribute("utente") Utente utente, 
 			@RequestParam (name="password", required=true) String password,
-			@RequestParam (name="specializzazioni", required=false) Long[] specializzazioni) {
+			@RequestParam (name="specializzazioni", required=false) Long[] specializzazioni) throws Exception {
+		
+		if (utente.getId()==null) {
+			Utente omonimo = service.listByUsername(utente.getUsername());
+			if (omonimo!=null) {
+				throw new Exception("Un utente con l'username '" + omonimo.getUsername() + "' esiste gia', specificarne uno diverso");
+			}
+		}
 		
 		if (specializzazioni!=null) {
 			Specializzazione spec = null;
