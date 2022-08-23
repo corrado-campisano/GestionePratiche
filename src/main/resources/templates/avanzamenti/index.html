@@ -65,20 +65,20 @@
 			    		<table>
 			    			<tr>
 								<td>Professionisti:</td>
-								<td colspan="4">
-									<input type="checkbox" name="utenti"
-							            th:each="utente : ${listaUtenti}"
+								<td>
+							        <select name="utenti" multiple size="2">
+										<option th:each="utente : ${listaUtenti}"
 							            th:text="${utente}"
-							            th:value="${utente.id}"
-							        />
+							            th:value="${utente.id}"></option>
+									</select>
 								</td>
+								<td>Scadenza:</td>
+								<td><input type="text" id="scadenza" name="scadenza" /></td>
 							</tr>
 							<tr>
 								<td>Commento:</td>
-								<td><input type="text" size="50" id="commento" name="commento" /></td>
-								<td>Scadenza:</td>
-								<td><input type="text" id="scadenza" name="scadenza" /></td>
-								<td><button type="submit" name="azione" value="presaInCarico">Prendi in carico</button></td>
+								<td colspan="2"><input type="text" size="50" id="commento" name="commento" /></td>
+								<td align="right"><button type="submit" name="azione" value="presaInCarico">Prendi in carico</button></td>
 							</tr>
 			    		</table>
 			    	</form>

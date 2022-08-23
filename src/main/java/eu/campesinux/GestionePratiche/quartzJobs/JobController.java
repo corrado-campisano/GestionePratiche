@@ -37,7 +37,7 @@ public class JobController {
 	@RequestMapping("/quartzJobs")
 	public String viewHomePage(Model model) {
 
-		List<PraticheScadenzeJob> jobs = Utils.recuperaAutomatismi(scheduler);
+		List<PraticheScadenzeJob> jobs = PraticheScadenzeJob.recuperaAutomatismi(scheduler);
 
 		model.addAttribute("listaJobs", jobs);
 

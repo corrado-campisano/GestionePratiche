@@ -96,66 +96,43 @@ public class AvanzamentoController {
 		
 		switch (azione) {
 		case "presaInCarico":
-			if (utenti==null) {
-				throw new Exception("Errore, specificare almeno un utente a cui assegnare la pratica");
-			}
-			
-			Utente utente = null;
-			for (int i = 0; i < utenti.length; i++) {
-				Long id = utenti[i];
-				utente = utenteService.get(id);
-				pratica.addUtente(utente);
-			}
-			
-			PraticaBusinessLogic.presaInCarico(pratica, praticaService, statoService, avanzamentoService, commento, scadenza);
+			PraticaBusinessLogic.presaInCarico(pratica, utenti, commento, scadenza, 
+					utenteService, avanzamentoService, praticaService, statoService);
 			break;
 
 		case "prontoPerNotifica":
-			if (!PraticaBusinessLogic.doesUtenteGestiscePratica(utenteService, pratica)) {
-				String msg = "L'utente corrente non e' assegnatario della pratica";
-				throw new Exception(msg);
-			}
-			PraticaBusinessLogic.prontoPerNotifica(pratica, praticaService, statoService, avanzamentoService, utenteService, commento, scadenza);
+			PraticaBusinessLogic.prontoPerNotifica(pratica, commento, scadenza,
+					statoService, avanzamentoService, praticaService, utenteService);
 			break;
 			
 		case "prontoPerDeposito":
-			if (!PraticaBusinessLogic.doesUtenteGestiscePratica(utenteService, pratica)) {
-				String msg = "L'utente corrente non e' assegnatario della pratica";
-				throw new Exception(msg);
-			}
-			PraticaBusinessLogic.prontoPerDeposito(pratica, praticaService, statoService, avanzamentoService, commento, scadenza);
+			PraticaBusinessLogic.prontoPerDeposito(pratica, commento, scadenza,
+					statoService, avanzamentoService, praticaService, utenteService);
 			break;
 			
 		case "inDibattimento":
-			if (!PraticaBusinessLogic.doesUtenteGestiscePratica(utenteService, pratica)) {
-				String msg = "L'utente corrente non e' assegnatario della pratica";
-				throw new Exception(msg);
-			}
-			PraticaBusinessLogic.inDibattimento(pratica, praticaService, statoService, avanzamentoService, commento, scadenza);
+			PraticaBusinessLogic.inDibattimento(pratica, commento, scadenza,
+					statoService, avanzamentoService, praticaService, utenteService);
 			break;
 
 		case "daFatturare":
-			if (!PraticaBusinessLogic.doesUtenteGestiscePratica(utenteService, pratica)) {
-				String msg = "L'utente corrente non e' assegnatario della pratica";
-				throw new Exception(msg);
-			}
-			PraticaBusinessLogic.daFatturare(pratica, praticaService, statoService, avanzamentoService, commento, scadenza);
+			PraticaBusinessLogic.daFatturare(pratica, commento, scadenza,
+					statoService, avanzamentoService, praticaService, utenteService);
 			break;
 			
 		case "praticaEvasa":
-			PraticaBusinessLogic.praticaEvasa(pratica, praticaService, statoService, avanzamentoService, commento);
+			PraticaBusinessLogic.praticaEvasa(pratica, commento, 
+					statoService, avanzamentoService, praticaService);
 			break;
 
 		case "praticaRigettata":
-			if (!PraticaBusinessLogic.doesUtenteGestiscePratica(utenteService, pratica)) {
-				String msg = "L'utente corrente non e' assegnatario della pratica";
-				throw new Exception(msg);
-			}
-			PraticaBusinessLogic.praticaRigettata(pratica, praticaService, statoService, avanzamentoService, commento);
+			PraticaBusinessLogic.praticaRigettata(pratica, commento,
+					statoService, avanzamentoService, praticaService, utenteService);
 			break;
 			
 		case "prorogaPratica":
-			PraticaBusinessLogic.prorogaPratica(pratica, praticaService, statoService, avanzamentoService, commento);
+			PraticaBusinessLogic.prorogaPratica(pratica, commento, 
+					avanzamentoService, praticaService);
 			break;
 			
 		default:

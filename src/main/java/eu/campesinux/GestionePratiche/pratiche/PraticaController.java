@@ -118,7 +118,7 @@ public class PraticaController {
 	public ModelAndView edit(@PathVariable(name = "id") Long id) {
 		ModelAndView mav = new ModelAndView("pratiche/edit");
 
-		List<Utente> listaUtenti = utenteService.listAll();
+		List<Utente> listaUtenti = utenteService.listAllProfessionals();
 		mav.addObject("listaUtenti", listaUtenti);
 
 		List<Cliente> listaClienti = clienteService.listAll();

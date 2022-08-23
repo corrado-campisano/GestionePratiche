@@ -66,12 +66,12 @@
 				<tr>
 					<td>Professionisti:</td>
 					<td>
-						<input type="checkbox" name="professionisti"
-				            th:each="professionista : ${listaProfessionisti}"
-				            th:text="${professionista}"
-				            th:value="${professionista.id}"
-				            th:field="*{professionisti}"
-				        />
+				        <select name="utenti" multiple size="2">
+							<option th:each="utente : ${listaUtenti}"
+				            th:text="${utente}"
+				            th:value="${utente.id}"
+				            th:field="*{utenti}"></option>
+						</select>
 					</td >
 				</tr>
 				<tr>

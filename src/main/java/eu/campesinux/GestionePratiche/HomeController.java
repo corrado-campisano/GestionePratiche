@@ -19,7 +19,7 @@ public class HomeController {
 	@RequestMapping("/")
 	public String viewHomePage(Model model) {
 
-		List<PraticheScadenzeJob> jobs = Utils.recuperaAutomatismi(scheduler);
+		List<PraticheScadenzeJob> jobs = PraticheScadenzeJob.recuperaAutomatismi(scheduler);
 
 		model.addAttribute("listaJobs", jobs);
 
