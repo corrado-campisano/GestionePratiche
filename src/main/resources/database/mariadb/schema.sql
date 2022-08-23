@@ -8,7 +8,8 @@ CREATE TABLE `utenti` (
   `cognome` varchar(64) NOT NULL,
   `role` varchar(45) NOT NULL,
   `enabled` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `ruoli`;
@@ -40,7 +41,8 @@ CREATE TABLE `cliente` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ragione_sociale` varchar(255) NOT NULL,
   `codice_fiscale` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE (codice_fiscale)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

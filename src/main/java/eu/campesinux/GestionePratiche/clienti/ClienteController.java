@@ -38,7 +38,16 @@ public class ClienteController {
 	}
 	
 	@RequestMapping(value = "/clienti/save", method = RequestMethod.POST)
-	public String save(@ModelAttribute("cliente") Cliente cliente) {
+	public String save(@ModelAttribute("cliente") Cliente cliente) throws Exception {
+		
+		if (cliente.getId()==null) {
+			Cliente omocode = service.getByCodiceFiscale(cliente.getCodiceFiscale());
+			if (omocode!=null) {
+				throw new Exception("Un cliente con il codice fiscale '" + omocode.getCodiceFiscale() + 
+						"' esiste gia', specificarne uno diverso");
+			}
+		}
+		
 		service.save(cliente);
 		
 		return "redirect:/clienti";

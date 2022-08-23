@@ -62,7 +62,8 @@ public class UtenteController {
 		if (utente.getId()==null) {
 			Utente omonimo = service.listByUsername(utente.getUsername());
 			if (omonimo!=null) {
-				throw new Exception("Un utente con l'username '" + omonimo.getUsername() + "' esiste gia', specificarne uno diverso");
+				throw new Exception("Un utente con l'username '" + omonimo.getUsername() + 
+						"' esiste gia', specificarne uno diverso");
 			}
 		}
 		

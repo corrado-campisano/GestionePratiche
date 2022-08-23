@@ -26,4 +26,8 @@ public class ClienteService {
 	public void delete(Long id) {
 		repo.deleteById(id);
 	}
+	
+	public Cliente getByCodiceFiscale(String codFisc) {
+		return repo.findByCodiceFiscale(codFisc);
+	}	
 }
