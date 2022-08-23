@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.quartz.JobDataMap;
+import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobKey;
@@ -32,6 +33,7 @@ public class PraticheScadenzeJob extends QuartzJobBean {
 	String jobName;
 	String groupName;
 	LocalDateTime nextExec;
+	Long giorniAnticipo;
 
 	@Autowired
 	private PraticaService pService;
@@ -143,6 +145,14 @@ public class PraticheScadenzeJob extends QuartzJobBean {
 		this.nextExec = nextExec;
 	}
 	
+	public Long getGiorniAnticipo() {
+		return giorniAnticipo;
+	}
+
+	public void setGiorniAnticipo(Long giorniAnticipo) {
+		this.giorniAnticipo = giorniAnticipo;
+	}
+
 	public static List<PraticheScadenzeJob> recuperaAutomatismi(Scheduler scheduler) {
 		
 		List<PraticheScadenzeJob> jobs = new ArrayList<PraticheScadenzeJob>();
@@ -153,10 +163,15 @@ public class PraticheScadenzeJob extends QuartzJobBean {
 
 					String jobName = jobKey.getName();
 					String jobGroup = jobKey.getGroup();
-
+					
+					JobDetail jobDetail = scheduler.getJobDetail(jobKey);
+					JobDataMap jobDataMap = jobDetail.getJobDataMap();
+					Long giorniAnticipo = jobDataMap.getLong("giorniAnticipo");
+					
 					PraticheScadenzeJob psj = new PraticheScadenzeJob();
 					psj.setGroupName(jobGroup);
 					psj.setJobName(jobName);
+					psj.setGiorniAnticipo(giorniAnticipo);
 
 					// get job's trigger
 					List<? extends Trigger> trigs = scheduler.getTriggersOfJob(jobKey);

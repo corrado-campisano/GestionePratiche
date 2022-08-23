@@ -26,12 +26,14 @@
 				<tr>
 					<th>Automatismo</th>
 					<th>Prossima Esecuzione</th>
+					<th>Anticipo in giorni</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="job : ${listaJobs}">
 					<td th:text="${job.groupName}">Automatismo</td>
 					<td th:text="${job.nextExec}">Prossima Esecuzione</td>
+					<td th:text="${job.giorniAnticipo}">Anticipo in giorni</td>
 				</tr>
 			</tbody>
 		</table>

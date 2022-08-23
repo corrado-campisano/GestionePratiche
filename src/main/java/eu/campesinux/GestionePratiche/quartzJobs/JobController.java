@@ -53,9 +53,8 @@ public class JobController {
 	@RequestMapping("/quartzJobs/delete")
 	public String delete(Model model, @RequestParam(name = "jobName", required = true) String jobName) {
 
-		// TODO : deleting does not work
-
-		JobKey jobKey = new JobKey(jobName);
+		JobKey jobKey = new JobKey(jobName, "PraticheScadenzeJob");
+		
 		try {
 			boolean interrupted = scheduler.interrupt(jobKey);
 			if (!interrupted) {

@@ -26,6 +26,7 @@
 					<th>ID</th>
 					<th>Gruppo</th>
 					<th>Prossima Exec</th>
+					<th>Anticipo in giorni</th>
 					<th sec:authorize="hasAuthority('ADMIN')">Azioni</th>
 
 				</tr>
@@ -35,6 +36,7 @@
 					<td th:text="${job.jobName}">ID</td>
 					<td th:text="${job.groupName}">Gruppo</td>
 					<td th:text="${job.nextExec}">Prossima Exec</td>
+					<td th:text="${job.giorniAnticipo}">Anticipo in giorni</td>
 					<td sec:authorize="hasAuthority('ADMIN')">
 						<a th:href="@{'/quartzJobs/delete/?jobName=' + ${job.jobName}}">Delete</a>
 					</td>

@@ -41,7 +41,7 @@ public class PraticaController {
 	@Autowired
 	private UtenteService utenteService;
 
-	int itemsPerPage = 2;
+	int itemsPerPage = 10;
 
 	@RequestMapping("/pratiche")
 	public String home(Model model, @RequestParam(name = "filtro", required = false) String filtro,
