@@ -2,13 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-<meta charset="ISO-8859-1">
-<title>Gestionale Pratiche</title>
+	<meta charset="ISO-8859-1">
+	<title>Gestionale Pratiche</title>
+	<link rel="stylesheet" href="/css/baseStyle.css">
 </head>
 <body>
 <div align="center">	
 
-	<div th:replace="fragments/page-header :: header"></div>
+	<div th:replace="_fragments/page-header :: header"></div>
 
 	<h3>Benvenuto, usa i link nell'header per procedere</h3>
 	
@@ -19,7 +20,8 @@
 		</div>
 		<div th:if="${listaJobs.size() > 0}">
 		Automatismo correttamente configurato.
-		<table border="1" cellpadding="10">
+		<br><br>
+		<table>
 			<thead>
 				<tr>
 					<th>Automatismo</th>

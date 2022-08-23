@@ -4,19 +4,20 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<title>Gestionale Pratiche</title>
+	<link rel="stylesheet" href="/css/baseStyle.css">
 </head>
 
 <body>
 	<div align="center">
 
-		<div th:replace="fragments/page-header :: header"></div>
+		<div th:replace="_fragments/page-header :: header"></div>
 
 	</div>
 	<div align="center">
 	
 		<h3>Modifica avanzamento per la pratica</h3>
 		
-		<table border="1" cellpadding="10">
+		<table>
 			<thead>
 				<tr>
 					<th>ID</th>
@@ -40,7 +41,7 @@
 	
 		<h3>Modifica avanzamento</h3>
 		<form action="#" th:action="@{/avanzamenti/save}" th:object="${avanzamento}" method="post">
-			<table border="0" cellpadding="10">
+			<table>
 				<tr>
 					<td>ID:</td>
 					<td><input type="text" th:field="*{id}" readonly="readonly" /></td>

@@ -4,12 +4,13 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<title>Gestionale Pratiche</title>
+	<link rel="stylesheet" href="/css/baseStyle.css">
 </head>
 
 <body>
 	<div align="center">
 
-		<div th:replace="fragments/page-header :: header"></div>
+		<div th:replace="_fragments/page-header :: header"></div>
 
 	</div>
 	<div align="center">
@@ -19,7 +20,7 @@
 		<a sec:authorize="hasAuthority('ADMIN')" href="specializzazioni/new">Crea nuova specializzazione</a>
 
 		<br /><br />
-		<table border="1" cellpadding="10">
+		<table>
 			<thead>
 				<tr>
 					<th>ID</th>

@@ -19,7 +19,6 @@ import eu.campesinux.GestionePratiche.ruoli.Ruolo;
 import eu.campesinux.GestionePratiche.ruoli.RuoloService;
 import eu.campesinux.GestionePratiche.specializzazioni.Specializzazione;
 import eu.campesinux.GestionePratiche.specializzazioni.SpecializzazioneService;
-import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
 
 @Controller
 public class UtenteController {

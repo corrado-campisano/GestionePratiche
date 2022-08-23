@@ -4,12 +4,13 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<title>Gestionale Pratiche</title>
+	<link rel="stylesheet" href="/css/baseStyle.css">
 </head>
 
 <body>
 	<div align="center">
 
-		<div th:replace="fragments/page-header :: header"></div>
+		<div th:replace="_fragments/page-header :: header"></div>
 
 	</div>
 	<div align="center">
@@ -17,7 +18,7 @@
 		<h3>Modifica utente</h3>
 		
 		<form action="#" th:action="@{/utenti/save}" th:object="${utente}" method="post">
-			<table border="0" cellpadding="10">
+			<table>
 				<tr>
 					<td>ID:</td>
 					<td><input type="text" th:field="*{id}" readonly="readonly" /></td>
@@ -56,12 +57,12 @@
 				<tr>
 					<td>Specializzazioni:</td>
 					<td>
-						<input type="checkbox" name="specializzazioni"
-				            th:each="specializzazione : ${listaSpecializzazioni}"
+				         <select name="specializzazioni" multiple size="2">
+							<option th:each="specializzazione : ${listaSpecializzazioni}"
 				            th:text="${specializzazione.descrizione}"
 				            th:value="${specializzazione.id}"
-				            th:field="*{specializzazioni}"
-				        />
+				            th:field="*{specializzazioni}"></option>
+						</select>
 					</td >
 				</tr>
 				<tr>

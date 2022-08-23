@@ -4,12 +4,13 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<title>Gestionale Pratiche</title>
+	<link rel="stylesheet" href="/css/baseStyle.css">
 </head>
 
 <body>
 	<div align="center">
 
-		<div th:replace="fragments/page-header :: header"></div>
+		<div th:replace="_fragments/page-header :: header"></div>
 
 	</div>
 	<div align="center">
@@ -17,7 +18,7 @@
 		<h3>Lista pratiche</h3>
 		
 		
-		<table border="1" cellpadding="10">
+		<table>
 			<tbody>
 				<tr>
 					<td sec:authorize="hasAuthority('ADMIN')"><a href="/pratiche/?filtro=daMettereInScadenza">daMettereInScadenza</a></td>
@@ -43,7 +44,7 @@
 		</table>
 		
 		<br /><br />
-		<table border="1" cellpadding="10">
+		<table>
 			<thead>
 				<tr>
 					<th>ID</th>

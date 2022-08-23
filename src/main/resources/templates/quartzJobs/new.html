@@ -4,20 +4,21 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<title>Gestionale Pratiche</title>
+	<link rel="stylesheet" href="/css/baseStyle.css">
 </head>
 
 <body>
 	<div align="center">
 
-		<div th:replace="fragments/page-header :: header"></div>
+		<div th:replace="_fragments/page-header :: header"></div>
 
 	</div>
 	<div align="center">
 	
-		<h3>Creazione nuovo cliente</h3>
+		<h3>Creazione nuovo automatismo</h3>
 		
 		<form action="#" th:action="@{/quartzJobs/save}" method="post">
-			<table border="0" cellpadding="10">
+			<table>
 				<tr>
 					<td>Anticipo in giorni:</td>
 					<td><input type="text" id="giorniAnticipo" name="giorniAnticipo" /></td>

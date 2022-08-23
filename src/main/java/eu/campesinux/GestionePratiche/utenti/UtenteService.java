@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import eu.campesinux.GestionePratiche.ruoli.Ruolo;
 import eu.campesinux.GestionePratiche.specializzazioni.Specializzazione;
 
 @Service
