@@ -31,13 +31,13 @@
 					<td> - </td>
 					
 					<td th:if="${listaPratiche.getNumber() GT 0}">
-						<a th:href="@{'/pratiche/?page=' + ${listaPratiche.getNumber()-1}}">Prev</a>
+						<a th:href="@{'/pratiche/?filtro='+${filtro}+'&page=' + ${listaPratiche.getNumber()-1}}">Prev</a>
 					</td>
 					<td>
 						Pagina <span th:text="${listaPratiche.getNumber()+1}"></span> 
 						di <span th:text="${listaPratiche.getTotalPages()}"></span></td>
 					<td th:if="${listaPratiche.getNumber()+1 LT listaPratiche.getTotalPages()}">
-						<a th:href="@{'/pratiche/?page=' + ${listaPratiche.getNumber()+1}}">Next</a>
+						<a th:href="@{'/pratiche/?filtro='+${filtro}+'&page=' + ${listaPratiche.getNumber()+1}}">Next</a>
 					</td>
 				</tr>
 			</tbody>

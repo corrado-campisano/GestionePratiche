@@ -46,20 +46,17 @@ public class PraticaService {
 		repo.deleteById(id);
 	}
 
-	public Page<Pratica> listInScadenza() {
-		Pageable pageRequest = PageRequest.of(0, 2);
+	public Page<Pratica> listInScadenza(Pageable pageRequest) {
 		StatoPratica inScadenza = statoService.findByStato(StatoPratica.STATO_IN_SCADENZA);
 		return repo.findByStato(inScadenza, pageRequest);
 	}
 
-	public Page<Pratica> listDaFatturare() {
-		Pageable pageRequest = PageRequest.of(0, 2);
+	public Page<Pratica> listDaFatturare(Pageable pageRequest) {
 		StatoPratica daFatturare = statoService.findByStato(StatoPratica.STATO_DA_FATTURARE);
 		return repo.findByStato(daFatturare, pageRequest);
 	}
 
-	public Page<Pratica> listNuove() {
-		Pageable pageRequest = PageRequest.of(0, 2);
+	public Page<Pratica> listNuove(Pageable pageRequest) {
 		StatoPratica nuova = statoService.findByStato(StatoPratica.STATO_NUOVA);
 		return repo.findByStato(nuova, pageRequest);
 	}
@@ -68,8 +65,7 @@ public class PraticaService {
 		return repo.findByCliente(cliente);
 	}
 
-	public Page<Pratica> listDaMettereInScadenza() {
-		Pageable pageRequest = PageRequest.of(0, 2);
+	public Page<Pratica> listDaMettereInScadenza(Pageable pageRequest) {
 		return repo.findDaMettereInScadenza(pageRequest);
 	}
 
@@ -77,8 +73,7 @@ public class PraticaService {
 		return repo.findDaMettereInScadenza();
 	}
 
-	public Page<Pratica> listDaMettereScadute() {
-		Pageable pageRequest = PageRequest.of(0, 2);
+	public Page<Pratica> listDaMettereScadute(Pageable pageRequest) {
 		return repo.findDaMettereScadute(pageRequest);
 	}
 

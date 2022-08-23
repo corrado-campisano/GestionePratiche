@@ -54,31 +54,33 @@ public class PraticaController {
 		model.addAttribute("startFrom", startFrom);
 		Pageable pageRequest = PageRequest.of(startFrom, itemsPerPage);
 
-		if (filtro == null) {
+		if (filtro == null || filtro.equals("all")) {
+			filtro = "all";
 			Page<Pratica> listaPratiche = service.listAll(pageRequest);
 			model.addAttribute("listaPratiche", listaPratiche);
 		} else {
 			if (filtro.equals("nuove")) {
-				Page<Pratica> listaPratiche = service.listNuove();
+				Page<Pratica> listaPratiche = service.listNuove(pageRequest);
 				model.addAttribute("listaPratiche", listaPratiche);
 			}
 			if (filtro.equals("inScadenza")) {
-				Page<Pratica> listaPratiche = service.listInScadenza();
+				Page<Pratica> listaPratiche = service.listInScadenza(pageRequest);
 				model.addAttribute("listaPratiche", listaPratiche);
 			}
 			if (filtro.equals("daFatturare")) {
-				Page<Pratica> listaPratiche = service.listDaFatturare();
+				Page<Pratica> listaPratiche = service.listDaFatturare(pageRequest);
 				model.addAttribute("listaPratiche", listaPratiche);
 			}
 			if (filtro.equals("daMettereInScadenza")) {
-				Page<Pratica> listaPratiche = service.listDaMettereInScadenza();
+				Page<Pratica> listaPratiche = service.listDaMettereInScadenza(pageRequest);
 				model.addAttribute("listaPratiche", listaPratiche);
 			}
 			if (filtro.equals("daMettereScadute")) {
-				Page<Pratica> listaPratiche = service.listDaMettereScadute();
+				Page<Pratica> listaPratiche = service.listDaMettereScadute(pageRequest);
 				model.addAttribute("listaPratiche", listaPratiche);
 			}
 		}
+		model.addAttribute("filtro", filtro);
 		return "pratiche/index";
 	}
 
