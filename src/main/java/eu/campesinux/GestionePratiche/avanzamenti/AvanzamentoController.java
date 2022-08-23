@@ -131,7 +131,7 @@ public class AvanzamentoController {
 			break;
 			
 		case "prorogaPratica":
-			PraticaBusinessLogic.prorogaPratica(pratica, commento, 
+			PraticaBusinessLogic.prorogaPratica(pratica, commento, scadenza,
 					avanzamentoService, praticaService);
 			break;
 			

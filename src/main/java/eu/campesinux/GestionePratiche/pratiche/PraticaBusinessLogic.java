@@ -58,7 +58,16 @@ public class PraticaBusinessLogic {
 		return doesUtenteGestiscePratica;
 	}
 
-	public static Avanzamento getUltimoAvanzamento(Pratica pratica, AvanzamentoService avanzamentoService) {
+	public static void checkCommentoAndScadenza(String commento, LocalDateTime scadenza) throws Exception {
+		if (commento==null || commento.equals("")) {
+			throw new Exception("Errore, specificare un commento per l'avanzamento");
+		}
+		if (scadenza==null) {
+			throw new Exception("Errore, specificare una scadenza per l'avanzamento");
+		}
+	}
+	
+ 	public static Avanzamento getUltimoAvanzamento(Pratica pratica, AvanzamentoService avanzamentoService) {
 
 		List<Avanzamento> avanzamenti = avanzamentoService.listByPratica(pratica);
 		Avanzamento ret = null;
@@ -84,12 +93,17 @@ public class PraticaBusinessLogic {
 			UtenteService utenteService, AvanzamentoService avanzamentoService, 
 			PraticaService praticaService, StatoPraticaService statoService) throws Exception {
 
+		// auth
 		if (!isUtenteWithAuthority("ADMIN") && !isUtenteWithAuthority("MANAGER")) {
 			throw new Exception("Errore, l'utente corrente non e' autorizzato a questa operazione");
 		}
+		
+		// data
+		checkCommentoAndScadenza(commento, scadenza);
 		if (utenti==null) {
 			throw new Exception("Errore, specificare almeno un utente a cui assegnare la pratica");
 		}
+		
 		
 		Utente utente = null;
 		for (int i = 0; i < utenti.length; i++) {
@@ -117,14 +131,17 @@ public class PraticaBusinessLogic {
 			StatoPraticaService statoService, AvanzamentoService avanzamentoService, 
 			PraticaService praticaService, UtenteService utenteService) throws Exception {
 		
+		// auth
 		if (!isUtenteWithAuthority("ADMIN") && !isUtenteWithAuthority("PROFESSIONISTA")) {
 			throw new Exception("Errore, l'utente corrente non e' autorizzato a questa operazione");
 		}
-		
 		if (isUtenteWithAuthority("PROFESSIONISTA") && !PraticaBusinessLogic.doesUtenteGestiscePratica(pratica, utenteService)) {
 			String msg = "L'utente corrente non e' assegnatario della pratica";
 			throw new Exception(msg);
 		}
+		
+		// data
+		checkCommentoAndScadenza(commento, scadenza);
 		
 		StatoPratica nuovo = statoService.findByStato(StatoPratica.STATO_DA_NOTIFICARE);
 
@@ -146,14 +163,17 @@ public class PraticaBusinessLogic {
 			StatoPraticaService statoService, AvanzamentoService avanzamentoService, 
 			PraticaService praticaService, UtenteService utenteService) throws Exception {
 
+		// auth
 		if (!isUtenteWithAuthority("ADMIN") && !isUtenteWithAuthority("PROFESSIONISTA")) {
 			throw new Exception("Errore, l'utente corrente non e' autorizzato a questa operazione");
-		}
-		
+		}		
 		if (isUtenteWithAuthority("PROFESSIONISTA") && !PraticaBusinessLogic.doesUtenteGestiscePratica(pratica, utenteService)) {
 			String msg = "L'utente corrente non e' assegnatario della pratica";
 			throw new Exception(msg);
 		}
+		
+		// data
+		checkCommentoAndScadenza(commento, scadenza);
 		
 		StatoPratica nuovo = statoService.findByStato(StatoPratica.STATO_DA_DEPOSITARE);
 
@@ -175,14 +195,17 @@ public class PraticaBusinessLogic {
 			StatoPraticaService statoService, AvanzamentoService avanzamentoService, 
 			PraticaService praticaService, UtenteService utenteService) throws Exception {
 
+		// auth
 		if (!isUtenteWithAuthority("ADMIN") && !isUtenteWithAuthority("PROFESSIONISTA")) {
 			throw new Exception("Errore, l'utente corrente non e' autorizzato a questa operazione");
 		}
-		
 		if (isUtenteWithAuthority("PROFESSIONISTA") && !PraticaBusinessLogic.doesUtenteGestiscePratica(pratica, utenteService)) {
 			String msg = "L'utente corrente non e' assegnatario della pratica";
 			throw new Exception(msg);
 		}
+		
+		// data
+		checkCommentoAndScadenza(commento, scadenza);
 		
 		StatoPratica nuovo = statoService.findByStato(StatoPratica.STATO_IN_DIBATTIMENTO);
 
@@ -204,14 +227,17 @@ public class PraticaBusinessLogic {
 			StatoPraticaService statoService, AvanzamentoService avanzamentoService, 
 			PraticaService praticaService, UtenteService utenteService) throws Exception {
 
+		// auth
 		if (!isUtenteWithAuthority("ADMIN") && !isUtenteWithAuthority("PROFESSIONISTA")) {
 			throw new Exception("Errore, l'utente corrente non e' autorizzato a questa operazione");
 		}
-		
 		if (isUtenteWithAuthority("PROFESSIONISTA") && !PraticaBusinessLogic.doesUtenteGestiscePratica(pratica, utenteService)) {
 			String msg = "L'utente corrente non e' assegnatario della pratica";
 			throw new Exception(msg);
 		}
+		
+		// data
+		checkCommentoAndScadenza(commento, scadenza);
 		
 		StatoPratica nuovo = statoService.findByStato(StatoPratica.STATO_DA_FATTURARE);
 
@@ -233,8 +259,14 @@ public class PraticaBusinessLogic {
 			StatoPraticaService statoService, AvanzamentoService avanzamentoService, 
 			PraticaService praticaService) throws Exception {
 
+		// auth
 		if (!isUtenteWithAuthority("ADMIN") && !isUtenteWithAuthority("MANAGER")) {
 			throw new Exception("Errore, l'utente corrente non e' autorizzato a questa operazione");
+		}
+		
+		// data
+		if (commento==null || commento.equals("")) {
+			throw new Exception("Errore, specificare un commento per l'avanzamento");
 		}
 		
 		StatoPratica nuovo = statoService.findByStato(StatoPratica.STATO_EVASA);
@@ -256,13 +288,18 @@ public class PraticaBusinessLogic {
 			StatoPraticaService statoService, AvanzamentoService avanzamentoService, 
 			PraticaService praticaService, UtenteService utenteService) throws Exception {
 		
+		// auth
 		if (!isUtenteWithAuthority("ADMIN") && !isUtenteWithAuthority("PROFESSIONISTA")) {
 			throw new Exception("Errore, l'utente corrente non e' autorizzato a questa operazione");
 		}
-		
 		if (isUtenteWithAuthority("PROFESSIONISTA") && !PraticaBusinessLogic.doesUtenteGestiscePratica(pratica, utenteService)) {
 			String msg = "L'utente corrente non e' assegnatario della pratica";
 			throw new Exception(msg);
+		}
+		
+		// data
+		if (commento==null || commento.equals("")) {
+			throw new Exception("Errore, specificare un commento per l'avanzamento");
 		}
 		
 		StatoPratica nuovo = statoService.findByStato(StatoPratica.STATO_RIGETTATA);
@@ -280,12 +317,16 @@ public class PraticaBusinessLogic {
 		praticaService.save(pratica);
 	}
 
-	public static void prorogaPratica(Pratica pratica, String commento,
+	public static void prorogaPratica(Pratica pratica, String commento, LocalDateTime scadenza,
 			AvanzamentoService avanzamentoService, PraticaService praticaService) throws Exception {
 
+		// auth
 		if (!isUtenteWithAuthority("ADMIN") && !isUtenteWithAuthority("MANAGER")) {
 			throw new Exception("Errore, l'utente corrente non e' autorizzato a questa operazione");
 		}
+		
+		// data
+		checkCommentoAndScadenza(commento, scadenza);
 		
 		Avanzamento ultimoAv = getUltimoAvanzamento(pratica, avanzamentoService);
 		StatoPratica statoDaProrogare = ultimoAv.getStatoPrecedente();
@@ -294,7 +335,7 @@ public class PraticaBusinessLogic {
 		// avanzamento di proroga: da in scadenza allo stato precedente
 		Avanzamento avanzamento = new Avanzamento();
 		avanzamento.setData(LocalDateTime.now());
-		avanzamento.setScadenza(LocalDateTime.now());
+		avanzamento.setScadenza(scadenza);
 		avanzamento.setDescrizione(commento);
 		avanzamento.setPratica(pratica);
 		avanzamento.setStatoAttuale(statoDaProrogare);
