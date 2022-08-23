@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import eu.campesinux.GestionePratiche.avanzamenti.Avanzamento;
@@ -14,6 +16,7 @@ import eu.campesinux.GestionePratiche.clienti.Cliente;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPratica;
 import eu.campesinux.GestionePratiche.statoPratica.StatoPraticaService;
 import eu.campesinux.GestionePratiche.utenti.Utente;
+import eu.campesinux.GestionePratiche.utenti.UtenteService;
 
 @Service
 public class PraticaService {
@@ -23,7 +26,9 @@ public class PraticaService {
 	private AvanzamentoRepository avaRepo;
 	@Autowired
 	private StatoPraticaService statoService;
-
+	@Autowired
+	private UtenteService utenteService;
+	
 	public Page<Pratica> listAll(Pageable pageRequest) {
 		return repo.findAll(pageRequest);
 	}
@@ -83,6 +88,16 @@ public class PraticaService {
 
 	public List<Pratica> listByUtente(Utente utente) {
 		return repo.findByUtenti(utente);
+	}
+
+	public Page<Pratica> listProprie(Pageable pageRequest) {
+		Utente utente = null;
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			String currentUserName = authentication.getName();
+			utente = utenteService.listByUsername(currentUserName);
+		}
+		return repo.findByUtenti(utente, pageRequest);
 	}
 
 }

@@ -23,9 +23,10 @@
 				<tr>
 					<td sec:authorize="hasAuthority('ADMIN')"><a href="/pratiche/?filtro=daMettereInScadenza">daMettereInScadenza</a></td>
 					<td sec:authorize="hasAuthority('ADMIN')"><a href="/pratiche/?filtro=daMettereScadute">daMettereScadute</a></td>
+					<td sec:authorize="hasAnyAuthority('ADMIN', 'PROFESSIONISTA')"><a href="/pratiche/?filtro=assegnate">Pratiche assegnate</a></td>
 					<td><a href="/pratiche/?filtro=nuove">Pratiche nuove</a></td>
 					<td><a href="/pratiche/?filtro=inScadenza">Pratiche in scadenza</a></td>
-					<td><a href="/pratiche/?filtro=daFatturare">Pratiche da fatturare</a></td>
+					<td sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')"><a href="/pratiche/?filtro=daFatturare">Pratiche da fatturare</a></td>
 					<td sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')"><a href="/pratiche/new">Crea nuova pratica</a></td>
 					
 					<td> - </td>

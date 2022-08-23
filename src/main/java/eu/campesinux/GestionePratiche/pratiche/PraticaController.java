@@ -59,6 +59,10 @@ public class PraticaController {
 			Page<Pratica> listaPratiche = service.listAll(pageRequest);
 			model.addAttribute("listaPratiche", listaPratiche);
 		} else {
+			if (filtro.equals("assegnate")) {
+				Page<Pratica> listaPratiche = service.listProprie(pageRequest);
+				model.addAttribute("listaPratiche", listaPratiche);
+			}
 			if (filtro.equals("nuove")) {
 				Page<Pratica> listaPratiche = service.listNuove(pageRequest);
 				model.addAttribute("listaPratiche", listaPratiche);

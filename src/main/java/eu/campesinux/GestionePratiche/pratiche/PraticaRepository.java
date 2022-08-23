@@ -64,5 +64,7 @@ public interface PraticaRepository extends PagingAndSortingRepository<Pratica, L
 			+ "sp.stato = '" + StatoPratica.STATO_DA_FATTURARE + "')",
 			nativeQuery = true)
 	List<Pratica> findDaMettereScadute();
+
+	Page<Pratica> findByUtenti(Utente utente, Pageable pageRequest);
 	
 }
