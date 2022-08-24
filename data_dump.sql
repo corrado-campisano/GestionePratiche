@@ -54,7 +54,8 @@ CREATE TABLE `cliente` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ragione_sociale` varchar(255) NOT NULL,
   `codice_fiscale` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `codice_fiscale` (`codice_fiscale`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -97,29 +98,6 @@ INSERT INTO `pratica` VALUES (1,'2022-01','cartella per TARI',1,1,1),(2,'2022-02
 UNLOCK TABLES;
 
 --
--- Table structure for table `pratica_professionista`
---
-
-DROP TABLE IF EXISTS `pratica_professionista`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pratica_professionista` (
-  `pratica_id` int(11) unsigned NOT NULL,
-  `professionista_id` int(11) unsigned NOT NULL,
-  UNIQUE KEY `pratica_id` (`pratica_id`,`professionista_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pratica_professionista`
---
-
-LOCK TABLES `pratica_professionista` WRITE;
-/*!40000 ALTER TABLE `pratica_professionista` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pratica_professionista` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `pratica_utente`
 --
 
@@ -140,55 +118,6 @@ CREATE TABLE `pratica_utente` (
 LOCK TABLES `pratica_utente` WRITE;
 /*!40000 ALTER TABLE `pratica_utente` DISABLE KEYS */;
 /*!40000 ALTER TABLE `pratica_utente` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `professionista`
---
-
-DROP TABLE IF EXISTS `professionista`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `professionista` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(255) NOT NULL,
-  `cognome` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `professionista`
---
-
-LOCK TABLES `professionista` WRITE;
-/*!40000 ALTER TABLE `professionista` DISABLE KEYS */;
-INSERT INTO `professionista` VALUES (1,'Mario','Civile'),(2,'Sergio','Penale'),(3,'Marco','Tributario'),(4,'Antonio','Commerciale'),(5,'Mario','Civile'),(6,'Sergio','Penale'),(7,'Marco','Tributario'),(8,'Antonio','Commerciale');
-/*!40000 ALTER TABLE `professionista` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `professionista_specializzazione`
---
-
-DROP TABLE IF EXISTS `professionista_specializzazione`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `professionista_specializzazione` (
-  `professionista_id` int(11) unsigned NOT NULL,
-  `specializzazione_id` int(11) unsigned NOT NULL,
-  UNIQUE KEY `professionista_id` (`professionista_id`,`specializzazione_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `professionista_specializzazione`
---
-
-LOCK TABLES `professionista_specializzazione` WRITE;
-/*!40000 ALTER TABLE `professionista_specializzazione` DISABLE KEYS */;
-INSERT INTO `professionista_specializzazione` VALUES (1,1),(2,2),(3,3),(4,4);
-/*!40000 ALTER TABLE `professionista_specializzazione` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -288,62 +217,6 @@ INSERT INTO `tipo_pratica` VALUES (1,'tributario primo grado'),(2,'tributario ap
 UNLOCK TABLES;
 
 --
--- Table structure for table `users`
---
-
-DROP TABLE IF EXISTS `users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `users` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(45) NOT NULL,
-  `password` varchar(64) NOT NULL,
-  `nome` varchar(45) NOT NULL,
-  `cognome` varchar(64) NOT NULL,
-  `role` varchar(45) NOT NULL,
-  `enabled` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `users`
---
-
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES 
-(1,'admin','$2a$10$XM50LLW.rmHL8qCbY00WYOjTZzTU8xL.TS08qY7UpaMzzi.vmMOZS','Corrado','Campisano','ROLE_ADMIN',1),
-(2,'marisa','$2a$10$f3iFK1oIwXjQD6RKHB9Ur.2ZUt/jbo5v.6sYFU4BQQ/I4ud6Fo2.G','Marisa','Checchia','ROLE_MANAGER',1),
-(3,'admin','$2a$10$XM50LLW.rmHL8qCbY00WYOjTZzTU8xL.TS08qY7UpaMzzi.vmMOZS','Corrado','Campisano','ROLE_ADMIN',1),
-(4,'marisa','$2a$10$f3iFK1oIwXjQD6RKHB9Ur.2ZUt/jbo5v.6sYFU4BQQ/I4ud6Fo2.G','Marisa','Checchia','ROLE_MANAGER',1);
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `users_specializzazione`
---
-
-DROP TABLE IF EXISTS `users_specializzazione`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `users_specializzazione` (
-  `user_id` int(11) unsigned NOT NULL,
-  `specializzazione_id` int(11) unsigned NOT NULL,
-  UNIQUE KEY `user_id` (`user_id`,`specializzazione_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `users_specializzazione`
---
-
-LOCK TABLES `users_specializzazione` WRITE;
-/*!40000 ALTER TABLE `users_specializzazione` DISABLE KEYS */;
-/*!40000 ALTER TABLE `users_specializzazione` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `utente_specializzazione`
 --
 
@@ -382,7 +255,8 @@ CREATE TABLE `utenti` (
   `cognome` varchar(64) NOT NULL,
   `role` varchar(45) NOT NULL,
   `enabled` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -392,14 +266,7 @@ CREATE TABLE `utenti` (
 
 LOCK TABLES `utenti` WRITE;
 /*!40000 ALTER TABLE `utenti` DISABLE KEYS */;
-INSERT INTO `utenti` VALUES 
-(1,'admin','$2a$10$XM50LLW.rmHL8qCbY00WYOjTZzTU8xL.TS08qY7UpaMzzi.vmMOZS','Corrado','Campisano','ADMIN',1),
-(2,'marisa','$2a$10$f3iFK1oIwXjQD6RKHB9Ur.2ZUt/jbo5v.6sYFU4BQQ/I4ud6Fo2.G','Marisa','Checchia','MANAGER',1),
-(3,'user','$2a$10$QPPbn6e6sNAsyi42hR2HieI78Hu2RjdK18XA/8snrKJOyh8Am/Y7a','sola','lettura','USER',1),
-(4,'marioc','$2a$10$HDo6qWkTNGcTTkoDJUO4LO5BUgw9PviZTxbAJ2VcZmGIhsISPL5/m','Mario','Civile','PROFESSIONISTA',1),
-(5,'sergiop','$2a$10$U/1RFnDXUK4fEWy0.HrlIuPqWbHs348367FRpNPv/32TM.pVyTM1i','Sergio','Penale','PROFESSIONISTA',1),
-(6,'pierot','$2a$10$QFNZiAouu58gBb9dHvKY4OZU7i6EnWMwRa3qM7s/EkQC4LFTy04om','Piero','Tributario','PROFESSIONISTA',1),
-(7,'luigic','$2a$10$0HUo3YzPyR6jx594FsggVONPPMKVcJSeZCOeMZ99j20v79UdzF42e','Luigi','Commerciale','PROFESSIONISTA',1);
+INSERT INTO `utenti` VALUES (1,'admin','$2a$10$XM50LLW.rmHL8qCbY00WYOjTZzTU8xL.TS08qY7UpaMzzi.vmMOZS','Corrado','Campisano','ADMIN',1),(2,'marisa','$2a$10$f3iFK1oIwXjQD6RKHB9Ur.2ZUt/jbo5v.6sYFU4BQQ/I4ud6Fo2.G','Marisa','Checchia','MANAGER',1),(3,'user','$2a$10$QPPbn6e6sNAsyi42hR2HieI78Hu2RjdK18XA/8snrKJOyh8Am/Y7a','sola','lettura','USER',1),(4,'marioc','$2a$10$HDo6qWkTNGcTTkoDJUO4LO5BUgw9PviZTxbAJ2VcZmGIhsISPL5/m','Mario','Civile','PROFESSIONISTA',1),(5,'sergiop','$2a$10$U/1RFnDXUK4fEWy0.HrlIuPqWbHs348367FRpNPv/32TM.pVyTM1i','Sergio','Penale','PROFESSIONISTA',1),(6,'pierot','$2a$10$QFNZiAouu58gBb9dHvKY4OZU7i6EnWMwRa3qM7s/EkQC4LFTy04om','Piero','Tributario','PROFESSIONISTA',1),(7,'luigic','$2a$10$0HUo3YzPyR6jx594FsggVONPPMKVcJSeZCOeMZ99j20v79UdzF42e','Luigi','Commerciale','PROFESSIONISTA',1);
 /*!40000 ALTER TABLE `utenti` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -412,4 +279,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-22 15:51:03
+-- Dump completed on 2022-08-24  8:57:13

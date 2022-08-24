@@ -8,6 +8,8 @@
 
 
 ### Default users:
-* marisa has role USER and password is marisa
-* admin has role ADMIN with password is corrado
+* admin has role ADMIN with password corrado
+* marisa has role MANAGER and password marisa
+* marioc, sergiop, pierot, luigic have role PROFESSIONISTA and password same as username
+* user has role USER and password user
 

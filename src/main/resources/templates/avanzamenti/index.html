@@ -25,7 +25,7 @@
 
 		<h3>Lista avanzamenti per la pratica</h3>
 		
-		<table>
+		<table class="styled-table">
 			<thead>
 				<tr>
 					<th>ID</th>
@@ -63,7 +63,7 @@
 		    <div th:case="'nuova'">
 		    	<div sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')">
 			    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
-			    		<table>
+			    		<table class="styled-table">
 			    			<tr>
 								<td>Professionisti:</td>
 								<td>
@@ -95,7 +95,7 @@
 		    <div th:case="'in lavorazione'">
 		    	<div sec:authorize="hasAnyAuthority('ADMIN', 'PROFESSIONISTA')">
 			    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
-			    		<table>
+			    		<table class="styled-table">
 			    			<tr>
 			    				<td>Commento:</td>
 								<td><input type="text" size="50" id="commento" name="commento" /></td>
@@ -118,7 +118,7 @@
 		    <div th:case="'da notificare'">
 		    	<div sec:authorize="hasAnyAuthority('ADMIN', 'PROFESSIONISTA')">
 			    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
-			    		<table>
+			    		<table class="styled-table">
 			    			<tr>
 			    				<td>Commento:</td>
 								<td><input type="text" size="50" id="commento" name="commento" /></td>
@@ -137,7 +137,7 @@
 		    <div th:case="'da depositare'">
 		    	<div sec:authorize="hasAnyAuthority('ADMIN', 'PROFESSIONISTA')">
 					<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
-			    		<table>
+			    		<table class="styled-table">
 			    			<tr>
 			    				<td>Commento:</td>
 								<td><input type="text" size="50" id="commento" name="commento" /></td>
@@ -156,7 +156,7 @@
 		    <div th:case="'in scadenza'">La pratica e' in scadenza, sollecitare i professionisti coinvolti prima di prorogarla.
 		    	<div sec:authorize="hasAnyAuthority('ADMIN', 'MANAGER')">
 			    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
-			    		<table>
+			    		<table class="styled-table">
 			    			<tr>
 			    				<td>Commento:</td>
 								<td><input type="text" size="50" id="commento" name="commento" /></td>
@@ -176,7 +176,7 @@
 		    <div th:case="'in dibattimento'">
 		    	<div sec:authorize="hasAnyAuthority('ADMIN', 'PROFESSIONISTA')">
 			    	<form action="#" th:action="@{'/avanzamenti/gestione/?pratica=' + ${pratica.id}}" method="post">
-			    		<table>
+			    		<table class="styled-table">
 			    			<tr>
 			    				<td>Commento:</td>
 								<td><input type="text" size="50" id="commento" name="commento" /></td>
@@ -211,7 +211,7 @@
 
 		<br><br>
 
-		<table>
+		<table class="styled-table">
 			<thead>
 				<tr>
 					<th>ID</th>

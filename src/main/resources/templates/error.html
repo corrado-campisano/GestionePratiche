@@ -13,22 +13,26 @@
 	
 	<h3>Errore</h3>
 
-	<p th:if="${timestamp}" id='created'>
-		<b>Errore occorso il:</b> <span th:text="${timestamp}">Timestamp</span>
-	</p>
-
-	<p th:if="${status}">
-		<b>Response Status:</b> <span th:text="${status}">status-code</span> <span
-			th:if="${error}" th:text="'('+${error}+')'">error ...</span>
-	</p>
-
-	<!-- ${exception} or ${message} are set internally by Spring Boot. */-->
-	<div
-		th:if="${exception} or (${message} and ${message.length() != 0})">
-		<b>Causa:</b>
-		<span th:if="${exception}" th:text="${exception}">exception ...</span>
-		<span th:if="${message} and ${message.length() != 0}" th:text="${message}">message ...</span>
-	</div>
+	<table class="styled-table">
+		<tr>
+			<th th:if="${timestamp}">Errore occorso il:</th>
+			<td><span th:text="${timestamp}">Timestamp</span></td>
+		</tr>
+		<tr th:if="${status}">
+			<th>Response Status:</th>
+			<td>
+				<span th:text="${status}">status-code</span> 
+				<span th:if="${error}" th:text="'('+${error}+')'">error ...</span>
+			</td>
+		</tr>
+		<tr>
+			<th>Causa:</th>
+			<td>
+				<span th:if="${exception}" th:text="${exception}">exception ...</span>
+				<span th:if="${message} and ${message.length() != 0}" th:text="${message}">message ...</span>
+			</td>
+		</tr>
+	</table>
 </div>
 </body>
 </html>
